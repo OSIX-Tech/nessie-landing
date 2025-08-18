@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  LineChart,
-  Line,
   AreaChart,
   Area,
   BarChart,
@@ -11,8 +9,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  RadialBarChart,
-  RadialBar,
   PieChart,
   Pie,
   Cell
@@ -41,11 +37,6 @@ const comparisonData = [
   { metric: 'Onboarding', before: 30, after: 7, improvement: 77 },
   { metric: 'Tickets', before: 72, after: 24, improvement: 67 },
   { metric: 'Errores', before: 23, after: 2, improvement: 91 }
-]
-
-// Data for radial chart
-const satisfactionData = [
-  { name: 'Satisfacción', value: 94, fill: 'rgb(0, 0, 0)' }
 ]
 
 // Data for distribution
@@ -86,14 +77,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 function Performance() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [, setActiveIndex] = useState(0)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          // Animation trigger point
         }
       },
       { threshold: 0.2 }
