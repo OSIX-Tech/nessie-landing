@@ -3,6 +3,7 @@ import { useState } from 'react'
 function Wishlist() {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -16,7 +17,7 @@ function Wishlist() {
   }
 
   return (
-    <section id="wishlist" className="py-24 relative overflow-hidden">
+    <section id="wishlist" className="py-16 md:py-24 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0"
            style={{
@@ -28,7 +29,7 @@ function Wishlist() {
              }}></div>
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-6 md:px-12 lg:px-24 text-center">
+      <div className="relative max-w-4xl mx-auto px-6 md:px-12 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
              style={{ 
@@ -48,7 +49,7 @@ function Wishlist() {
         </div>
 
         {/* Heading */}
-        <h2 className="text-5xl md:text-6xl font-bold mb-6" 
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6" 
             style={{ color: 'rgb(var(--color-black))' }}>
           Sé de los primeros
           <br />
@@ -61,63 +62,69 @@ function Wishlist() {
         </h2>
 
         {/* Description */}
-        <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed" 
+        <p className="text-base md:text-lg lg:text-xl mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed" 
            style={{ color: 'rgb(var(--color-gray-600))' }}>
           Únete a la lista de espera y obtén acceso prioritario cuando lancemos. 
           Sin spam, solo actualizaciones importantes.
         </p>
 
         {/* Email form */}
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8">
-          <div className="flex flex-col sm:flex-row gap-3">
+        <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-6 md:mb-8">
+          <div className="relative flex items-center p-2 rounded-full transition-all duration-300"
+               style={{ 
+                 background: 'rgb(var(--color-white))',
+                 border: isFocused ? '2px solid rgb(var(--color-black))' : '2px solid rgb(var(--color-gray-200))',
+                 boxShadow: isFocused ? '0 0 0 4px rgba(0, 0, 0, 0.05)' : 'none'
+               }}>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
-              className="flex-1 px-6 py-4 rounded-full text-base outline-none transition-all"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder="Ingresa tu email corporativo"
+              className="flex-1 px-4 md:px-6 py-2 bg-transparent text-sm md:text-base outline-none"
               style={{
-                background: 'rgb(var(--color-white))',
-                border: '2px solid rgb(var(--color-gray-200))',
                 color: 'rgb(var(--color-black))'
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = 'rgb(var(--color-black))'
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = 'rgb(var(--color-gray-200))'
               }}
               required
             />
             <button
               type="submit"
-              className="px-8 py-4 rounded-full font-semibold text-base transition-all hover:scale-105 hover:shadow-lg"
+              className="px-6 md:px-8 py-2.5 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all hover:scale-105 whitespace-nowrap"
               style={{
                 background: isSubscribed ? 'rgb(var(--color-emerald-500))' : 'rgb(var(--color-black))',
-                color: 'rgb(var(--color-white))'
+                color: 'rgb(var(--color-white))',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
               }}>
               {isSubscribed ? (
                 <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                           d="M5 13l4 4L19 7" />
                   </svg>
-                  ¡Añadido!
+                  ¡Listo!
                 </span>
               ) : (
-                'Unirse a la lista'
+                <span className="flex items-center gap-2">
+                  Unirse
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                          d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
               )}
             </button>
           </div>
         </form>
 
         {/* Stats */}
-        <div className="flex items-center justify-center gap-8 flex-wrap">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 flex-wrap">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} 
-                     className="w-8 h-8 rounded-full border-2 border-white"
+                     className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white"
                      style={{ 
                        background: `rgb(var(--color-gray-${i * 2}00))`
                      }}></div>

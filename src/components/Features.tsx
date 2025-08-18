@@ -64,18 +64,18 @@ const features = [
 
 function Features() {
   return (
-    <section id="features" className="py-32 px-6 md:px-12 lg:px-24">
+    <section id="features" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24">
       <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
-        <div className="max-w-3xl mb-24">
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold mb-6"
+        {/* Section header - centered */}
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20 lg:mb-24">
+          <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-semibold mb-4 md:mb-6"
                 style={{ 
                   background: 'rgba(0, 0, 0, 0.05)',
                   color: 'rgb(var(--color-black))'
                 }}>
             CARACTERÍSTICAS
           </span>
-          <h2 className="heading-lg mb-6" style={{ color: 'rgb(var(--color-black))' }}>
+          <h2 className="heading-lg mb-4 md:mb-6" style={{ color: 'rgb(var(--color-black))' }}>
             Diseñado para equipos
             <br />
             que <span className="gradient-text">exigen excelencia</span>
@@ -87,10 +87,10 @@ function Features() {
         </div>
         
         {/* Features bento grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, index) => (
             <div key={index} 
-                 className="group relative overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:scale-[1.02]"
+                 className="group relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 transition-all duration-500 hover:scale-[1.02]"
                  style={{ 
                    background: 'linear-gradient(135deg, rgb(var(--color-gray-50)) 0%, rgb(var(--color-white)) 100%)',
                    border: '1px solid rgb(var(--color-gray-200))'
@@ -100,7 +100,7 @@ function Features() {
               
               {/* Content */}
               <div className="relative z-10">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6 transition-all duration-500 group-hover:scale-110"
+                <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl mb-4 md:mb-6 transition-all duration-500 group-hover:scale-110"
                      style={{ 
                        background: 'rgb(var(--color-black))',
                        color: 'rgb(var(--color-white))'
@@ -110,18 +110,18 @@ function Features() {
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-3 transition-colors duration-500 group-hover:text-white" 
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-500 group-hover:text-white" 
                     style={{ color: 'rgb(var(--color-black))' }}>
                   {feature.title}
                 </h3>
                 
-                <p className="leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
+                <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
                    style={{ color: 'rgb(var(--color-gray-600))' }}>
                   {feature.description}
                 </p>
                 
                 {/* Arrow indicator */}
-                <div className="mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                <div className="mt-4 md:mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                           d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -137,14 +137,14 @@ function Features() {
         </div>
         
         {/* AI Conversational section - redesigned for full width image */}
-        <div className="mt-32">
-          <div className="rounded-3xl overflow-hidden relative py-16"
+        <div className="mt-16 md:mt-24 lg:mt-32">
+          <div className="rounded-2xl md:rounded-3xl overflow-hidden relative py-12 md:py-16"
                style={{ 
                  background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
                }}>
             {/* Section header centered */}
-            <div className="text-center mb-12 px-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold mb-6"
+            <div className="text-center mb-8 md:mb-12 px-4 md:px-6">
+              <span className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-bold mb-4 md:mb-6"
                     style={{ 
                       background: 'rgba(255, 255, 255, 0.1)',
                       backdropFilter: 'blur(10px)',
@@ -153,14 +153,14 @@ function Features() {
                 POWERED BY GPT-4 & CLAUDE 3
               </span>
               
-              <h3 className="text-4xl md:text-5xl font-bold mb-6"
+              <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6"
                   style={{ color: 'rgb(255, 255, 255)' }}>
                 IA conversacional que entiende
                 <br />
                 tu <span style={{ color: 'rgba(255, 255, 255, 0.7)' }}>conocimiento empresarial</span>
               </h3>
               
-              <p className="text-lg leading-relaxed max-w-3xl mx-auto"
+              <p className="text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
                  style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                 Nessie no solo busca palabras clave. Comprende la intención, 
                 el contexto y las relaciones entre documentos para darte 
@@ -169,8 +169,8 @@ function Features() {
             </div>
 
             {/* Full width screenshot without browser frame */}
-            <div className="px-6 md:px-12 lg:px-24 mb-12">
-              <div className="rounded-2xl overflow-hidden mx-auto"
+            <div className="px-4 md:px-12 lg:px-24 mb-8 md:mb-12">
+              <div className="rounded-xl md:rounded-2xl overflow-hidden mx-auto"
                    style={{ 
                      boxShadow: '0 30px 80px rgba(0, 0, 0, 0.5)',
                      border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -190,7 +190,7 @@ function Features() {
             </div>
 
             {/* Stats below image */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto px-4 md:px-6">
               {[
                 { metric: '0.3s', label: 'Tiempo de respuesta' },
                 { metric: '99.9%', label: 'Precisión' },
@@ -198,9 +198,9 @@ function Features() {
                 { metric: '∞', label: 'Documentos procesados' }
               ].map((item, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-3xl font-bold mb-1" 
+                  <div className="text-2xl md:text-3xl font-bold mb-1" 
                        style={{ color: 'rgb(255, 255, 255)' }}>{item.metric}</div>
-                  <div className="text-sm" 
+                  <div className="text-xs md:text-sm" 
                        style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{item.label}</div>
                 </div>
               ))}

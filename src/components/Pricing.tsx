@@ -57,18 +57,18 @@ const plans = [
 
 function Pricing() {
   return (
-    <section id="pricing" className="py-32 px-6 md:px-12 lg:px-24" style={{ background: 'rgb(var(--color-gray-50))' }}>
+    <section id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24" style={{ background: 'rgb(var(--color-gray-50))' }}>
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold mb-6"
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20">
+          <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-semibold mb-4 md:mb-6"
                 style={{ 
                   background: 'rgba(0, 0, 0, 0.05)',
                   color: 'rgb(var(--color-black))'
                 }}>
             PRECIOS
           </span>
-          <h2 className="heading-lg mb-6" style={{ color: 'rgb(var(--color-black))' }}>
+          <h2 className="heading-lg mb-4 md:mb-6" style={{ color: 'rgb(var(--color-black))' }}>
             Inversión que
             <br />
             <span className="gradient-text">se paga sola</span>
@@ -80,20 +80,20 @@ function Pricing() {
         </div>
 
         {/* Pricing toggle */}
-        <div className="flex justify-center mb-16">
-          <div className="inline-flex items-center p-2 rounded-full"
+        <div className="flex justify-center mb-8 md:mb-16">
+          <div className="inline-flex items-center p-1.5 md:p-2 rounded-full"
                style={{ 
                  background: 'rgb(var(--color-white))',
                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
                }}>
-            <button className="px-8 py-3 rounded-full font-medium transition-all text-sm"
+            <button className="px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all text-xs md:text-sm"
                     style={{ 
                       background: 'rgb(var(--color-black))',
                       color: 'rgb(var(--color-white))'
                     }}>
               Mensual
             </button>
-            <button className="px-8 py-3 rounded-full font-medium transition-all text-sm flex items-center gap-2"
+            <button className="px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all text-xs md:text-sm flex items-center gap-2"
                     style={{ color: 'rgb(var(--color-gray-600))' }}>
               Anual
               <span className="px-2 py-1 text-xs font-bold rounded-full"
@@ -108,12 +108,12 @@ function Pricing() {
         </div>
         
         {/* Pricing cards with fixed height */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative flex flex-col rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
-                plan.highlight ? 'md:-mt-8' : ''
+              className={`relative flex flex-col rounded-2xl md:rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
+                plan.highlight ? 'lg:-mt-8' : ''
               }`}
               style={{ 
                 background: plan.highlight 
@@ -140,14 +140,14 @@ function Pricing() {
               )}
               
               {/* Card content - flex-grow to push button down */}
-              <div className="flex flex-col h-full p-8">
+              <div className="flex flex-col h-full p-6 md:p-8">
                 {/* Header */}
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold mb-2" 
+                <div className="mb-6 md:mb-8">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2" 
                       style={{ color: plan.highlight ? 'rgb(var(--color-white))' : 'rgb(var(--color-black))' }}>
                     {plan.name}
                   </h3>
-                  <p className="text-sm mb-6" 
+                  <p className="text-sm mb-4 md:mb-6" 
                      style={{ color: plan.highlight ? 'rgba(255, 255, 255, 0.7)' : 'rgb(var(--color-gray-600))' }}>
                     {plan.description}
                   </p>
@@ -158,7 +158,7 @@ function Pricing() {
                         $
                       </span>
                     )}
-                    <span className="text-5xl font-bold tracking-tight" 
+                    <span className="text-4xl md:text-5xl font-bold tracking-tight" 
                           style={{ color: plan.highlight ? 'rgb(var(--color-white))' : 'rgb(var(--color-black))' }}>
                       {plan.price}
                     </span>
@@ -172,7 +172,7 @@ function Pricing() {
                 </div>
                 
                 {/* Features list - flex-grow to fill space */}
-                <ul className="space-y-4 mb-8 flex-grow">
+                <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8 flex-grow">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
@@ -195,7 +195,7 @@ function Pricing() {
                 </ul>
                 
                 {/* CTA Button - stays at bottom */}
-                <button className="w-full py-4 px-6 rounded-full font-semibold transition-all hover:scale-[1.02] hover:shadow-xl"
+                <button className="w-full py-3 md:py-4 px-6 rounded-full text-sm md:text-base font-semibold transition-all hover:scale-[1.02] hover:shadow-xl"
                         style={plan.highlight ? {
                           background: 'rgb(var(--color-white))',
                           color: 'rgb(var(--color-black))'
