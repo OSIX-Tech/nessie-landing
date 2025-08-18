@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 function Hero() {
   const heroRef = useRef<HTMLElement>(null)
@@ -130,7 +130,7 @@ function Hero() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% {
             transform: translateY(0) rotate(-1deg);
