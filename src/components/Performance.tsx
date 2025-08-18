@@ -508,27 +508,6 @@ function Performance() {
             </ResponsiveContainer>
           </div>
         </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-12"
-             style={{ 
-               background: 'linear-gradient(135deg, rgb(250, 250, 250) 0%, rgb(255, 255, 255) 100%)',
-               border: '1px solid rgba(0, 0, 0, 0.06)'
-             }}>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style={{ color: 'rgb(0, 0, 0)' }}>
-            Resultados desde el día uno
-          </h3>
-          <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0" style={{ color: 'rgba(0, 0, 0, 0.6)' }}>
-            Únete a las empresas que ya han transformado su gestión del conocimiento 
-            con resultados medibles y sostenibles.
-          </p>
-          <button className="btn-shine px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                  style={{ 
-                    background: 'linear-gradient(135deg, rgb(0, 0, 0) 0%, rgb(38, 38, 38) 100%)',
-                  }}>
-            Ver caso de estudio completo
-          </button>
-        </div>
       </div>
     </section>
   )
