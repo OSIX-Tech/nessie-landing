@@ -169,7 +169,9 @@ function Hero() {
                              inset 0 2px 0 rgba(255, 255, 255, 0.1),
                              inset 0 -2px 0 rgba(0, 0, 0, 0.4)
                            `
-                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-2deg) rotateY(8deg) rotateZ(-1deg) translateZ(-20px) translateX(-90px) translateY(-30px) scale(1.03)'
+                           if (e.currentTarget.parentElement?.parentElement) {
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-2deg) rotateY(8deg) rotateZ(-1deg) translateZ(-20px) translateX(-90px) translateY(-30px) scale(1.03)'
+                          }
                          }}
                          onMouseLeave={(e) => {
                            e.currentTarget.style.opacity = '0.65'
@@ -180,7 +182,9 @@ function Hero() {
                              inset 0 1px 0 rgba(255, 255, 255, 0.06),
                              inset 0 -1px 0 rgba(0, 0, 0, 0.3)
                            `
-                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-100px) translateX(-70px) translateY(50px)'
+                           if (e.currentTarget.parentElement?.parentElement) {
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-100px) translateX(-70px) translateY(50px)'
+                          }
                          }}>
                       {/* Screenshot */}
                       <div className="relative w-full h-full">
@@ -251,7 +255,9 @@ function Hero() {
                              inset 0 2px 0 rgba(255, 255, 255, 0.12),
                              inset 0 -2px 0 rgba(0, 0, 0, 0.45)
                            `
-                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(0deg) rotateY(6deg) rotateZ(-1deg) translateZ(20px) translateX(-10px) translateY(-45px) scale(1.04)'
+                           if (e.currentTarget.parentElement?.parentElement) {
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(0deg) rotateY(6deg) rotateZ(-1deg) translateZ(20px) translateX(-10px) translateY(-45px) scale(1.04)'
+                          }
                          }}
                          onMouseLeave={(e) => {
                            e.currentTarget.style.opacity = '0.72'
@@ -262,7 +268,9 @@ function Hero() {
                              inset 0 1px 0 rgba(255, 255, 255, 0.08),
                              inset 0 -1px 0 rgba(0, 0, 0, 0.35)
                            `
-                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-50px) translateX(0px) translateY(35px)'
+                           if (e.currentTarget.parentElement?.parentElement) {
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-50px) translateX(0px) translateY(35px)'
+                          }
                          }}>
                       {/* Screenshot */}
                       <div className="relative w-full h-full">
@@ -334,8 +342,10 @@ function Hero() {
                              inset 0 2px 0 rgba(255, 255, 255, 0.15),
                              inset 0 -2px 0 rgba(0, 0, 0, 0.5)
                            `
-                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(2deg) rotateY(4deg) rotateZ(0deg) translateZ(80px) translateX(60px) translateY(-70px) scale(1.05)'
-                           e.currentTarget.parentElement.parentElement.style.zIndex = '20'
+                           if (e.currentTarget.parentElement?.parentElement) {
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(2deg) rotateY(4deg) rotateZ(0deg) translateZ(80px) translateX(60px) translateY(-70px) scale(1.05)'
+                             e.currentTarget.parentElement.parentElement.style.zIndex = '20'
+                          }
                          }}
                          onMouseLeave={(e) => {
                            e.currentTarget.style.opacity = '0.8'
@@ -346,8 +356,10 @@ function Hero() {
                              inset 0 1px 0 rgba(255, 255, 255, 0.1),
                              inset 0 -1px 0 rgba(0, 0, 0, 0.4)
                            `
-                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(0px) translateX(70px) translateY(20px)'
-                           e.currentTarget.parentElement.parentElement.style.zIndex = '3'
+                           if (e.currentTarget.parentElement?.parentElement) {
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(0px) translateX(70px) translateY(20px)'
+                             e.currentTarget.parentElement.parentElement.style.zIndex = '3'
+                          }
                          }}>
                       {/* Screenshot with reflection */}
                       <div className="relative w-full h-full">

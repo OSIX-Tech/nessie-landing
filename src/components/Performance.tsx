@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useCountUp } from '../hooks/useCountUp'
 import { useParallax } from '../hooks/useParallax'
 import {
-  AreaChart,
   Area,
   BarChart,
   Bar,
@@ -13,9 +12,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
@@ -23,9 +19,6 @@ import {
   Radar,
   ComposedChart,
   Legend,
-  ScatterChart,
-  Scatter,
-  ZAxis
 } from 'recharts'
 
 // ROI & Revenue Impact Data
@@ -107,7 +100,6 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 function Performance() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [, setActiveIndex] = useState(0)
   const parallax = useParallax({ speed: 0.3 })
   
   // Counter animations for Business Value KPIs
@@ -133,9 +125,6 @@ function Performance() {
     return () => observer.disconnect()
   }, [])
 
-  const onPieEnter = (_: any, index: number) => {
-    setActiveIndex(index)
-  }
 
   return (
     <section ref={sectionRef} id="performance" className="py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden"
