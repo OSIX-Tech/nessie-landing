@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function Hero() {
   const heroRef = useRef<HTMLElement>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const elements = heroRef.current?.querySelectorAll('.animate-on-load')
@@ -10,21 +11,35 @@ function Hero() {
         el.classList.add('animate-slide-up')
       }, index * 100)
     })
+
+    // Subtle parallax mouse effect
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX - window.innerWidth / 2) / window.innerWidth
+      const y = (e.clientY - window.innerHeight / 2) / window.innerHeight
+      setMousePosition({ x: x * 10, y: y * 10 })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   return (
     <section ref={heroRef} className="relative min-h-screen w-full flex items-center overflow-hidden py-12 md:py-20">
-      {/* Background gradient orbs - full width */}
+      {/* Premium layered background with subtle depth */}
       <div className="absolute inset-0 w-full">
-        <div className="absolute top-1/4 -left-1/4 w-[400px] md:w-[600px] lg:w-[800px] h-[400px] md:h-[600px] lg:h-[800px] rounded-full opacity-[0.15]"
+        <div className="absolute top-1/4 -left-1/4 w-[400px] md:w-[600px] lg:w-[800px] h-[400px] md:h-[600px] lg:h-[800px] rounded-full opacity-[0.12]"
              style={{ 
                background: 'radial-gradient(circle, rgb(var(--color-gray-400)) 0%, transparent 60%)',
-               filter: 'blur(80px)'
+               filter: 'blur(80px)',
+               transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`,
+               transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
              }} />
-        <div className="absolute bottom-0 -right-1/4 w-[500px] md:w-[800px] lg:w-[1000px] h-[500px] md:h-[800px] lg:h-[1000px] rounded-full opacity-[0.08]"
+        <div className="absolute bottom-0 -right-1/4 w-[500px] md:w-[800px] lg:w-[1000px] h-[500px] md:h-[800px] lg:h-[1000px] rounded-full opacity-[0.06]"
              style={{ 
                background: 'radial-gradient(circle, rgb(var(--color-black)) 0%, transparent 60%)',
-               filter: 'blur(100px)'
+               filter: 'blur(100px)',
+               transform: `translate(${-mousePosition.x * 0.3}px, ${-mousePosition.y * 0.3}px)`,
+               transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
              }} />
       </div>
 
@@ -55,109 +70,311 @@ function Hero() {
                 de última generación. Sin configuración compleja.
               </p>
               
-              {/* CTA Buttons */}
+              {/* Premium CTA Buttons with enhanced interactions */}
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 animate-on-load opacity-0">
-                <a href="#" 
-                   className="group btn-primary inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-sm md:text-base">
-                  Empezar ahora
-                  <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" 
+                <a href="#wishlist" 
+                   onClick={(e) => {
+                     e.preventDefault()
+                     document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
+                   }}
+                   className="group btn-primary inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-sm md:text-base relative overflow-hidden"
+                   style={{
+                     boxShadow: '0 4px 14px 0 rgba(0, 0, 0, 0.1)',
+                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                   }}>
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+                       style={{
+                         background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)'
+                       }}></div>
+                  <span className="relative font-medium">Empezar ahora</span>
+                  <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 relative" 
                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                           d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
-                <a href="#" 
-                   className="btn-secondary inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-sm md:text-base group">
-                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <a href="#features" 
+                   onClick={(e) => {
+                     e.preventDefault()
+                     document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+                   }}
+                   className="btn-secondary inline-flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-sm md:text-base group relative"
+                   style={{
+                     borderWidth: '1.5px',
+                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                   }}>
+                  <svg className="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                   </svg>
-                  Ver demo 
+                  <span className="font-medium">Ver demo</span>
                 </a>
               </div>
             </div>
 
-            {/* Right visual - Abstract geometric composition */}
-            <div className="relative h-[400px] md:h-[500px] lg:h-[600px] hidden md:flex items-center justify-center">
-              <div className="relative w-full max-w-[600px] h-full">
-                {/* Large circle */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[350px] lg:w-[400px] h-[250px] md:h-[350px] lg:h-[400px] rounded-full"
-                     style={{ 
-                       background: 'radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%)',
-                       animation: 'pulse 4s ease-in-out infinite'
-                     }}></div>
+            {/* Right visual - Premium floating cards */}
+            <div className="relative h-[500px] md:h-[600px] lg:h-[700px] hidden md:flex items-center justify-end pr-4 lg:pr-8">
+              <div className="relative w-full max-w-[700px] h-full flex items-center justify-center group/cards"
+                   style={{ 
+                     perspective: '1400px',
+                     perspectiveOrigin: '50% 40%',
+                     transform: 'translateZ(0)',
+                     transformStyle: 'preserve-3d'
+                   }}>
                 
-                {/* Rotating ring */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] md:w-[300px] lg:w-[350px] h-[220px] md:h-[300px] lg:h-[350px] rounded-full"
-                     style={{ 
-                       border: '2px solid rgba(0, 0, 0, 0.1)',
-                       animation: 'rotate 20s linear infinite'
-                     }}></div>
-                
-                {/* Center logo */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-2xl flex items-center justify-center p-3 md:p-4"
-                       style={{ 
-                         background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-700)) 100%)',
-                         boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
-                         animation: 'float 6s ease-in-out infinite'
+                {/* Screenshot 1 - Dashboard/Home */}
+                <div className="absolute group/card hover:!z-10"
+                     style={{
+                       width: '500px',
+                       height: '310px',
+                       transform: 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-100px) translateX(-70px) translateY(50px)',
+                       transformStyle: 'preserve-3d',
+                       transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                       willChange: 'transform, filter',
+                       zIndex: 1
+                     }}>
+                  <div className="relative w-full h-full"
+                       style={{
+                         transform: 'translateZ(0)',
+                         transition: 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)'
                        }}>
-                    <img src="/logo_w.png" alt="Nessie Logo" className="w-full h-full object-contain" />
+                    {/* Glow effect */}
+                    <div className="absolute -inset-4 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"
+                         style={{
+                           background: 'radial-gradient(circle at center, rgba(99, 102, 241, 0.15), transparent 70%)',
+                           filter: 'blur(20px)'
+                         }} />
+                    
+                    {/* Card container */}
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover/cards:opacity-30 group-hover/card:!opacity-100"
+                         style={{
+                           background: 'linear-gradient(145deg, rgba(25, 25, 30, 0.95) 0%, rgba(35, 35, 42, 0.95) 100%)',
+                           border: '1px solid rgba(255, 255, 255, 0.1)',
+                           boxShadow: `
+                             0 50px 100px -20px rgba(0, 0, 0, 0.5),
+                             0 30px 60px -30px rgba(0, 0, 0, 0.6),
+                             0 10px 20px -10px rgba(0, 0, 0, 0.7),
+                             inset 0 1px 0 rgba(255, 255, 255, 0.08)
+                           `,
+                           opacity: 0.65,
+                           filter: 'brightness(0.92) saturate(0.9) contrast(1.05)',
+                           transition: 'all 0.6s ease'
+                         }}
+                         onMouseEnter={(e) => {
+                           e.currentTarget.style.opacity = '1'
+                           e.currentTarget.style.filter = 'brightness(1.1) saturate(1.15) contrast(1.1)'
+                           e.currentTarget.style.boxShadow = `
+                             0 32px 64px rgba(0, 0, 0, 0.5),
+                             0 16px 32px rgba(0, 0, 0, 0.4),
+                             inset 0 2px 0 rgba(255, 255, 255, 0.1),
+                             inset 0 -2px 0 rgba(0, 0, 0, 0.4)
+                           `
+                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-2deg) rotateY(8deg) rotateZ(-1deg) translateZ(-20px) translateX(-90px) translateY(-30px) scale(1.03)'
+                         }}
+                         onMouseLeave={(e) => {
+                           e.currentTarget.style.opacity = '0.65'
+                           e.currentTarget.style.filter = 'brightness(0.92) saturate(0.9) contrast(1.05)'
+                           e.currentTarget.style.boxShadow = `
+                             0 24px 48px rgba(0, 0, 0, 0.4),
+                             0 12px 24px rgba(0, 0, 0, 0.3),
+                             inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                             inset 0 -1px 0 rgba(0, 0, 0, 0.3)
+                           `
+                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-100px) translateX(-70px) translateY(50px)'
+                         }}>
+                      {/* Screenshot */}
+                      <div className="relative w-full h-full">
+                        <img src="/nessieb.png" 
+                             alt="Nessie Dashboard" 
+                             className="w-full h-full object-cover object-top"
+                             loading="lazy"
+                             onError={(e) => {
+                               const target = e.target as HTMLImageElement
+                               target.style.display = 'none'
+                               if (target.parentElement) {
+                                 target.parentElement.innerHTML = `
+                                   <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(40, 40, 45, 1) 0%, rgba(30, 30, 35, 1) 100%);">
+                                     <div class="text-gray-500 text-6xl opacity-20">📊</div>
+                                   </div>
+                                 `
+                               }
+                             }}/>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Orbiting dots */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[380px] lg:w-[450px] h-[280px] md:h-[380px] lg:h-[450px]"
-                     style={{ animation: 'rotate 15s linear infinite reverse' }}>
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 md:w-2.5 lg:w-3 h-2 md:h-2.5 lg:h-3 rounded-full"
-                       style={{ background: 'rgb(var(--color-black))' }}></div>
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 md:w-2.5 lg:w-3 h-2 md:h-2.5 lg:h-3 rounded-full"
-                       style={{ background: 'rgb(var(--color-gray-500))' }}></div>
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 md:w-2.5 lg:w-3 h-2 md:h-2.5 lg:h-3 rounded-full"
-                       style={{ background: 'rgb(var(--color-gray-700))' }}></div>
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 md:w-2.5 lg:w-3 h-2 md:h-2.5 lg:h-3 rounded-full"
-                       style={{ background: 'rgb(var(--color-gray-300))' }}></div>
+                {/* Screenshot 2 - Search/Features */}
+                <div className="absolute group/card hover:!z-10"
+                     style={{
+                       width: '540px',
+                       height: '335px',
+                       transform: 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-50px) translateX(0px) translateY(35px)',
+                       transformStyle: 'preserve-3d',
+                       transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                       willChange: 'transform, filter',
+                       zIndex: 2
+                     }}>
+                  <div className="relative w-full h-full"
+                       style={{
+                         transform: 'translateZ(0)',
+                         transition: 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)'
+                       }}>
+                    {/* Glow effect */}
+                    <div className="absolute -inset-4 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"
+                         style={{
+                           background: 'radial-gradient(circle at center, rgba(236, 72, 153, 0.15), transparent 70%)',
+                           filter: 'blur(20px)'
+                         }} />
+                    
+                    {/* Card container */}
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover/cards:opacity-30 group-hover/card:!opacity-100"
+                         style={{
+                           background: 'linear-gradient(145deg, rgba(30, 30, 36, 0.96) 0%, rgba(40, 40, 48, 0.96) 100%)',
+                           border: '1px solid rgba(255, 255, 255, 0.12)',
+                           boxShadow: `
+                             0 55px 110px -20px rgba(0, 0, 0, 0.55),
+                             0 35px 70px -30px rgba(0, 0, 0, 0.65),
+                             0 15px 30px -10px rgba(0, 0, 0, 0.75),
+                             inset 0 1px 0 rgba(255, 255, 255, 0.1)
+                           `,
+                           opacity: 0.72,
+                           filter: 'brightness(0.96) saturate(0.95) contrast(1.08)',
+                           transition: 'all 0.6s ease'
+                         }}
+                         onMouseEnter={(e) => {
+                           e.currentTarget.style.opacity = '1'
+                           e.currentTarget.style.filter = 'brightness(1.12) saturate(1.2) contrast(1.12)'
+                           e.currentTarget.style.boxShadow = `
+                             0 36px 72px rgba(0, 0, 0, 0.55),
+                             0 18px 36px rgba(0, 0, 0, 0.45),
+                             inset 0 2px 0 rgba(255, 255, 255, 0.12),
+                             inset 0 -2px 0 rgba(0, 0, 0, 0.45)
+                           `
+                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(0deg) rotateY(6deg) rotateZ(-1deg) translateZ(20px) translateX(-10px) translateY(-45px) scale(1.04)'
+                         }}
+                         onMouseLeave={(e) => {
+                           e.currentTarget.style.opacity = '0.72'
+                           e.currentTarget.style.filter = 'brightness(0.96) saturate(0.95) contrast(1.08)'
+                           e.currentTarget.style.boxShadow = `
+                             0 28px 56px rgba(0, 0, 0, 0.45),
+                             0 14px 28px rgba(0, 0, 0, 0.35),
+                             inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                             inset 0 -1px 0 rgba(0, 0, 0, 0.35)
+                           `
+                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(-50px) translateX(0px) translateY(35px)'
+                         }}>
+                      {/* Screenshot */}
+                      <div className="relative w-full h-full">
+                        <img src="/nessiebb.jpg" 
+                             alt="Nessie Search Interface" 
+                             className="w-full h-full object-cover object-top"
+                             loading="lazy"
+                             onError={(e) => {
+                               const target = e.target as HTMLImageElement
+                               target.style.display = 'none'
+                               if (target.parentElement) {
+                                 target.parentElement.innerHTML = `
+                                   <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(35, 35, 40, 1) 0%, rgba(25, 25, 30, 1) 100%);">
+                                     <div class="text-gray-500 text-6xl opacity-20">🔍</div>
+                                   </div>
+                                 `
+                               }
+                             }}/>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Grid pattern */}
-                <div className="absolute inset-0 opacity-[0.03]"
+                {/* Screenshot 3 - Analytics/AI */}
+                <div className="absolute group/card hover:!z-10"
                      style={{
-                       backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 39px, rgb(var(--color-black)) 39px, rgb(var(--color-black)) 40px),
-                                         repeating-linear-gradient(90deg, transparent, transparent 39px, rgb(var(--color-black)) 39px, rgb(var(--color-black)) 40px)`
-                     }}></div>
+                       width: '580px',
+                       height: '360px',
+                       transform: 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(0px) translateX(70px) translateY(20px)',
+                       transformStyle: 'preserve-3d',
+                       transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                       willChange: 'transform, filter',
+                       zIndex: 3
+                     }}>
+                  <div className="relative w-full h-full"
+                       style={{
+                         transform: 'translateZ(0)',
+                         transition: 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)'
+                       }}>
+                    {/* Glow effect */}
+                    <div className="absolute -inset-4 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"
+                         style={{
+                           background: 'radial-gradient(circle at center, rgba(34, 211, 238, 0.15), transparent 70%)',
+                           filter: 'blur(20px)'
+                         }} />
+                    
+                    {/* Card container with glass effect */}
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover/cards:opacity-30 group-hover/card:!opacity-100"
+                         style={{
+                           background: 'linear-gradient(145deg, rgba(35, 35, 42, 0.98) 0%, rgba(45, 45, 54, 0.98) 100%)',
+                           border: '1px solid rgba(255, 255, 255, 0.15)',
+                           boxShadow: `
+                             0 60px 120px -20px rgba(0, 0, 0, 0.6),
+                             0 40px 80px -30px rgba(0, 0, 0, 0.7),
+                             0 20px 40px -10px rgba(0, 0, 0, 0.8),
+                             inset 0 1px 0 rgba(255, 255, 255, 0.12)
+                           `,
+                           opacity: 0.8,
+                           filter: 'brightness(1.02) saturate(1.05) contrast(1.1)',
+                           transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                           backdropFilter: 'blur(12px)'
+                         }}
+                         onMouseEnter={(e) => {
+                           e.currentTarget.style.opacity = '1'
+                           e.currentTarget.style.filter = 'brightness(1.15) saturate(1.25) contrast(1.15)'
+                           e.currentTarget.style.boxShadow = `
+                             0 40px 80px rgba(0, 0, 0, 0.6),
+                             0 20px 40px rgba(0, 0, 0, 0.5),
+                             inset 0 2px 0 rgba(255, 255, 255, 0.15),
+                             inset 0 -2px 0 rgba(0, 0, 0, 0.5)
+                           `
+                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(2deg) rotateY(4deg) rotateZ(0deg) translateZ(80px) translateX(60px) translateY(-70px) scale(1.05)'
+                           e.currentTarget.parentElement.parentElement.style.zIndex = '20'
+                         }}
+                         onMouseLeave={(e) => {
+                           e.currentTarget.style.opacity = '0.8'
+                           e.currentTarget.style.filter = 'brightness(1.02) saturate(1.05) contrast(1.1)'
+                           e.currentTarget.style.boxShadow = `
+                             0 32px 64px rgba(0, 0, 0, 0.5),
+                             0 16px 32px rgba(0, 0, 0, 0.4),
+                             inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                             inset 0 -1px 0 rgba(0, 0, 0, 0.4)
+                           `
+                           e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-8deg) rotateY(10deg) rotateZ(-2deg) translateZ(0px) translateX(70px) translateY(20px)'
+                           e.currentTarget.parentElement.parentElement.style.zIndex = '3'
+                         }}>
+                      {/* Screenshot with reflection */}
+                      <div className="relative w-full h-full">
+                        <img src="/nessieebbb.jpg" 
+                             alt="Nessie Analytics Dashboard" 
+                             className="w-full h-full object-cover object-top"
+                             loading="lazy"
+                             onError={(e) => {
+                               const target = e.target as HTMLImageElement
+                               target.style.display = 'none'
+                               if (target.parentElement) {
+                                 target.parentElement.innerHTML = `
+                                   <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(38, 38, 43, 1) 0%, rgba(28, 28, 33, 1) 100%);">
+                                     <div class="text-gray-500 text-6xl opacity-20">🤖</div>
+                                   </div>
+                                 `
+                               }
+                             }}/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) rotate(-1deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(1deg);
-          }
-        }
-        @keyframes rotate {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        @keyframes pulse {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.03;
-          }
-          50% {
-            transform: scale(1.1);
-            opacity: 0.05;
-          }
-        }
-      `}</style>
     </section>
   )
 }
