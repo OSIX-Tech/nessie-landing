@@ -49,16 +49,22 @@ function Navbar() {
       }`}
       style={{
         background: isScrolled 
-          ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))'
+          ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95))'
           : 'transparent',
-        borderColor: isScrolled ? 'rgba(0, 0, 0, 0.06)' : 'transparent',
-        boxShadow: isScrolled ? '0 1px 20px rgba(0, 0, 0, 0.05)' : 'none'
+        borderColor: isScrolled ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
+        boxShadow: isScrolled ? '0 1px 0 rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.02)' : 'none',
+        backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none'
       }}>
         <div className="w-full px-6 md:px-12">
           <div className="flex justify-between items-center lg:justify-center">
             {/* Logo for mobile */}
             <div className="lg:hidden">
-              <img src="/logo.png" alt="Nessie" className="h-8 w-8" />
+              <div className="h-8 w-auto flex items-center">
+                <span className="text-xl font-bold" style={{ color: 'rgb(var(--color-black))' }}>
+                  Nessie
+                </span>
+              </div>
             </div>
             
             {/* Desktop Navigation */}
@@ -71,23 +77,45 @@ function Navbar() {
               ].map((item, i) => (
                 <a key={i}
                    href={item.href}
-                   className="text-sm font-medium transition-all duration-300 hover:opacity-60"
+                   onClick={(e) => {
+                     e.preventDefault()
+                     const target = item.href === '#' ? 'top' : item.href.slice(1)
+                     if (target === 'top') {
+                       window.scrollTo({ top: 0, behavior: 'smooth' })
+                     } else {
+                       document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
+                     }
+                   }}
+                   className="text-sm font-medium transition-all duration-300 hover:opacity-70 relative group"
                    style={{ 
-                     color: 'rgb(var(--color-gray-700))'
+                     color: 'rgb(var(--color-gray-700))',
+                     letterSpacing: '-0.01em'
                    }}>
                   {item.label}
+                  {/* Premium hover underline */}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] transition-all duration-300 group-hover:w-full"
+                        style={{ background: 'rgb(var(--color-gray-400))' }}></span>
                 </a>
               ))}
               
-              {/* Desktop CTA Button */}
-              <a href="#"
-                 className="ml-4 px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 hover:scale-105"
+              {/* Premium Desktop CTA Button */}
+              <a href="#wishlist"
+                 onClick={(e) => {
+                   e.preventDefault()
+                   document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
+                 }}
+                 className="ml-4 px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 hover:scale-105 relative overflow-hidden group"
                  style={{
                    background: 'rgb(var(--color-black))',
                    color: 'rgb(var(--color-white))',
-                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
+                   boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.08)'
                  }}>
-                Probar gratis
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+                     style={{
+                       background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)'
+                     }}></div>
+                <span className="relative">Probar gratis</span>
               </a>
             </nav>
             
@@ -146,7 +174,16 @@ function Navbar() {
                 ].map((item, i) => (
                   <a key={i}
                      href={item.href}
-                     onClick={() => setIsMobileMenuOpen(false)}
+                     onClick={(e) => {
+                       e.preventDefault()
+                       setIsMobileMenuOpen(false)
+                       const target = item.href === '#' ? 'top' : item.href.slice(1)
+                       if (target === 'top') {
+                         window.scrollTo({ top: 0, behavior: 'smooth' })
+                       } else {
+                         document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
+                       }
+                     }}
                      className="block py-4 text-2xl font-medium transition-all duration-300 hover:translate-x-2"
                      style={{ 
                        color: 'rgb(var(--color-gray-900))'

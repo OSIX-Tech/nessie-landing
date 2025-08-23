@@ -1,8 +1,12 @@
 
-const plans = [
+import { useState } from 'react'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
+
+const plansData = [
   {
     name: 'Starter',
     price: '299',
+    priceAnnual: '239',
     period: '/mes',
     description: 'Perfecto para equipos pequeños',
     features: [
@@ -19,6 +23,7 @@ const plans = [
   {
     name: 'Professional',
     price: '999',
+    priceAnnual: '799',
     period: '/mes',
     description: 'Para empresas en crecimiento',
     features: [
@@ -38,6 +43,7 @@ const plans = [
   {
     name: 'Enterprise',
     price: 'Custom',
+    priceAnnual: 'Custom',
     period: '',
     description: 'Soluciones a medida',
     features: [
@@ -56,8 +62,11 @@ const plans = [
 ]
 
 function Pricing() {
+  const [isAnnual, setIsAnnual] = useState(false)
+  const sectionRef = useScrollAnimation()
+  
   return (
-    <section id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24" style={{ background: 'rgb(var(--color-gray-50))' }}>
+    <section ref={sectionRef} id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0" style={{ background: 'rgb(var(--color-gray-50))' }}>
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20">
@@ -79,27 +88,47 @@ function Pricing() {
           </p>
         </div>
 
-        {/* Pricing toggle */}
+        {/* Premium Pricing toggle with hover effects */}
         <div className="flex justify-center mb-8 md:mb-16">
-          <div className="inline-flex items-center p-1.5 md:p-2 rounded-full"
+          <div className="relative inline-flex items-center p-1 md:p-1.5 rounded-full"
                style={{ 
-                 background: 'rgb(var(--color-white))',
-                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+                 background: 'linear-gradient(135deg, rgb(var(--color-gray-100)) 0%, rgb(var(--color-white)) 100%)',
+                 boxShadow: `
+                   0 10px 30px rgba(0, 0, 0, 0.08),
+                   inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                   inset 0 -1px 0 rgba(0, 0, 0, 0.05)
+                 `
                }}>
-            <button className="px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all text-xs md:text-sm"
+            {/* Sliding background indicator */}
+            <div className="absolute h-[calc(100%-8px)] md:h-[calc(100%-12px)] top-1 md:top-1.5 rounded-full transition-all duration-500 ease-out"
+                 style={{ 
+                   background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)',
+                   width: 'calc(50% - 4px)',
+                   left: isAnnual ? 'calc(50% + 2px)' : '4px',
+                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                 }}></div>
+            
+            <button 
+                    onClick={() => setIsAnnual(false)}
+                    className="relative z-10 px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all duration-300 text-xs md:text-sm hover:scale-105"
                     style={{ 
-                      background: 'rgb(var(--color-black))',
-                      color: 'rgb(var(--color-white))'
+                      color: !isAnnual ? 'rgb(var(--color-white))' : 'rgb(var(--color-gray-600))'
                     }}>
               Mensual
             </button>
-            <button className="px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all text-xs md:text-sm flex items-center gap-2"
-                    style={{ color: 'rgb(var(--color-gray-600))' }}>
+            <button 
+                    onClick={() => setIsAnnual(true)}
+                    className="relative z-10 px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all duration-300 text-xs md:text-sm flex items-center gap-2 hover:scale-105"
+                    style={{ 
+                      color: isAnnual ? 'rgb(var(--color-white))' : 'rgb(var(--color-gray-600))'
+                    }}>
               Anual
               <span className="px-2 py-1 text-xs font-bold rounded-full"
                     style={{ 
-                      background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-600)) 100%)',
-                      color: 'rgb(var(--color-white))'
+                      background: isAnnual 
+                        ? 'rgba(255, 255, 255, 0.2)' 
+                        : 'rgba(0, 0, 0, 0.1)',
+                      color: isAnnual ? 'rgb(var(--color-white))' : 'rgb(var(--color-gray-700))'
                     }}>
                 -20%
               </span>
@@ -109,7 +138,7 @@ function Pricing() {
         
         {/* Pricing cards with fixed height */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {plans.map((plan, index) => (
+          {plansData.map((plan, index) => (
             <div
               key={index}
               className={`relative flex flex-col rounded-2xl md:rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
@@ -160,15 +189,31 @@ function Pricing() {
                     )}
                     <span className="text-4xl md:text-5xl font-bold tracking-tight" 
                           style={{ color: plan.highlight ? 'rgb(var(--color-white))' : 'rgb(var(--color-black))' }}>
-                      {plan.price}
+                      {isAnnual ? plan.priceAnnual : plan.price}
                     </span>
                     {plan.period && (
                       <span className="text-sm" 
                             style={{ color: plan.highlight ? 'rgba(255, 255, 255, 0.5)' : 'rgb(var(--color-gray-500))' }}>
                         {plan.period}
+                        {isAnnual && plan.price !== 'Custom' && (
+                          <span className="ml-1 text-xs opacity-70">(facturado anual)</span>
+                        )}
                       </span>
                     )}
                   </div>
+                  {/* Indicador de ahorro anual */}
+                  {isAnnual && plan.price !== 'Custom' && (
+                    <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                         style={{ 
+                           background: plan.highlight ? 'rgba(255, 255, 255, 0.15)' : 'rgba(16, 185, 129, 0.1)',
+                           color: plan.highlight ? 'rgb(255, 255, 255)' : 'rgb(16, 185, 129)'
+                         }}>
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      Ahorras ${parseInt(plan.price) * 12 - parseInt(plan.priceAnnual) * 12}/año
+                    </div>
+                  )}
                 </div>
                 
                 {/* Features list - flex-grow to fill space */}
@@ -212,9 +257,6 @@ function Pricing() {
             </div>
           ))}
         </div>
-        
-        
-
         
       </div>
     </section>

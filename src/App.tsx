@@ -1,19 +1,29 @@
+import { lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import Features from './components/Features'
-import Performance from './components/Performance'
-import Pricing from './components/Pricing'
-import Wishlist from './components/Wishlist'
+import Footer from './components/Footer'
+
+const Features = lazy(() => import('./components/Features'))
+const Performance = lazy(() => import('./components/Performance'))
+const Pricing = lazy(() => import('./components/Pricing'))
+const Wishlist = lazy(() => import('./components/Wishlist'))
 
 function App() {
   return (
-    <main className="min-h-dvh pb-20 lg:pb-0">
+    <main className="min-h-dvh">
       <Navbar />
       <Hero />
-      <Features />
-      <Performance />
-      <Pricing />
-      <Wishlist />
+      <Suspense fallback={
+        <div className="flex items-center justify-center py-20">
+          <div className="animate-pulse text-gray-400">Cargando...</div>
+        </div>
+      }>
+        <Features />
+        <Performance />
+        <Pricing />
+        <Wishlist />
+      </Suspense>
+      <Footer />
     </main>
   )
 }

@@ -1,3 +1,5 @@
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import FeatureCard3D from './FeatureCard3D'
 
 const features = [
   {
@@ -63,8 +65,10 @@ const features = [
 ]
 
 function Features() {
+  const sectionRef = useScrollAnimation()
+  
   return (
-    <section id="features" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24">
+    <section ref={sectionRef} id="features" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0">
       <div className="max-w-[1400px] mx-auto">
         {/* Section header - centered */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20 lg:mb-24">
@@ -86,125 +90,218 @@ function Features() {
           </p>
         </div>
         
-        {/* Features bento grid */}
+        {/* Features bento grid with 3D cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, index) => (
-            <div key={index} 
-                 className="group relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 transition-all duration-500 hover:scale-[1.02]"
-                 style={{ 
-                   background: 'linear-gradient(135deg, rgb(var(--color-gray-50)) 0%, rgb(var(--color-white)) 100%)',
-                   border: '1px solid rgb(var(--color-gray-200))'
-                 }}>
-              {/* Gradient overlay on hover */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${feature.gradient}`}></div>
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl mb-4 md:mb-6 transition-all duration-500 group-hover:scale-110"
-                     style={{ 
-                       background: 'rgb(var(--color-black))',
-                       color: 'rgb(var(--color-white))'
-                     }}>
-                  <div className="group-hover:rotate-12 transition-transform duration-500">
-                    {feature.icon}
-                  </div>
-                </div>
-                
-                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-500 group-hover:text-white" 
-                    style={{ color: 'rgb(var(--color-black))' }}>
-                  {feature.title}
-                </h3>
-                
-                <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
-                   style={{ color: 'rgb(var(--color-gray-600))' }}>
-                  {feature.description}
-                </p>
-                
-                {/* Arrow indicator */}
-                <div className="mt-4 md:mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                          d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </div>
-              
-              {/* Decorative element */}
-              <div className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full opacity-10 group-hover:scale-150 transition-transform duration-700"
-                   style={{ background: 'rgb(var(--color-black))' }}></div>
-            </div>
+            <FeatureCard3D key={index} feature={feature} index={index} />
           ))}
         </div>
         
-        {/* AI Conversational section - redesigned for full width image */}
+        {/* AI Conversational section - Clean white design */}
         <div className="mt-16 md:mt-24 lg:mt-32">
-          <div className="rounded-2xl md:rounded-3xl overflow-hidden relative py-12 md:py-16"
-               style={{ 
-                 background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
-               }}>
+          <div className="relative py-12 md:py-16">
             {/* Section header centered */}
             <div className="text-center mb-8 md:mb-12 px-4 md:px-6">
               <span className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-bold mb-4 md:mb-6"
                     style={{ 
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      backdropFilter: 'blur(10px)',
-                      color: 'rgb(var(--color-white))'
+                      background: 'rgba(0, 0, 0, 0.05)',
+                      color: 'rgb(var(--color-black))'
                     }}>
                 POWERED BY GPT-4 & CLAUDE 3
               </span>
               
               <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6"
-                  style={{ color: 'rgb(255, 255, 255)' }}>
+                  style={{ color: 'rgb(var(--color-black))' }}>
                 IA conversacional que entiende
                 <br />
-                tu <span style={{ color: 'rgba(255, 255, 255, 0.7)' }}>conocimiento empresarial</span>
+                tu <span className="gradient-text">conocimiento empresarial</span>
               </h3>
               
               <p className="text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
-                 style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                 style={{ color: 'rgb(var(--color-gray-600))' }}>
                 Nessie no solo busca palabras clave. Comprende la intención, 
                 el contexto y las relaciones entre documentos para darte 
                 exactamente lo que necesitas.
               </p>
             </div>
 
-            {/* Full width screenshot without browser frame */}
-            <div className="px-4 md:px-12 lg:px-24 mb-8 md:mb-12">
-              <div className="rounded-xl md:rounded-2xl overflow-hidden mx-auto"
-                   style={{ 
-                     boxShadow: '0 30px 80px rgba(0, 0, 0, 0.5)',
-                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                     maxWidth: '1200px'
-                   }}>
-                <img 
-                  src="/nessie.png" 
-                  alt="Nessie Platform Screenshot"
-                  className="w-full h-auto"
-                  style={{
-                    display: 'block',
-                    maxHeight: '600px',
-                    objectFit: 'contain'
-                  }}
-                />
+            {/* Clean white screenshot frame */}
+            <div className="px-4 md:px-8 lg:px-12 mb-8 md:mb-12">
+              {/* Small title */}
+              <p className="text-center text-sm font-medium mb-6" 
+                 style={{ color: 'rgb(var(--color-gray-500))' }}>
+                Interfaz intuitiva y poderosa
+              </p>
+              
+              <div className="mx-auto max-w-6xl">
+                {/* Clean macOS-style window frame */}
+                <div className="rounded-xl md:rounded-2xl overflow-hidden"
+                     style={{ 
+                       background: 'rgb(var(--color-white))',
+                       boxShadow: `
+                         0 30px 60px rgba(0, 0, 0, 0.12),
+                         0 10px 20px rgba(0, 0, 0, 0.08)
+                       `,
+                       border: '1px solid rgb(var(--color-gray-200))'
+                     }}>
+                  {/* Window header bar */}
+                  <div className="flex items-center gap-2 px-4 py-3"
+                       style={{ 
+                         background: 'rgb(var(--color-gray-50))',
+                         borderBottom: '1px solid rgb(var(--color-gray-200))'
+                       }}>
+                    {/* Traffic lights */}
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full" style={{ background: '#ff5f57' }}></div>
+                      <div className="w-3 h-3 rounded-full" style={{ background: '#ffbd2e' }}></div>
+                      <div className="w-3 h-3 rounded-full" style={{ background: '#28ca42' }}></div>
+                    </div>
+                    {/* Title bar */}
+                    <div className="flex-1 text-center">
+                      <span className="text-xs font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
+                        Nessie AI - Knowledge Platform
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Content area with subtle animation */}
+                  <div className="relative overflow-hidden"
+                       style={{ 
+                         background: 'linear-gradient(135deg, rgb(var(--color-gray-50)) 0%, rgb(var(--color-white)) 100%)'
+                       }}>
+                    <img 
+                      src="/nessie.png" 
+                      alt="Nessie Platform Interface"
+                      className="w-full h-auto block"
+                      style={{
+                        maxHeight: '600px',
+                        objectFit: 'cover'
+                      }}
+                      onError={(e) => {
+                        // Premium fallback UI
+                        e.currentTarget.style.display = 'none'
+                        e.currentTarget.parentElement!.innerHTML = `
+                          <div style="
+                            width: 100%;
+                            height: 500px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.05) 100%);
+                            position: relative;
+                            overflow: hidden;
+                          ">
+                            <!-- Animated background pattern -->
+                            <div style="
+                              position: absolute;
+                              inset: 0;
+                              opacity: 0.03;
+                              background-image: repeating-linear-gradient(
+                                45deg,
+                                transparent,
+                                transparent 35px,
+                                rgba(0, 0, 0, 0.03) 35px,
+                                rgba(0, 0, 0, 0.03) 70px
+                              );
+                            "></div>
+                            
+                            <!-- Content placeholder -->
+                            <div style="
+                              width: 80%;
+                              max-width: 400px;
+                              space-y: 16px;
+                              z-index: 1;
+                            ">
+                              <!-- Search bar mockup -->
+                              <div style="
+                                height: 48px;
+                                background: rgba(0, 0, 0, 0.05);
+                                border-radius: 24px;
+                                display: flex;
+                                align-items: center;
+                                padding: 0 24px;
+                                margin-bottom: 24px;
+                              ">
+                                <div style="
+                                  width: 20px;
+                                  height: 20px;
+                                  border: 2px solid rgba(0, 0, 0, 0.2);
+                                  border-radius: 50%;
+                                  margin-right: 12px;
+                                "></div>
+                                <div style="
+                                  height: 8px;
+                                  width: 120px;
+                                  background: rgba(0, 0, 0, 0.08);
+                                  border-radius: 4px;
+                                "></div>
+                              </div>
+                              
+                              <!-- Results mockup -->
+                              <div style="space-y: 12px;">
+                                <div style="
+                                  height: 60px;
+                                  background: rgba(0, 0, 0, 0.03);
+                                  border-radius: 12px;
+                                  padding: 16px;
+                                  margin-bottom: 12px;
+                                ">
+                                  <div style="height: 8px; width: 60%; background: rgba(0, 0, 0, 0.08); border-radius: 4px; margin-bottom: 8px;"></div>
+                                  <div style="height: 6px; width: 90%; background: rgba(0, 0, 0, 0.05); border-radius: 3px;"></div>
+                                </div>
+                                <div style="
+                                  height: 60px;
+                                  background: rgba(0, 0, 0, 0.03);
+                                  border-radius: 12px;
+                                  padding: 16px;
+                                  margin-bottom: 12px;
+                                ">
+                                  <div style="height: 8px; width: 50%; background: rgba(0, 0, 0, 0.08); border-radius: 4px; margin-bottom: 8px;"></div>
+                                  <div style="height: 6px; width: 85%; background: rgba(0, 0, 0, 0.05); border-radius: 3px;"></div>
+                                </div>
+                                <div style="
+                                  height: 60px;
+                                  background: rgba(0, 0, 0, 0.03);
+                                  border-radius: 12px;
+                                  padding: 16px;
+                                ">
+                                  <div style="height: 8px; width: 70%; background: rgba(0, 0, 0, 0.08); border-radius: 4px; margin-bottom: 8px;"></div>
+                                  <div style="height: 6px; width: 80%; background: rgba(0, 0, 0, 0.05); border-radius: 3px;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <!-- Loading indicator -->
+                            <div style="
+                              position: absolute;
+                              bottom: 20px;
+                              left: 50%;
+                              transform: translateX(-50%);
+                              display: flex;
+                              gap: 4px;
+                            ">
+                              <div style="width: 8px; height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+                              <div style="width: 8px; height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; animation: pulse 1.5s infinite 0.3s;"></div>
+                              <div style="width: 8px; height: 8px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; animation: pulse 1.5s infinite 0.6s;"></div>
+                            </div>
+                          </div>
+                        `
+                      }}
+                    />
+                    
+                    {/* Subtle reflection effect */}
+                    <div className="absolute inset-0 pointer-events-none"
+                         style={{
+                           background: 'linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%)',
+                           transform: 'translateX(-100%)',
+                           animation: 'shimmer 8s infinite'
+                         }}></div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Stats below image */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto px-4 md:px-6">
-              {[
-                { metric: '0.3s', label: 'Tiempo de respuesta' },
-                { metric: '99.9%', label: 'Precisión' },
-                { metric: '50+', label: 'Idiomas soportados' },
-                { metric: '∞', label: 'Documentos procesados' }
-              ].map((item, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold mb-1" 
-                       style={{ color: 'rgb(255, 255, 255)' }}>{item.metric}</div>
-                  <div className="text-xs md:text-sm" 
-                       style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{item.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

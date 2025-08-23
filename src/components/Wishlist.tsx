@@ -1,13 +1,75 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 function Wishlist() {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const [emailError, setEmailError] = useState('')
+  const sectionRef = useScrollAnimation()
+  
+  // Countdown to December 1, 2025
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  })
+  
+  useEffect(() => {
+    const targetDate = new Date('2025-12-01T00:00:00')
+    
+    const updateCountdown = () => {
+      const now = new Date()
+      const difference = targetDate.getTime() - now.getTime()
+      
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+        
+        setTimeLeft({ days, hours, minutes, seconds })
+      }
+    }
+    
+    updateCountdown()
+    const interval = setInterval(updateCountdown, 1000)
+    
+    return () => clearInterval(interval)
+  }, [])
+
+  const validateCorporateEmail = (email: string) => {
+    const freeEmailProviders = [
+      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 
+      'aol.com', 'icloud.com', 'protonmail.com', 'mail.com',
+      'yandex.com', 'zoho.com'
+    ]
+    
+    const emailDomain = email.split('@')[1]?.toLowerCase()
+    
+    if (!emailDomain) {
+      return 'Email inválido'
+    }
+    
+    if (freeEmailProviders.includes(emailDomain)) {
+      return 'Por favor, usa tu email corporativo'
+    }
+    
+    return ''
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    const error = validateCorporateEmail(email)
+    if (error) {
+      setEmailError(error)
+      return
+    }
+    
     if (email) {
+      setEmailError('')
       setIsSubscribed(true)
       setTimeout(() => {
         setIsSubscribed(false)
@@ -17,7 +79,7 @@ function Wishlist() {
   }
 
   return (
-    <section id="wishlist" className="py-16 md:py-24 relative overflow-hidden">
+    <section ref={sectionRef} id="wishlist" className="py-16 md:py-24 relative overflow-hidden opacity-0">
       {/* Background gradient */}
       <div className="absolute inset-0"
            style={{
@@ -79,7 +141,10 @@ function Wishlist() {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                if (emailError) setEmailError('')
+              }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="Ingresa tu email corporativo"
@@ -116,8 +181,44 @@ function Wishlist() {
               )}
             </button>
           </div>
+          {emailError && (
+            <p className="text-sm text-red-500 mt-2 text-center">{emailError}</p>
+          )}
         </form>
 
+        {/* Integrated Countdown - Subtle and cohesive */}
+        <div className="mb-8">
+          {/* Small countdown that doesn't dominate */}
+          <div className="flex justify-center items-center gap-6 md:gap-8 mb-8">
+            {[
+              { value: timeLeft.days, label: 'días' },
+              { value: timeLeft.hours, label: 'horas' },
+              { value: timeLeft.minutes, label: 'min' }
+            ].map((item, i) => (
+              <div key={i} className="text-center">
+                <div className="text-2xl md:text-3xl font-light"
+                     style={{ 
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                       color: 'rgb(var(--color-black))',
+                       fontVariantNumeric: 'tabular-nums'
+                     }}>
+                  {String(item.value).padStart(2, '0')}
+                </div>
+                <div className="text-xs mt-1" 
+                     style={{ color: 'rgb(var(--color-gray-500))' }}>
+                  {item.label}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Subtle date reference */}
+          <p className="text-center text-sm mb-8" 
+             style={{ color: 'rgb(var(--color-gray-600))' }}>
+            Lanzamiento el 1 de diciembre de 2025
+          </p>
+        </div>
+        
         {/* Stats */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 flex-wrap">
           <div className="flex items-center gap-2">

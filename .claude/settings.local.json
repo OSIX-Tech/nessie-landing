@@ -1,8 +1,11 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
-      "Bash(git init:*)"
-    ]
+      "Bash(git init:*)",
+      "Bash(rm:*)",
+      "Bash(git checkout:*)",
+      "Bash(git stash:*)"
+    ],
+    "defaultMode": "acceptEdits"
   }
 }

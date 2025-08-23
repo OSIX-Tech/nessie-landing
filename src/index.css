@@ -3,18 +3,18 @@
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  /* macOS-inspired monochrome palette */
+  /* Premium monochrome palette with subtle warmth */
   --color-white: 255 255 255;
-  --color-gray-50: 250 250 250;
-  --color-gray-100: 245 245 245;
-  --color-gray-200: 229 229 229;
-  --color-gray-300: 212 212 212;
-  --color-gray-400: 161 161 161;
-  --color-gray-500: 115 115 115;
-  --color-gray-600: 82 82 82;
-  --color-gray-700: 64 64 64;
-  --color-gray-800: 38 38 38;
-  --color-gray-900: 23 23 23;
+  --color-gray-50: 250 250 249;
+  --color-gray-100: 245 245 244;
+  --color-gray-200: 231 229 228;
+  --color-gray-300: 214 211 209;
+  --color-gray-400: 168 162 158;
+  --color-gray-500: 120 113 108;
+  --color-gray-600: 87 83 78;
+  --color-gray-700: 68 64 60;
+  --color-gray-800: 41 37 36;
+  --color-gray-900: 28 25 23;
   --color-black: 0 0 0;
   
   /* Legacy color mappings for compatibility */
@@ -23,20 +23,71 @@
   --color-navy-800: 64 64 64;
   --color-cyan-300: 161 161 161;
   --color-emerald-400: 115 115 115;
+  --color-emerald-500: 16 185 129;
+  --color-green-600: 22 163 74;
 
   --color-text-primary: 23 23 23;
   --color-text-secondary: 115 115 115;
+  
+  /* Premium easing functions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 :root {
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Modern clean background */
+/* Premium clean background with subtle grain */
 body {
   background: rgb(var(--color-white));
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle grain texture for depth */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.015;
+  z-index: 100;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* Premium scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-gray-50));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-gray-400));
+  border-radius: 10px;
+  border: 2px solid rgb(var(--color-gray-50));
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-gray-600));
+}
+
+/* Premium selection */
+::selection {
+  background: rgba(0, 0, 0, 0.99);
+  color: rgb(var(--color-white));
 }
 
 /* Modern buttons */
@@ -180,7 +231,7 @@ body {
   color: rgb(var(--color-gray-700));
 }
 
-/* Animations */
+/* Premium Animations */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -203,12 +254,55 @@ body {
   }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .animate-fade-in {
-  animation: fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fade-in 0.8s var(--ease-out-expo) forwards;
 }
 
 .animate-slide-up {
-  animation: slide-up 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slide-up 1s var(--ease-out-expo) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s var(--ease-out-expo) forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
 }
 
 /* Focus styles */
