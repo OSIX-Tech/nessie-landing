@@ -24,7 +24,7 @@ function Hero() {
   }, [])
 
   return (
-    <section ref={heroRef} className="relative min-h-screen w-full flex items-center overflow-hidden py-12 md:py-20">
+    <section ref={heroRef} className="relative min-h-screen w-full flex items-center overflow-hidden py-8 md:py-12">
       {/* Premium layered background with subtle depth */}
       <div className="absolute inset-0 w-full">
         <div className="absolute top-1/4 -left-1/4 w-[400px] md:w-[600px] lg:w-[800px] h-[400px] md:h-[600px] lg:h-[800px] rounded-full opacity-[0.12]"
@@ -170,7 +170,7 @@ function Hero() {
                              inset 0 -2px 0 rgba(0, 0, 0, 0.4)
                            `
                            if (e.currentTarget.parentElement?.parentElement) {
-                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-2deg) rotateY(8deg) rotateZ(-1deg) translateZ(-20px) translateX(-90px) translateY(-30px) scale(1.03)'
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(-2deg) rotateY(8deg) rotateZ(-1deg) translateZ(30px) translateX(-90px) translateY(-30px) scale(1.03)'
                           }
                          }}
                          onMouseLeave={(e) => {
@@ -209,7 +209,7 @@ function Hero() {
                 </div>
 
                 {/* Screenshot 2 - Search/Features */}
-                <div className="absolute group/card hover:!z-10"
+                <div className="absolute group/card hover:!z-20"
                      style={{
                        width: '540px',
                        height: '335px',
@@ -256,7 +256,7 @@ function Hero() {
                              inset 0 -2px 0 rgba(0, 0, 0, 0.45)
                            `
                            if (e.currentTarget.parentElement?.parentElement) {
-                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(0deg) rotateY(6deg) rotateZ(-1deg) translateZ(20px) translateX(-10px) translateY(-45px) scale(1.04)'
+                            e.currentTarget.parentElement.parentElement.style.transform = 'rotateX(0deg) rotateY(6deg) rotateZ(-1deg) translateZ(50px) translateX(-10px) translateY(-45px) scale(1.04)'
                           }
                          }}
                          onMouseLeave={(e) => {
@@ -295,7 +295,7 @@ function Hero() {
                 </div>
 
                 {/* Screenshot 3 - Analytics/AI */}
-                <div className="absolute group/card hover:!z-10"
+                <div className="absolute group/card hover:!z-30"
                      style={{
                        width: '580px',
                        height: '360px',
