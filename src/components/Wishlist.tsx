@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 function Wishlist() {
@@ -7,37 +7,6 @@ function Wishlist() {
   const [isFocused, setIsFocused] = useState(false)
   const [emailError, setEmailError] = useState('')
   const sectionRef = useScrollAnimation()
-  
-  // Countdown to December 1, 2025
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  })
-  
-  useEffect(() => {
-    const targetDate = new Date('2025-12-01T00:00:00')
-    
-    const updateCountdown = () => {
-      const now = new Date()
-      const difference = targetDate.getTime() - now.getTime()
-      
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
-        
-        setTimeLeft({ days, hours, minutes, seconds })
-      }
-    }
-    
-    updateCountdown()
-    const interval = setInterval(updateCountdown, 1000)
-    
-    return () => clearInterval(interval)
-  }, [])
 
   const validateCorporateEmail = (email: string) => {
     const freeEmailProviders = [
@@ -80,23 +49,18 @@ function Wishlist() {
 
   return (
     <section ref={sectionRef} id="wishlist" className="py-16 md:py-24 relative overflow-hidden opacity-0">
-      {/* Background gradient */}
-      <div className="absolute inset-0"
+      {/* Subtle overlay for depth */}
+      <div className="absolute inset-0 opacity-30"
            style={{
-             background: 'linear-gradient(to bottom, rgb(var(--color-white)), rgb(var(--color-gray-50)))'
-           }}>
-        <div className="absolute inset-0 opacity-30"
-             style={{
-               background: 'radial-gradient(circle at center, rgba(0, 0, 0, 0.02) 0%, transparent 70%)'
-             }}></div>
-      </div>
+             background: 'radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%)'
+           }}></div>
 
       <div className="relative max-w-4xl mx-auto px-6 md:px-12 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
              style={{ 
-               background: 'rgba(0, 0, 0, 0.03)',
-               border: '1px solid rgba(0, 0, 0, 0.06)'
+               background: 'rgba(255, 255, 255, 0.1)',
+               border: '1px solid rgba(255, 255, 255, 0.2)'
              }}>
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
@@ -105,18 +69,18 @@ function Wishlist() {
                   style={{ background: 'rgb(var(--color-emerald-500))' }}></span>
           </span>
           <span className="text-xs font-semibold uppercase tracking-wider" 
-                style={{ color: 'rgb(var(--color-gray-700))' }}>
+                style={{ color: 'rgb(var(--color-white))' }}>
             Acceso anticipado
           </span>
         </div>
 
         {/* Heading */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6" 
-            style={{ color: 'rgb(var(--color-black))' }}>
+            style={{ color: 'rgb(var(--color-white))' }}>
           Sé de los primeros
           <br />
           <span style={{
-            background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-500)) 100%)',
+            background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -125,7 +89,7 @@ function Wishlist() {
 
         {/* Description */}
         <p className="text-base md:text-lg lg:text-xl mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed" 
-           style={{ color: 'rgb(var(--color-gray-600))' }}>
+           style={{ color: 'rgb(var(--color-gray-400))' }}>
           Únete a la lista de espera y obtén acceso prioritario cuando lancemos. 
           Sin spam, solo actualizaciones importantes.
         </p>
@@ -186,36 +150,11 @@ function Wishlist() {
           )}
         </form>
 
-        {/* Integrated Countdown - Subtle and cohesive */}
+        {/* Launch date */}
         <div className="mb-8">
-          {/* Small countdown that doesn't dominate */}
-          <div className="flex justify-center items-center gap-6 md:gap-8 mb-8">
-            {[
-              { value: timeLeft.days, label: 'días' },
-              { value: timeLeft.hours, label: 'horas' },
-              { value: timeLeft.minutes, label: 'min' }
-            ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="text-2xl md:text-3xl font-light"
-                     style={{ 
-                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-                       color: 'rgb(var(--color-black))',
-                       fontVariantNumeric: 'tabular-nums'
-                     }}>
-                  {String(item.value).padStart(2, '0')}
-                </div>
-                <div className="text-xs mt-1" 
-                     style={{ color: 'rgb(var(--color-gray-500))' }}>
-                  {item.label}
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Subtle date reference */}
-          <p className="text-center text-sm mb-8" 
-             style={{ color: 'rgb(var(--color-gray-600))' }}>
-            Lanzamiento el 1 de diciembre de 2025
+          <p className="text-center text-sm" 
+             style={{ color: 'rgb(var(--color-gray-500))' }}>
+            Lanzamiento: Diciembre 2025
           </p>
         </div>
         
@@ -231,8 +170,8 @@ function Wishlist() {
                      }}></div>
               ))}
             </div>
-            <span className="text-sm" style={{ color: 'rgb(var(--color-gray-600))' }}>
-              <span className="font-semibold" style={{ color: 'rgb(var(--color-black))' }}>
+            <span className="text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
+              <span className="font-semibold" style={{ color: 'rgb(var(--color-white))' }}>
                 2,847
               </span> personas esperando
             </span>
@@ -244,7 +183,7 @@ function Wishlist() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            <span className="text-sm" style={{ color: 'rgb(var(--color-gray-600))' }}>
+            <span className="text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
               No compartimos tu email
             </span>
           </div>
@@ -255,7 +194,7 @@ function Wishlist() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                     d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span className="text-sm" style={{ color: 'rgb(var(--color-gray-600))' }}>
+            <span className="text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
               Acceso prioritario garantizado
             </span>
           </div>

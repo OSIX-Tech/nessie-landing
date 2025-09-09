@@ -49,10 +49,10 @@ function Navbar() {
       }`}
       style={{
         background: isScrolled 
-          ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95))'
+          ? 'rgba(0, 0, 0, 0.85)'
           : 'transparent',
-        borderColor: isScrolled ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
-        boxShadow: isScrolled ? '0 1px 0 rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.02)' : 'none',
+        borderColor: isScrolled ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+        boxShadow: isScrolled ? '0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 40px rgba(0, 0, 0, 0.3)' : 'none',
         backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none',
         WebkitBackdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none'
       }}>
@@ -61,7 +61,7 @@ function Navbar() {
             {/* Logo for mobile */}
             <div className="lg:hidden">
               <div className="h-8 w-auto flex items-center">
-                <span className="text-xl font-bold" style={{ color: 'rgb(var(--color-black))' }}>
+                <span className="text-xl font-bold" style={{ color: 'rgb(var(--color-white))' }}>
                   Nessie
                 </span>
               </div>
@@ -88,13 +88,13 @@ function Navbar() {
                    }}
                    className="text-sm font-medium transition-all duration-300 hover:opacity-70 relative group"
                    style={{ 
-                     color: 'rgb(var(--color-gray-700))',
+                     color: 'rgb(var(--color-gray-300))',
                      letterSpacing: '-0.01em'
                    }}>
                   {item.label}
                   {/* Premium hover underline */}
                   <span className="absolute -bottom-1 left-0 w-0 h-[1px] transition-all duration-300 group-hover:w-full"
-                        style={{ background: 'rgb(var(--color-gray-400))' }}></span>
+                        style={{ background: 'rgb(var(--color-white))' }}></span>
                 </a>
               ))}
               
@@ -106,8 +106,8 @@ function Navbar() {
                  }}
                  className="ml-4 px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 hover:scale-105 relative overflow-hidden group"
                  style={{
-                   background: 'rgb(var(--color-black))',
-                   color: 'rgb(var(--color-white))',
+                   background: 'rgb(var(--color-white))',
+                   color: 'rgb(var(--color-black))',
                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.08)'
                  }}>
                 {/* Shimmer effect */}
@@ -124,8 +124,8 @@ function Navbar() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden relative z-50 w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300"
               style={{ 
-                background: isMobileMenuOpen ? 'rgb(var(--color-black))' : 'rgba(0, 0, 0, 0.04)',
-                color: isMobileMenuOpen ? 'rgb(var(--color-white))' : 'rgb(var(--color-black))'
+                background: isMobileMenuOpen ? 'rgb(var(--color-white))' : 'rgba(255, 255, 255, 0.1)',
+                color: isMobileMenuOpen ? 'rgb(var(--color-black))' : 'rgb(var(--color-white))'
               }}>
               <div className="relative w-5 h-4 flex flex-col justify-between">
                 <span className={`block h-0.5 w-full transition-all duration-300 origin-left ${
@@ -158,7 +158,7 @@ function Navbar() {
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
-          background: 'rgba(255, 255, 255, 0.98)',
+          background: 'rgba(0, 0, 0, 0.95)',
           backdropFilter: 'blur(20px)',
           boxShadow: '-10px 0 40px rgba(0, 0, 0, 0.1)'
         }}>
@@ -186,7 +186,7 @@ function Navbar() {
                      }}
                      className="block py-4 text-2xl font-medium transition-all duration-300 hover:translate-x-2"
                      style={{ 
-                       color: 'rgb(var(--color-gray-900))'
+                       color: 'rgb(var(--color-white))'
                      }}>
                     {item.label}
                   </a>
@@ -200,8 +200,8 @@ function Navbar() {
                  onClick={() => setIsMobileMenuOpen(false)}
                  className="block w-full text-center px-8 py-4 text-base font-medium rounded-2xl transition-all duration-300"
                  style={{
-                   background: 'rgb(var(--color-black))',
-                   color: 'rgb(var(--color-white))'
+                   background: 'rgb(var(--color-white))',
+                   color: 'rgb(var(--color-black))'
                  }}>
                 Empezar gratis →
               </a>
@@ -210,16 +210,16 @@ function Navbar() {
                  onClick={() => setIsMobileMenuOpen(false)}
                  className="block w-full text-center px-8 py-4 text-base font-medium rounded-2xl transition-all duration-300"
                  style={{
-                   background: 'rgba(0, 0, 0, 0.05)',
-                   color: 'rgb(var(--color-black))'
+                   background: 'rgba(255, 255, 255, 0.1)',
+                   color: 'rgb(var(--color-white))'
                  }}>
                 Ver demo
               </a>
             </div>
             
             {/* Social links or footer info */}
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <p className="text-xs text-center" style={{ color: 'rgb(var(--color-gray-500))' }}>
+            <div className="mt-8 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+              <p className="text-xs text-center" style={{ color: 'rgb(var(--color-gray-400))' }}>
                 © 2024 Nessie. Todos los derechos reservados.
               </p>
             </div>

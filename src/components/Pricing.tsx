@@ -66,23 +66,28 @@ function Pricing() {
   const sectionRef = useScrollAnimation()
   
   return (
-    <section ref={sectionRef} id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0" style={{ background: 'rgb(var(--color-gray-50))' }}>
+    <section ref={sectionRef} id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20">
           <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-semibold mb-4 md:mb-6"
                 style={{ 
-                  background: 'rgba(0, 0, 0, 0.05)',
-                  color: 'rgb(var(--color-black))'
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  color: 'rgb(var(--color-white))'
                 }}>
             PRECIOS
           </span>
-          <h2 className="heading-lg mb-4 md:mb-6" style={{ color: 'rgb(var(--color-black))' }}>
+          <h2 className="heading-lg mb-4 md:mb-6" style={{ color: 'rgb(var(--color-white))' }}>
             Inversión que
             <br />
-            <span className="gradient-text">se paga sola</span>
+            <span style={{
+              background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>se paga sola</span>
           </h2>
-          <p className="text-body">
+          <p className="text-body" style={{ color: 'rgb(var(--color-gray-400))' }}>
             Ahorra horas de búsqueda, reduce duplicación de trabajo 
             y acelera la toma de decisiones desde el día uno.
           </p>
@@ -146,12 +151,12 @@ function Pricing() {
               }`}
               style={{ 
                 background: plan.highlight 
-                  ? 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)' 
-                  : 'rgb(var(--color-white))',
-                border: plan.highlight ? 'none' : '1px solid rgb(var(--color-gray-200))',
+                  ? 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-200)) 100%)' 
+                  : 'rgba(255, 255, 255, 0.05)',
+                border: plan.highlight ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
                 boxShadow: plan.highlight 
-                  ? '0 30px 60px rgba(0, 0, 0, 0.2)' 
-                  : '0 10px 30px rgba(0, 0, 0, 0.05)',
+                  ? '0 30px 60px rgba(255, 255, 255, 0.1)' 
+                  : '0 10px 30px rgba(0, 0, 0, 0.3)',
                 minHeight: '650px'
               }}
             >
@@ -173,27 +178,27 @@ function Pricing() {
                 {/* Header */}
                 <div className="mb-6 md:mb-8">
                   <h3 className="text-xl md:text-2xl font-bold mb-2" 
-                      style={{ color: plan.highlight ? 'rgb(var(--color-white))' : 'rgb(var(--color-black))' }}>
+                      style={{ color: plan.highlight ? 'rgb(var(--color-black))' : 'rgb(var(--color-white))' }}>
                     {plan.name}
                   </h3>
                   <p className="text-sm mb-4 md:mb-6" 
-                     style={{ color: plan.highlight ? 'rgba(255, 255, 255, 0.7)' : 'rgb(var(--color-gray-600))' }}>
+                     style={{ color: plan.highlight ? 'rgb(var(--color-gray-600))' : 'rgb(var(--color-gray-400))' }}>
                     {plan.description}
                   </p>
                   <div className="flex items-baseline gap-2">
                     {plan.price !== 'Custom' && (
                       <span className="text-xs" 
-                            style={{ color: plan.highlight ? 'rgba(255, 255, 255, 0.5)' : 'rgb(var(--color-gray-500))' }}>
+                            style={{ color: plan.highlight ? 'rgb(var(--color-gray-500))' : 'rgb(var(--color-gray-500))' }}>
                         $
                       </span>
                     )}
                     <span className="text-4xl md:text-5xl font-bold tracking-tight" 
-                          style={{ color: plan.highlight ? 'rgb(var(--color-white))' : 'rgb(var(--color-black))' }}>
+                          style={{ color: plan.highlight ? 'rgb(var(--color-black))' : 'rgb(var(--color-white))' }}>
                       {isAnnual ? plan.priceAnnual : plan.price}
                     </span>
                     {plan.period && (
                       <span className="text-sm" 
-                            style={{ color: plan.highlight ? 'rgba(255, 255, 255, 0.5)' : 'rgb(var(--color-gray-500))' }}>
+                            style={{ color: plan.highlight ? 'rgb(var(--color-gray-500))' : 'rgb(var(--color-gray-500))' }}>
                         {plan.period}
                         {isAnnual && plan.price !== 'Custom' && (
                           <span className="ml-1 text-xs opacity-70">(facturado anual)</span>
@@ -232,7 +237,7 @@ function Pricing() {
                         </svg>
                       </div>
                       <span className="text-sm" 
-                            style={{ color: plan.highlight ? 'rgba(255, 255, 255, 0.9)' : 'rgb(var(--color-gray-700))' }}>
+                            style={{ color: plan.highlight ? 'rgb(var(--color-gray-700))' : 'rgb(var(--color-gray-300))' }}>
                         {feature}
                       </span>
                     </li>
@@ -242,11 +247,11 @@ function Pricing() {
                 {/* CTA Button - stays at bottom */}
                 <button className="w-full py-3 md:py-4 px-6 rounded-full text-sm md:text-base font-semibold transition-all hover:scale-[1.02] hover:shadow-xl"
                         style={plan.highlight ? {
-                          background: 'rgb(var(--color-white))',
-                          color: 'rgb(var(--color-black))'
-                        } : {
                           background: 'rgb(var(--color-black))',
                           color: 'rgb(var(--color-white))'
+                        } : {
+                          background: 'rgb(var(--color-white))',
+                          color: 'rgb(var(--color-black))'
                         }}>
                   {plan.cta}
                   {plan.cta === 'Empezar gratis' && ' →'}

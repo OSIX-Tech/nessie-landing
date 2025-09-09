@@ -41,26 +41,25 @@
   text-rendering: optimizeLegibility;
 }
 
-/* Premium clean background with subtle grain */
+/* Premium dark background with 3D depth effect */
 body {
-  background: rgb(var(--color-white));
+  background: 
+    radial-gradient(ellipse at 0% 50%, 
+      rgba(25, 25, 30, 1) 0%,
+      rgba(10, 10, 10, 0.5) 25%,
+      transparent 50%
+    ),
+    radial-gradient(ellipse at 100% 50%, 
+      rgba(25, 25, 30, 1) 0%,
+      rgba(10, 10, 10, 0.5) 25%,
+      transparent 50%
+    ),
+    rgb(0, 0, 0);
+  background-attachment: fixed;
+  color: rgb(var(--color-white));
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-}
-
-/* Subtle grain texture for depth */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.015;
-  z-index: 100;
-  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
 }
 
 /* Premium scrollbar */

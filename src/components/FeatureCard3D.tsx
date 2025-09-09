@@ -54,8 +54,9 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
       ref={cardRef}
       className="group relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 transition-all duration-300"
       style={{ 
-        background: 'linear-gradient(135deg, rgb(var(--color-gray-50)) 0%, rgb(var(--color-white)) 100%)',
-        border: '1px solid rgb(var(--color-gray-200))',
+        background: 'rgba(255, 255, 255, 0.03)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)',
         transformStyle: 'preserve-3d',
         animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
       }}>
@@ -82,8 +83,9 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
       <div className="relative z-10">
         <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl mb-4 md:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
              style={{ 
-               background: 'rgb(var(--color-black))',
+               background: 'rgba(255, 255, 255, 0.1)',
                color: 'rgb(var(--color-white))',
+               border: '1px solid rgba(255, 255, 255, 0.2)',
                transform: 'translateZ(20px)'
              }}>
           <div className="transition-transform duration-500">
@@ -91,9 +93,9 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
           </div>
         </div>
         
-        <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-500 group-hover:text-white" 
+        <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-500" 
             style={{ 
-              color: 'rgb(var(--color-black))',
+              color: 'rgb(var(--color-white))',
               transform: 'translateZ(15px)'
             }}>
           {feature.title}
@@ -101,7 +103,7 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
         
         <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
            style={{ 
-             color: 'rgb(var(--color-gray-600))',
+             color: 'rgb(var(--color-gray-400))',
              transform: 'translateZ(10px)'
            }}>
           {feature.description}
