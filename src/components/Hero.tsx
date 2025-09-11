@@ -47,14 +47,14 @@ function Hero() {
                 color: 'rgb(var(--color-white))',
                 marginBottom: '1.5rem'
               }}>
-            Tu conocimiento empresarial
+            Acceso directo a toda
             <br />
             <span style={{
               background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
-            }}>potenciado con IA</span>
+            }}>tu base documental</span>
           </h1>
           
           {/* Subheadline */}
@@ -70,6 +70,28 @@ function Hero() {
           
           {/* CTA Buttons */}
           <div className="animate-on-load opacity-0 flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <a href="#features" 
+               onClick={(e) => {
+                 e.preventDefault()
+                 document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+               }}
+               className="px-8 py-4 rounded-full font-semibold text-base transition-all duration-300"
+               style={{
+                 background: 'transparent',
+                 color: 'rgb(var(--color-white))',
+                 border: '1px solid rgba(255, 255, 255, 0.3)',
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.background = 'transparent'
+                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+               }}>
+              Nessie Enterprise
+            </a>
+            
             <a href="#wishlist" 
                onClick={(e) => {
                  e.preventDefault()
@@ -90,7 +112,7 @@ function Hero() {
                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(255, 255, 255, 0.25)'
                }}>
               <span className="flex items-center gap-2">
-                Empezar ahora
+                Prueba la demo
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" 
                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
@@ -98,68 +120,8 @@ function Hero() {
                 </svg>
               </span>
             </a>
-            
-            <a href="#features" 
-               onClick={(e) => {
-                 e.preventDefault()
-                 document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
-               }}
-               className="px-8 py-4 rounded-full font-semibold text-base transition-all duration-300"
-               style={{
-                 background: 'transparent',
-                 color: 'rgb(var(--color-white))',
-                 border: '1px solid rgba(255, 255, 255, 0.3)',
-               }}
-               onMouseEnter={(e) => {
-                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-               }}
-               onMouseLeave={(e) => {
-                 e.currentTarget.style.background = 'transparent'
-                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-               }}>
-              Explorar funciones
-            </a>
           </div>
 
-          {/* Tech stack icons */}
-          <div className="animate-on-load opacity-0 flex items-center justify-center gap-8">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="rgb(var(--color-gray-500))" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
-                React
-              </span>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="rgb(var(--color-gray-500))" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
-                TypeScript
-              </span>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="rgb(var(--color-gray-500))" viewBox="0 0 20 20">
-                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-              </svg>
-              <span className="text-sm font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
-                Tailwind CSS
-              </span>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="rgb(var(--color-gray-500))" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
-                Vite
-              </span>
-            </div>
-          </div>
 
           {/* Screenshot preview */}
           <div className="animate-on-load opacity-0 mt-20 relative">
