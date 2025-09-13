@@ -7,7 +7,6 @@ import Footer from './components/Footer'
 import ProductSection from './components/ProductSection'
 import FeaturesSection from './components/FeaturesSection'
 import UseCasesSection from './components/UseCasesSection'
-import MetricsSection from './components/MetricsSection'
 import PricingCompact from './components/PricingCompact'
 
 // Keep only wishlist from existing sections
@@ -23,7 +22,6 @@ function App() {
       <ProductSection />
       <FeaturesSection />
       <UseCasesSection />
-      <MetricsSection />
       <PricingCompact />
       
       <Suspense fallback={
