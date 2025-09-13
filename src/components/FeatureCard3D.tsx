@@ -1,16 +1,14 @@
 import { useRef, useEffect } from 'react'
 
 interface FeatureCard3DProps {
-  feature: {
-    title: string
-    description: string
-    icon: React.ReactNode
-    gradient: string
-  }
-  index: number
+  title: string
+  description: string
+  example: string
+  icon?: React.ReactNode
+  onMouseEnter?: () => void
 }
 
-function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
+function FeatureCard3D({ title, description, example, icon, onMouseEnter }: FeatureCard3DProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const glowRef = useRef<HTMLDivElement>(null)
 
@@ -57,9 +55,9 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
         background: 'rgba(255, 255, 255, 0.03)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         backdropFilter: 'blur(10px)',
-        transformStyle: 'preserve-3d',
-        animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
-      }}>
+        transformStyle: 'preserve-3d'
+      }}
+      onMouseEnter={onMouseEnter}>
       
       {/* Glow effect layer */}
       <div 
@@ -69,7 +67,7 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
       />
       
       {/* Gradient overlay on hover */}
-      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${feature.gradient}`}></div>
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/5 to-white/10"></div>
       
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700">
@@ -89,7 +87,7 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
                transform: 'translateZ(20px)'
              }}>
           <div className="transition-transform duration-500">
-            {feature.icon}
+            {icon}
           </div>
         </div>
         
@@ -98,7 +96,7 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
               color: 'rgb(var(--color-white))',
               transform: 'translateZ(15px)'
             }}>
-          {feature.title}
+          {title}
         </h3>
         
         <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
@@ -106,19 +104,18 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
              color: 'rgb(var(--color-gray-400))',
              transform: 'translateZ(10px)'
            }}>
-          {feature.description}
+          {description}
         </p>
         
-        {/* Interactive indicator */}
-        <div className="mt-4 md:mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-white">Explorar</span>
-            <svg className="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </div>
-        </div>
+        {/* Example text */}
+        <p className="text-sm mt-4 leading-relaxed transition-colors duration-500" 
+           style={{ 
+             color: 'rgb(var(--color-gray-500))',
+             fontStyle: 'italic',
+             transform: 'translateZ(5px)'
+           }}>
+          {example}
+        </p>
       </div>
       
       {/* Decorative floating elements */}

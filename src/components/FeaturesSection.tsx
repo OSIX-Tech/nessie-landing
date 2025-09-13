@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import FeatureCard3D from './FeatureCard3D'
 
 type Feature = { 
   id: string
@@ -132,57 +133,17 @@ function FeaturesSection() {
           </p>
         </div>
         
-        {/* Features grid */}
+        {/* Features grid with 3D cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
           {features.map((feature) => (
-            <div 
+            <FeatureCard3D
               key={feature.id}
-              data-feature-id={feature.id}
-              className="group p-6 md:p-8 rounded-3xl transition-all duration-300 cursor-pointer"
-              style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
-              }}
+              title={feature.title}
+              description={feature.benefit}
+              example={feature.example}
+              icon={feature.icon}
               onMouseEnter={() => handleFeatureHover(feature.id)}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)'
-                e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15)'
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.1)'
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-              }}
-            >
-              {/* Icon */}
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
-                   style={{
-                     background: 'rgba(255, 255, 255, 0.1)',
-                     color: 'rgb(var(--color-white))'
-                   }}>
-                {feature.icon}
-              </div>
-              
-              {/* Content */}
-              <h3 className="text-xl font-semibold mb-3" style={{ color: 'rgb(var(--color-white))' }}>
-                {feature.title}
-              </h3>
-              <p className="text-base mb-4" style={{ 
-                color: 'rgb(var(--color-gray-400))',
-                lineHeight: 1.5
-              }}>
-                {feature.benefit}
-              </p>
-              <p className="text-sm" style={{ 
-                color: 'rgb(var(--color-gray-500))',
-                lineHeight: 1.4,
-                fontStyle: 'italic'
-              }}>
-                {feature.example}
-              </p>
-            </div>
+            />
           ))}
         </div>
 
