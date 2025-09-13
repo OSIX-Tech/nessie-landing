@@ -87,14 +87,14 @@ function Hero() {
   return (
     <section 
       ref={heroRef} 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden isolate bg-black"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden isolate"
     >
-      {/* Background Layer 1: Subtle radial gradient for depth */}
+      {/* Background Layer 1: Very subtle radial gradient for depth */}
       <div className="absolute inset-0 -z-30">
         <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%]"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%]"
           style={{
-            background: 'radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.9) 100%)'
+            background: 'radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 100%)'
           }}
         />
       </div>
@@ -104,7 +104,7 @@ function Hero() {
         <div className="absolute inset-0 -z-20 overflow-hidden">
           {/* Left image */}
           <div 
-            className="absolute left-[8%] top-[55%] -translate-y-1/2 w-[500px] h-[350px] opacity-[0.35]"
+            className="absolute left-[8%] top-[55%] -translate-y-1/2 w-[500px] h-[350px] opacity-[0.65]"
             style={{
               transform: `perspective(1200px) rotateY(25deg) rotateX(5deg) translateZ(-100px) translateY(${scrollY * 0.15}px)`,
               transformOrigin: 'right center',
@@ -131,7 +131,7 @@ function Hero() {
 
           {/* Right image */}
           <div 
-            className="absolute right-[8%] top-[55%] -translate-y-1/2 w-[500px] h-[350px] opacity-[0.35]"
+            className="absolute right-[8%] top-[55%] -translate-y-1/2 w-[500px] h-[350px] opacity-[0.65]"
             style={{
               transform: `perspective(1200px) rotateY(-25deg) rotateX(5deg) translateZ(-100px) translateY(${-scrollY * 0.15}px)`,
               transformOrigin: 'left center',
@@ -192,7 +192,7 @@ function Hero() {
               <span 
                 className="text-white relative inline-block"
                 style={{
-                  textShadow: '0 0 40px rgba(255, 255, 255, 0.5), 0 0 80px rgba(255, 255, 255, 0.3), 0 0 120px rgba(255, 255, 255, 0.1)'
+                  textShadow: '0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 255, 255, 0.1)'
                 }}
               >
                 unificado con IA
