@@ -7,7 +7,6 @@ import Footer from './components/Footer'
 import ProductSection from './components/ProductSection'
 import FeaturesSection from './components/FeaturesSection'
 import UseCasesSection from './components/UseCasesSection'
-import PricingCompact from './components/PricingCompact'
 
 // Keep only wishlist from existing sections
 const Wishlist = lazy(() => import('./components/Wishlist'))
@@ -22,7 +21,6 @@ function App() {
       <ProductSection />
       <FeaturesSection />
       <UseCasesSection />
-      <PricingCompact />
       
       <Suspense fallback={
         <div className="flex items-center justify-center py-20">

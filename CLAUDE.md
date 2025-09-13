@@ -102,6 +102,34 @@ src/
 - Smooth number counting for statistics
 - CSS transforms preferred over position changes
 
+## Git & Commit Guidelines
+
+### Repository Structure
+- **Origin remote**: `git@github.com:OSIX-Tech/nessie-landing.git` (official OSIX repository)
+- **Fork remote**: `git@github.com:mateobodenlle/nessie-landing.git` (personal fork)
+- Always commit and push to the **origin** (OSIX repository), NOT the fork
+
+### Commit Message Convention
+Follow OSIX Tech naming conventions as seen in existing commits:
+```bash
+v0.6.1 feat[landing]: description of changes
+v0.5.2 fix[hero]: resolve specific issue
+v0.4.1 fix[types]: type safety improvements
+```
+
+**Format**: `v{version} {type}[{scope}]: {description}`
+- **Version**: Follow semantic versioning (patch for fixes, minor for features)
+- **Type**: `feat`, `fix`, `refactor`, `docs`, `style`, `test`
+- **Scope**: Component or area affected (landing, hero, types, etc.)
+- **Description**: Clear, concise description without period
+
+### Commit Rules
+- **NEVER** include Claude Code attribution or co-authoring
+- **NEVER** push to personal fork unless explicitly requested
+- Use author credentials: `mateo.bodenlle@rai.usc.es`, `Mateo Bodenlle`
+- Always push to `origin` remote (OSIX repository)
+- Commits should be authored by the user, not AI-assisted tools
+
 ## Build & Deployment
 - TypeScript compilation runs before Vite build
 - Production builds output to `dist/` directory
