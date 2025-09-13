@@ -3,14 +3,14 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Footer from './components/Footer'
 
-// New landing sections
+// New landing sections from v0.6
 import ProductSection from './components/ProductSection'
-import FeaturesSection from './components/FeaturesSection'
 import UseCasesSection from './components/UseCasesSection'
 import MetricsSection from './components/MetricsSection'
-import PricingCompact from './components/PricingCompact'
 
-// Keep only wishlist from existing sections
+// Original components from v0.5
+const Features = lazy(() => import('./components/Features'))
+const Pricing = lazy(() => import('./components/Pricing'))
 const Wishlist = lazy(() => import('./components/Wishlist'))
 
 function App() {
@@ -19,18 +19,26 @@ function App() {
       <Navbar />
       <Hero />
       
-      {/* New landing sections - loaded immediately after Hero */}
+      {/* New sections from v0.6 */}
       <ProductSection />
-      <FeaturesSection />
-      <UseCasesSection />
-      <MetricsSection />
-      <PricingCompact />
       
       <Suspense fallback={
         <div className="flex items-center justify-center py-20">
           <div className="animate-pulse text-gray-400">Cargando...</div>
         </div>
       }>
+        <Features />
+      </Suspense>
+      
+      <UseCasesSection />
+      <MetricsSection />
+      
+      <Suspense fallback={
+        <div className="flex items-center justify-center py-20">
+          <div className="animate-pulse text-gray-400">Cargando...</div>
+        </div>
+      }>
+        <Pricing />
         <Wishlist />
       </Suspense>
       <Footer />
