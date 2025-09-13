@@ -228,11 +228,15 @@ const renderChart = (metrics: UseCase['metrics']) => {
             <YAxis hide />
             <Tooltip 
               contentStyle={{ 
-                background: 'rgba(0,0,0,0.8)', 
-                border: 'none', 
-                borderRadius: '8px',
-                fontSize: '12px'
-              }} 
+                background: 'rgba(0,0,0,0.7)', 
+                border: '1px solid rgba(255,255,255,0.15)', 
+                borderRadius: '12px',
+                fontSize: '12px',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+              }}
+              cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+              animationDuration={200}
             />
             <Bar dataKey="tradicional" fill="rgba(255,255,255,0.2)" />
             <Bar dataKey="conIA" fill={primaryColor} />
@@ -409,10 +413,10 @@ function UseCasesSection() {
                   </div>
                   
                   {/* Category badge */}
-                  <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                  <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded-full text-xs font-normal transition-all duration-300 ${
                     activeIndex === index 
-                      ? 'bg-white/10 text-white/90 border border-white/20' 
-                      : 'bg-white/5 text-white/50 border border-white/10'
+                      ? 'bg-white/5 text-white/60 border border-white/10' 
+                      : 'bg-white/3 text-white/40 border border-white/5'
                   }`} style={{ transform: 'translateZ(10px)' }}>
                     {useCase.category}
                   </div>
@@ -530,7 +534,7 @@ function UseCasesSection() {
 
                   {/* Visual Side - 2 columns with metrics */}
                   <div className="lg:col-span-2 relative flex items-center justify-center">
-                    <div className="w-full max-w-lg space-y-6">
+                    <div className="w-full max-w-lg space-y-6 pt-2">
                       {/* Chart Section - 3D Card Style */}
                       <div className="group relative overflow-hidden rounded-3xl p-8 transition-all duration-300"
                            style={{
