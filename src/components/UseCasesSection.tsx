@@ -329,54 +329,103 @@ function UseCasesSection() {
             </div>
           </div>
 
-          {/* Navigation Tabs - Improved */}
+          {/* Navigation Tabs - 3D Card Style */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-white/8 backdrop-blur-sm rounded-2xl p-4 gap-2 border border-white/20 shadow-2xl">
+            <div className="inline-flex p-2 gap-3 rounded-3xl" 
+                 style={{ 
+                   background: 'rgba(255, 255, 255, 0.03)',
+                   border: '1px solid rgba(255, 255, 255, 0.1)',
+                   backdropFilter: 'blur(10px)',
+                   boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
+                 }}>
               {useCases.map((useCase, index) => (
                 <button
                   key={useCase.id}
                   onClick={() => setActiveIndex(index)}
-                  className={`relative px-4 py-3 pb-8 rounded-xl font-semibold text-sm transition-all duration-300 min-w-[140px] group cursor-pointer mx-1 ${
+                  className={`group relative overflow-hidden px-4 py-3 pb-8 rounded-2xl font-semibold text-sm transition-all duration-300 min-w-[140px] cursor-pointer ${
                     activeIndex === index 
-                      ? 'bg-white text-black shadow-lg' 
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                      ? 'transform-gpu' 
+                      : 'transform-gpu hover:scale-105'
                   }`}
+                  style={{
+                    background: activeIndex === index 
+                      ? 'rgba(255, 255, 255, 0.1)' 
+                      : 'rgba(255, 255, 255, 0.02)',
+                    border: activeIndex === index 
+                      ? '1px solid rgba(255, 255, 255, 0.2)' 
+                      : '1px solid rgba(255, 255, 255, 0.05)',
+                    backdropFilter: 'blur(10px)',
+                    transformStyle: 'preserve-3d'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeIndex !== index) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeIndex !== index) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)'
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                    }
+                  }}
                 >
-                  {/* Active indicator */}
+                  {/* Glow effect for active */}
                   {activeIndex === index && (
-                    <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full"></div>
+                    <div className="absolute inset-0 opacity-100 transition-opacity duration-500 pointer-events-none"
+                         style={{ mixBlendMode: 'overlay' }}>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10"></div>
+                    </div>
                   )}
                   
-                  {/* Icon */}
-                  <div className={`w-6 h-6 mx-auto mb-2 transition-colors duration-300 ${
-                    activeIndex === index ? 'text-black' : 'text-white/60'
-                  }`}>
-                    {React.cloneElement(useCase.visual.icon, { 
-                      className: "w-6 h-6",
-                      strokeWidth: activeIndex === index ? 2 : 1.5
-                    })}
+                  {/* Icon container */}
+                  <div className={`w-8 h-8 mx-auto mb-3 rounded-xl flex items-center justify-center transition-all duration-500 ${
+                    activeIndex === index ? 'scale-110 rotate-12' : 'group-hover:scale-110'
+                  }`}
+                       style={{
+                         background: activeIndex === index 
+                           ? 'rgba(255, 255, 255, 0.15)' 
+                           : 'rgba(255, 255, 255, 0.08)',
+                         border: '1px solid rgba(255, 255, 255, 0.2)',
+                         transform: 'translateZ(20px)'
+                       }}>
+                    <div className={`transition-colors duration-300 ${
+                      activeIndex === index ? 'text-white' : 'text-white/70'
+                    }`}>
+                      {React.cloneElement(useCase.visual.icon, { 
+                        className: "w-5 h-5",
+                        strokeWidth: activeIndex === index ? 2 : 1.5
+                      })}
+                    </div>
                   </div>
                   
                   {/* Text */}
-                  <div className="text-sm font-medium">
+                  <div className={`text-sm font-bold mb-2 transition-colors duration-300 ${
+                    activeIndex === index ? 'text-white' : 'text-white/80'
+                  }`} style={{ transform: 'translateZ(15px)' }}>
                     {useCase.audience.split(' ')[0]}
                   </div>
                   
                   {/* Category badge */}
-                  <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                  <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
                     activeIndex === index 
-                      ? 'bg-black/10 text-black/60' 
-                      : 'bg-white/10 text-white/40'
-                  }`}>
+                      ? 'bg-white/10 text-white/90 border border-white/20' 
+                      : 'bg-white/5 text-white/50 border border-white/10'
+                  }`} style={{ transform: 'translateZ(10px)' }}>
                     {useCase.category}
                   </div>
 
-                  {/* Hover effect */}
-                  <div className={`absolute inset-0 rounded-xl border-2 transition-all duration-300 pointer-events-none ${
-                    activeIndex === index 
-                      ? 'border-white/30' 
-                      : 'border-transparent group-hover:border-white/20'
-                  }`}></div>
+                  {/* Animated background pattern for active */}
+                  {activeIndex === index && (
+                    <div className="absolute inset-0 opacity-10 transition-opacity duration-700">
+                      <div className="absolute inset-0 rounded-2xl" style={{
+                        backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(255, 255, 255, 0.03) 12px, rgba(255, 255, 255, 0.03) 24px)`,
+                        animation: 'slidePattern 20s linear infinite'
+                      }} />
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
@@ -398,12 +447,12 @@ function UseCasesSection() {
                   style={{ width: `${100 / useCases.length}%` }}
                 >
                   <div className="grid lg:grid-cols-5 gap-12 items-center h-full">
-                  {/* Content Side - 3 columns */}
+                    {/* Content Side - 3 columns */}
                   <div className="lg:col-span-3 space-y-8 flex flex-col justify-center">
                     {/* Category Badge & Time Saved */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 -ml-2">
                       <span 
-                        className="px-3 py-1 rounded-full text-xs font-semibold"
+                        className="px-4 py-2 rounded-full text-sm font-semibold"
                         style={{
                           background: useCase.visual.color,
                           color: 'rgb(var(--color-white))',
@@ -444,7 +493,7 @@ function UseCasesSection() {
                       <a 
                         href={useCase.cta.href}
                         data-analytics-id={useCase.cta.analyticsId}
-                        className="group inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm transition-all duration-300"
+                        className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300"
                         style={{
                           background: index === 3 ? 'rgb(var(--color-white))' : 'transparent',
                           color: index === 3 ? 'rgb(var(--color-black))' : 'rgb(var(--color-white))',
@@ -470,7 +519,7 @@ function UseCasesSection() {
                         }}
                       >
                         {useCase.cta.label}
-                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" 
+                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                                 d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -482,52 +531,109 @@ function UseCasesSection() {
                   {/* Visual Side - 2 columns with metrics */}
                   <div className="lg:col-span-2 relative flex items-center justify-center">
                     <div className="w-full max-w-lg space-y-6">
-                      {/* Chart Section */}
-                      <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
-                        <div className="flex items-center gap-4 mb-6">
-                          <div 
-                            className="w-8 h-8 rounded-lg flex items-center justify-center"
-                            style={{
-                              background: useCase.visual.color,
-                              border: '1px solid rgba(255, 255, 255, 0.1)'
-                            }}
-                          >
-                            <div className="text-white/80 scale-50">
-                              {React.cloneElement(useCase.visual.icon, { className: "w-8 h-8" })}
+                      {/* Chart Section - 3D Card Style */}
+                      <div className="group relative overflow-hidden rounded-3xl p-8 transition-all duration-300"
+                           style={{
+                             background: 'rgba(255, 255, 255, 0.03)',
+                             border: '1px solid rgba(255, 255, 255, 0.1)',
+                             backdropFilter: 'blur(10px)',
+                             transformStyle: 'preserve-3d',
+                             boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
+                           }}
+                           onMouseEnter={(e) => {
+                             e.currentTarget.style.transform = 'translateY(-4px)'
+                             e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15)'
+                           }}
+                           onMouseLeave={(e) => {
+                             e.currentTarget.style.transform = 'translateY(0)'
+                             e.currentTarget.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.1)'
+                           }}>
+                        
+                        {/* Glow effect layer */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                             style={{ mixBlendMode: 'overlay' }}>
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10"></div>
+                        </div>
+
+                        {/* Animated background pattern */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700">
+                          <div className="absolute inset-0 rounded-3xl" style={{
+                            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.05) 10px, rgba(255, 255, 255, 0.05) 20px)`,
+                            animation: 'slidePattern 20s linear infinite'
+                          }} />
+                        </div>
+
+                        {/* Content */}
+                        <div className="relative z-10">
+                          <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
+                                 style={{
+                                   background: 'rgba(255, 255, 255, 0.1)',
+                                   border: '1px solid rgba(255, 255, 255, 0.2)',
+                                   transform: 'translateZ(20px)'
+                                 }}>
+                              <div className="text-white transition-transform duration-500">
+                                {React.cloneElement(useCase.visual.icon, { className: "w-6 h-6" })}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-lg font-bold transition-colors duration-500" 
+                                   style={{ 
+                                     color: 'rgb(var(--color-white))',
+                                     transform: 'translateZ(15px)'
+                                   }}>
+                                Métricas de impacto
+                              </div>
+                              <div className="text-base transition-colors duration-500" 
+                                   style={{ 
+                                     color: 'rgb(var(--color-gray-400))',
+                                     transform: 'translateZ(10px)'
+                                   }}>
+                                {useCase.mainMetric.value} {useCase.mainMetric.label}
+                              </div>
                             </div>
                           </div>
-                          <div>
-                            <div className="text-base font-semibold" style={{ color: 'rgb(var(--color-white))' }}>
-                              Métricas de impacto
-                            </div>
-                            <div className="text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
-                              {useCase.mainMetric.value} {useCase.mainMetric.label}
-                            </div>
+                        
+                          {/* Chart */}
+                          <div className="mb-8" style={{ transform: 'translateZ(10px)' }}>
+                            {renderChart(useCase.metrics)}
                           </div>
-                        </div>
-                        
-                        {/* Chart */}
-                        <div className="mb-8">
-                          {renderChart(useCase.metrics)}
-                        </div>
-                        
-                        {/* KPIs Grid */}
-                        <div className="grid grid-cols-3 gap-4">
-                          {useCase.metrics.kpis.map((kpi, idx) => (
-                            <div key={idx} className="text-center p-3 rounded-lg bg-white/5">
-                              <div className="text-xl font-bold mb-2" style={{ color: 'rgb(var(--color-white))' }}>
-                                {kpi.value}
-                              </div>
-                              <div className="text-sm mb-2" style={{ color: 'rgb(var(--color-gray-400))' }}>
-                                {kpi.label}
-                              </div>
-                              {kpi.change && (
-                                <div className="text-sm font-medium" style={{ color: useCase.metrics.primaryColor }}>
-                                  {kpi.change}
+                          
+                          {/* KPIs Grid */}
+                          <div className="grid grid-cols-3 gap-4" style={{ transform: 'translateZ(5px)' }}>
+                            {useCase.metrics.kpis.map((kpi, idx) => (
+                              <div key={idx} className="text-center p-4 rounded-2xl transition-all duration-300 hover:scale-105"
+                                   style={{
+                                     background: 'rgba(255, 255, 255, 0.05)',
+                                     border: '1px solid rgba(255, 255, 255, 0.1)',
+                                     backdropFilter: 'blur(5px)'
+                                   }}>
+                                <div className="text-xl font-bold mb-2 transition-colors duration-500" 
+                                     style={{ 
+                                       color: 'rgb(var(--color-white))',
+                                       transform: 'translateZ(10px)'
+                                     }}>
+                                  {kpi.value}
                                 </div>
-                              )}
-                            </div>
-                          ))}
+                                <div className="text-sm mb-2 transition-colors duration-500" 
+                                     style={{ 
+                                       color: 'rgb(var(--color-gray-400))',
+                                       transform: 'translateZ(5px)'
+                                     }}>
+                                  {kpi.label}
+                                </div>
+                                {kpi.change && (
+                                  <div className="text-sm font-medium transition-colors duration-500" 
+                                       style={{ 
+                                         color: useCase.metrics.primaryColor,
+                                         transform: 'translateZ(5px)'
+                                       }}>
+                                    {kpi.change}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
