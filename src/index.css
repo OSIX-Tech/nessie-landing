@@ -41,9 +41,13 @@
   text-rendering: optimizeLegibility;
 }
 
-/* Premium dark background with 3D depth effect */
+/* Premium dark background with 3D depth effect and grid */
 body {
   background: 
+    /* Grid pattern */
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    /* Depth gradients */
     radial-gradient(ellipse at 0% 50%, 
       rgba(25, 25, 30, 1) 0%,
       rgba(10, 10, 10, 0.5) 25%,
@@ -55,6 +59,7 @@ body {
       transparent 50%
     ),
     rgb(0, 0, 0);
+  background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
   background-attachment: fixed;
   color: rgb(var(--color-white));
   min-height: 100vh;
