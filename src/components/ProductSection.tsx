@@ -73,7 +73,7 @@ function ProductSection() {
   }
 
   return (
-    <section ref={sectionRef} id="product" className="py-20 md:py-28 lg:py-36 px-6 md:px-12 lg:px-20 opacity-0">
+    <section ref={sectionRef} id="product" className="relative py-20 md:py-28 lg:py-36 px-6 md:px-12 lg:px-20 opacity-0">
       <div className="max-w-[1600px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20">
@@ -128,15 +128,15 @@ function ProductSection() {
                   }`}
                   style={{
                     background: activeCase === index
-                      ? 'rgba(255, 255, 255, 0.08)'
-                      : 'rgba(255, 255, 255, 0.03)',
+                      ? 'rgba(20, 20, 20, 0.9)'
+                      : 'rgba(10, 10, 10, 0.8)',
                     border: activeCase === index
                       ? '1px solid rgba(255, 255, 255, 0.2)'
                       : '1px solid rgba(255, 255, 255, 0.08)',
                     backdropFilter: 'blur(10px)',
                     boxShadow: activeCase === index
-                      ? '0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                      : 'none'
+                      ? '0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                      : '0 4px 12px rgba(0, 0, 0, 0.2)'
                   }}
                 >
                   <div className="relative flex items-start gap-4">
@@ -211,9 +211,9 @@ function ProductSection() {
           <div className="flex flex-col">
             <div className="flex-1 relative rounded-3xl overflow-hidden flex flex-col"
                  style={{
-                   background: 'rgba(255, 255, 255, 0.05)',
+                   background: 'rgba(15, 15, 15, 0.95)',
                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                   boxShadow: '0 30px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                   boxShadow: '0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
                    backdropFilter: 'blur(20px)'
                  }}>
 

@@ -288,7 +288,7 @@ function UseCasesSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   
   return (
-    <section ref={sectionRef} id="use-cases" className="min-h-[150vh] py-12 md:py-16 lg:py-20 px-6 md:px-12 lg:px-24 opacity-0 flex flex-col justify-center">
+    <section ref={sectionRef} id="use-cases" className="relative min-h-[150vh] py-12 md:py-16 lg:py-20 px-6 md:px-12 lg:px-24 opacity-0 flex flex-col justify-center">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8">
@@ -335,12 +335,12 @@ function UseCasesSection() {
 
           {/* Navigation Tabs - 3D Card Style */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex p-2 gap-3 rounded-3xl" 
-                 style={{ 
-                   background: 'rgba(255, 255, 255, 0.03)',
-                   border: '1px solid rgba(255, 255, 255, 0.1)',
+            <div className="inline-flex p-2 gap-3 rounded-3xl"
+                 style={{
+                   background: 'rgba(10, 10, 10, 0.9)',
+                   border: '1px solid rgba(255, 255, 255, 0.15)',
                    backdropFilter: 'blur(10px)',
-                   boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
+                   boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)'
                  }}>
               {useCases.map((useCase, index) => (
                 <button
@@ -352,25 +352,28 @@ function UseCasesSection() {
                       : 'transform-gpu hover:scale-105'
                   }`}
                   style={{
-                    background: activeIndex === index 
-                      ? 'rgba(255, 255, 255, 0.1)' 
-                      : 'rgba(255, 255, 255, 0.02)',
-                    border: activeIndex === index 
-                      ? '1px solid rgba(255, 255, 255, 0.2)' 
-                      : '1px solid rgba(255, 255, 255, 0.05)',
+                    background: activeIndex === index
+                      ? 'rgba(25, 25, 25, 0.95)'
+                      : 'rgba(15, 15, 15, 0.85)',
+                    border: activeIndex === index
+                      ? '1px solid rgba(255, 255, 255, 0.25)'
+                      : '1px solid rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(10px)',
-                    transformStyle: 'preserve-3d'
+                    transformStyle: 'preserve-3d',
+                    boxShadow: activeIndex === index
+                      ? '0 6px 16px rgba(0, 0, 0, 0.3)'
+                      : 'none'
                   }}
                   onMouseEnter={(e) => {
                     if (activeIndex !== index) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'
+                      e.currentTarget.style.background = 'rgba(30, 30, 30, 0.95)'
                       e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
                       e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (activeIndex !== index) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
+                      e.currentTarget.style.background = 'rgba(15, 15, 15, 0.85)'
                       e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)'
                       e.currentTarget.style.transform = 'translateY(0) scale(1)'
                     }
@@ -499,13 +502,15 @@ function UseCasesSection() {
                         data-analytics-id={useCase.cta.analyticsId}
                         className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300"
                         style={{
-                          background: index === 3 ? 'rgb(var(--color-white))' : 'transparent',
+                          background: index === 3 ? 'rgb(var(--color-white))' : 'rgba(15, 15, 15, 0.9)',
                           color: index === 3 ? 'rgb(var(--color-black))' : 'rgb(var(--color-white))',
                           border: index === 3 ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
+                          backdropFilter: 'blur(10px)',
+                          boxShadow: '0 6px 20px rgba(0, 0, 0, 0.3)'
                         }}
                         onMouseEnter={(e) => {
                           if (index !== 3) {
-                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                            e.currentTarget.style.background = 'rgba(25, 25, 25, 0.95)'
                             e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
                           } else {
                             e.currentTarget.style.transform = 'translateY(-2px)'
@@ -514,7 +519,7 @@ function UseCasesSection() {
                         }}
                         onMouseLeave={(e) => {
                           if (index !== 3) {
-                            e.currentTarget.style.background = 'transparent'
+                            e.currentTarget.style.background = 'rgba(15, 15, 15, 0.9)'
                             e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
                           } else {
                             e.currentTarget.style.transform = 'translateY(0)'
@@ -538,11 +543,11 @@ function UseCasesSection() {
                       {/* Chart Section - 3D Card Style */}
                       <div className="group relative overflow-hidden rounded-3xl p-8 transition-all duration-300"
                            style={{
-                             background: 'rgba(255, 255, 255, 0.03)',
-                             border: '1px solid rgba(255, 255, 255, 0.1)',
+                             background: 'rgba(10, 10, 10, 0.95)',
+                             border: '1px solid rgba(255, 255, 255, 0.15)',
                              backdropFilter: 'blur(10px)',
                              transformStyle: 'preserve-3d',
-                             boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
+                             boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)'
                            }}
                            onMouseEnter={(e) => {
                              e.currentTarget.style.transform = 'translateY(-4px)'
@@ -608,9 +613,10 @@ function UseCasesSection() {
                             {useCase.metrics.kpis.map((kpi, idx) => (
                               <div key={idx} className="text-center p-4 rounded-2xl transition-all duration-300 hover:scale-105"
                                    style={{
-                                     background: 'rgba(255, 255, 255, 0.05)',
-                                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                                     backdropFilter: 'blur(5px)'
+                                     background: 'rgba(15, 15, 15, 0.9)',
+                                     border: '1px solid rgba(255, 255, 255, 0.12)',
+                                     backdropFilter: 'blur(5px)',
+                                     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                                    }}>
                                 <div className="text-xl font-bold mb-2 transition-colors duration-500" 
                                      style={{ 

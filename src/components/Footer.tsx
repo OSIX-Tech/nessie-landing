@@ -2,8 +2,10 @@ function Footer() {
   const currentYear = new Date().getFullYear()
   
   return (
-    <footer className="relative border-t" style={{ 
-      borderColor: 'rgba(255, 255, 255, 0.1)'
+    <footer className="relative border-t" style={{
+      borderColor: 'rgba(255, 255, 255, 0.1)',
+      background: 'rgba(5, 5, 5, 0.95)',
+      backdropFilter: 'blur(10px)'
     }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-16">
         {/* Main footer content */}

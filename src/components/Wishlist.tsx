@@ -58,17 +58,11 @@ function Wishlist() {
       <div className="relative max-w-4xl mx-auto px-6 md:px-12 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-             style={{ 
+             style={{
                background: 'rgba(255, 255, 255, 0.1)',
                border: '1px solid rgba(255, 255, 255, 0.2)'
              }}>
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                  style={{ background: 'rgb(var(--color-emerald-500))' }}></span>
-            <span className="relative inline-flex rounded-full h-2 w-2"
-                  style={{ background: 'rgb(var(--color-emerald-500))' }}></span>
-          </span>
-          <span className="text-xs font-semibold uppercase tracking-wider" 
+          <span className="text-xs font-semibold uppercase tracking-wider"
                 style={{ color: 'rgb(var(--color-white))' }}>
             Acceso anticipado
           </span>
@@ -111,7 +105,7 @@ function Wishlist() {
               }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              placeholder="Ingresa tu email corporativo"
+              placeholder="Ingresa tu email"
               className="flex-1 px-4 md:px-6 py-2 bg-transparent text-sm md:text-base outline-none"
               style={{
                 color: 'rgb(var(--color-black))'
@@ -150,14 +144,6 @@ function Wishlist() {
           )}
         </form>
 
-        {/* Launch date */}
-        <div className="mb-8">
-          <p className="text-center text-sm" 
-             style={{ color: 'rgb(var(--color-gray-500))' }}>
-            Lanzamiento: Diciembre 2025
-          </p>
-        </div>
-        
         {/* Stats */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 flex-wrap">
           <div className="flex items-center gap-2">

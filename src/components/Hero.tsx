@@ -9,82 +9,13 @@ function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Modern Grid Pattern Background */}
+      {/* Subtle depth effect */}
       <div className="absolute inset-0 -z-10">
-        {/* Base grid */}
+        {/* Center glow */}
         <div className="absolute inset-0"
              style={{
-               backgroundImage: `
-                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-               `,
-               backgroundSize: '50px 50px',
+               background: 'radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0%, transparent 60%)'
              }}/>
-
-        {/* Larger grid overlay for depth */}
-        <div className="absolute inset-0"
-             style={{
-               backgroundImage: `
-                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px)
-               `,
-               backgroundSize: '200px 200px',
-             }}/>
-
-        {/* Perspective grid effect */}
-        <div className="absolute inset-0"
-             style={{
-               background: `
-                 radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%)
-               `,
-             }}/>
-
-        {/* Animated grid fade effect */}
-        <div className="absolute inset-0"
-             style={{
-               maskImage: 'radial-gradient(circle at center, black 0%, transparent 70%)',
-               WebkitMaskImage: 'radial-gradient(circle at center, black 0%, transparent 70%)',
-               animation: 'grid-fade 20s ease-in-out infinite'
-             }}>
-          <div className="absolute inset-0"
-               style={{
-                 backgroundImage: `
-                   linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                   linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
-                 `,
-                 backgroundSize: '25px 25px',
-                 transform: 'perspective(1000px) rotateX(60deg)',
-                 transformOrigin: 'center center',
-               }}/>
-        </div>
-
-        {/* Top gradient fade */}
-        <div className="absolute top-0 left-0 right-0 h-40"
-             style={{
-               background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent)'
-             }}/>
-
-        {/* Bottom gradient fade for depth */}
-        <div className="absolute bottom-0 left-0 right-0 h-40"
-             style={{
-               background: 'linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent)'
-             }}/>
-
-        {/* Floating grid squares for depth */}
-        {[...Array(5)].map((_, i) => (
-          <div key={i}
-               className="absolute border"
-               style={{
-                 width: `${150 + i * 50}px`,
-                 height: `${150 + i * 50}px`,
-                 left: `${10 + i * 15}%`,
-                 top: `${20 + i * 10}%`,
-                 borderColor: 'rgba(255, 255, 255, 0.05)',
-                 transform: 'rotate(45deg)',
-                 animation: `float-slow ${20 + i * 5}s ease-in-out infinite`,
-                 animationDelay: `${i * 2}s`
-               }}/>
-        ))}
       </div>
 
       {/* Content */}
