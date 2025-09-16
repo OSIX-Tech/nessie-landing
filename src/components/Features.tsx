@@ -102,16 +102,6 @@ function Features() {
     setCurrentIndex(index)
   }
 
-  // Calculate visible cards (3 at a time on desktop, 1 on mobile)
-  const getVisibleCards = () => {
-    const cards = []
-    for (let i = 0; i < 3; i++) {
-      const index = (currentIndex + i) % features.length
-      cards.push({ ...features[index], originalIndex: index })
-    }
-    return cards
-  }
-
   return (
     <section ref={sectionRef} id="features" className="relative py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0">
       <div className="max-w-[1400px] mx-auto">
