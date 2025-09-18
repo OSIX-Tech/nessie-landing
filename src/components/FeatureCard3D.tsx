@@ -52,13 +52,12 @@ function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
   return (
     <div 
       ref={cardRef}
-      className="group relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 transition-all duration-300"
+      className="group relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 transition-all duration-300 h-full"
       style={{
         background: 'rgba(10, 10, 10, 0.9)',
         border: '1px solid rgba(255, 255, 255, 0.15)',
         backdropFilter: 'blur(10px)',
         transformStyle: 'preserve-3d',
-        animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
       }}>
       

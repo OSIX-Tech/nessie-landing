@@ -11,10 +11,10 @@ type UseCase = {
   benefits: string[]
   timesSaved: string
   mainMetric: { value: string; label: string }
-  visual: { icon: any; color: string }
+  visual: { icon: React.ReactNode; color: string }
   metrics: {
     chartType: 'bar' | 'line' | 'area' | 'radar'
-    data: any[]
+    data: Record<string, number | string>[]
     primaryColor: string
     kpis: { label: string; value: string; change?: string }[]
   }
@@ -288,11 +288,11 @@ function UseCasesSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   
   return (
-    <section ref={sectionRef} id="use-cases" className="relative min-h-[150vh] py-12 md:py-16 lg:py-20 px-6 md:px-12 lg:px-24 opacity-0 flex flex-col justify-center">
+    <section ref={sectionRef} id="use-cases" className="relative min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 flex flex-col justify-center">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8">
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold mb-6"
+        <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 md:mb-8">
+          <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold mb-4 sm:mb-6"
                 style={{ 
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -300,8 +300,8 @@ function UseCasesSection() {
                 }}>
             CASOS DE USO
           </span>
-          <h2 className="heading-lg mb-6" style={{ color: 'rgb(var(--color-white))' }}>
-            Transforma tu forma 
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6" style={{ color: 'rgb(var(--color-white))' }}>
+            Transforma tu forma
             <br />
             <span style={{
               background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
@@ -310,32 +310,32 @@ function UseCasesSection() {
               backgroundClip: 'text'
             }}>de trabajar con documentos</span>
           </h2>
-          <p className="text-xl" style={{ 
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-0" style={{
             color: 'rgb(var(--color-gray-400))',
             lineHeight: 1.6
           }}>
-            Descubre cómo profesionales de diferentes sectores están revolucionando 
+            Descubre cómo profesionales de diferentes sectores están revolucionando
             su productividad con Nessie.
           </p>
         </div>
 
         {/* Interactive Use Case Showcase */}
         <div className="relative">
-          {/* Section instruction */}
-          <div className="text-center mb-6">
-            <p className="text-sm font-medium animate-pulse" style={{ color: 'rgb(var(--color-gray-400))' }}>
+          {/* Section instruction - Hidden on mobile */}
+          <div className="hidden sm:block text-center mb-4 sm:mb-6">
+            <p className="text-xs sm:text-sm font-medium animate-pulse" style={{ color: 'rgb(var(--color-gray-400))' }}>
               ← Haz clic en un perfil para explorar su caso de uso →
             </p>
             <div className="flex justify-center items-center gap-2 mt-2">
-              <div className="w-2 h-2 rounded-full bg-white/40 animate-bounce"></div>
-              <div className="w-2 h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-2 h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/40 animate-bounce"></div>
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           </div>
 
-          {/* Navigation Tabs - 3D Card Style */}
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex p-2 gap-3 rounded-3xl"
+          {/* Navigation Tabs - Scrollable on mobile */}
+          <div className="flex justify-center mb-6 sm:mb-8">
+            <div className="inline-flex p-1.5 sm:p-2 gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl overflow-x-auto max-w-full"
                  style={{
                    background: 'rgba(10, 10, 10, 0.9)',
                    border: '1px solid rgba(255, 255, 255, 0.15)',
@@ -346,7 +346,7 @@ function UseCasesSection() {
                 <button
                   key={useCase.id}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden px-4 py-3 pb-8 rounded-2xl font-semibold text-sm transition-all duration-300 min-w-[140px] cursor-pointer ${
+                  className={`group relative overflow-hidden px-3 sm:px-4 py-2.5 sm:py-3 pb-6 sm:pb-8 rounded-xl sm:rounded-2xl font-semibold text-[11px] sm:text-sm transition-all duration-300 min-w-[100px] sm:min-w-[140px] cursor-pointer ${
                     activeIndex === index 
                       ? 'transform-gpu' 
                       : 'transform-gpu hover:scale-105'
@@ -388,7 +388,7 @@ function UseCasesSection() {
                   )}
                   
                   {/* Icon container */}
-                  <div className={`w-8 h-8 mx-auto mb-3 rounded-xl flex items-center justify-center transition-all duration-500 ${
+                  <div className={`w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-500 ${
                     activeIndex === index ? 'scale-110 rotate-12' : 'group-hover:scale-110'
                   }`}
                        style={{
@@ -401,22 +401,22 @@ function UseCasesSection() {
                     <div className={`transition-colors duration-300 ${
                       activeIndex === index ? 'text-white' : 'text-white/70'
                     }`}>
-                      {React.cloneElement(useCase.visual.icon, { 
-                        className: "w-5 h-5",
+                      {React.cloneElement(useCase.visual.icon, {
+                        className: "w-4 h-4 sm:w-5 sm:h-5",
                         strokeWidth: activeIndex === index ? 2 : 1.5
                       })}
                     </div>
                   </div>
                   
                   {/* Text */}
-                  <div className={`text-sm font-bold mb-2 transition-colors duration-300 ${
+                  <div className={`text-[10px] sm:text-sm font-bold mb-1.5 sm:mb-2 transition-colors duration-300 ${
                     activeIndex === index ? 'text-white' : 'text-white/80'
                   }`} style={{ transform: 'translateZ(15px)' }}>
                     {useCase.audience.split(' ')[0]}
                   </div>
                   
                   {/* Category badge */}
-                  <div className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-1 rounded-full text-xs font-normal transition-all duration-300 ${
+                  <div className={`absolute bottom-1.5 sm:bottom-2 left-1/2 transform -translate-x-1/2 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-xs font-normal transition-all duration-300 ${
                     activeIndex === index 
                       ? 'bg-white/5 text-white/60 border border-white/10' 
                       : 'bg-white/3 text-white/40 border border-white/5'
@@ -439,7 +439,7 @@ function UseCasesSection() {
           </div>
 
           {/* Active Use Case Display - Full Viewport */}
-          <div className="relative min-h-[70vh] overflow-hidden flex-1">
+          <div className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] overflow-hidden flex-1">
             <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ 
@@ -450,14 +450,14 @@ function UseCasesSection() {
               {useCases.map((useCase, index) => (
                 <div
                   key={useCase.id}
-                  className="flex-shrink-0 px-6"
+                  className="flex-shrink-0 px-2 sm:px-4 md:px-6"
                   style={{ width: `${100 / useCases.length}%` }}
                 >
-                  <div className="grid lg:grid-cols-5 gap-12 items-center h-full">
+                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 md:gap-12 items-center h-full">
                     {/* Content Side - 3 columns */}
-                  <div className="lg:col-span-3 space-y-8 flex flex-col justify-center">
+                  <div className="lg:col-span-3 space-y-4 sm:space-y-6 md:space-y-8 flex flex-col justify-center">
                     {/* Category Badge & Time Saved */}
-                    <div className="flex items-center gap-4 -ml-2">
+                    <div className="flex items-center gap-2 sm:gap-4 sm:-ml-2">
                       <span 
                         className="px-4 py-2 rounded-full text-sm font-semibold"
                         style={{
@@ -475,20 +475,20 @@ function UseCasesSection() {
 
                     {/* Title & Description */}
                     <div>
-                      <h3 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'rgb(var(--color-white))' }}>
+                      <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3 md:mb-4" style={{ color: 'rgb(var(--color-white))' }}>
                         {useCase.title}
                       </h3>
-                      <p className="text-base md:text-lg" style={{ color: 'rgb(var(--color-gray-300))', lineHeight: 1.7 }}>
+                      <p className="text-sm sm:text-base md:text-lg" style={{ color: 'rgb(var(--color-gray-300))', lineHeight: 1.6 }}>
                         {useCase.description}
                       </p>
                     </div>
 
-                    {/* Benefits List - Expanded */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {useCase.benefits.map((benefit, idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <div className="w-2 h-2 rounded-full bg-white mt-2 flex-shrink-0"></div>
-                          <span className="text-sm leading-relaxed" style={{ color: 'rgb(var(--color-gray-300))' }}>
+                    {/* Benefits List - Compact on mobile */}
+                    <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
+                      {useCase.benefits.slice(0, 4).map((benefit, idx) => (
+                        <div key={idx} className="flex items-start gap-2 sm:gap-3">
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white mt-1.5 sm:mt-2 flex-shrink-0"></div>
+                          <span className="text-xs sm:text-sm leading-relaxed" style={{ color: 'rgb(var(--color-gray-300))' }}>
                             {benefit}
                           </span>
                         </div>
@@ -537,9 +537,9 @@ function UseCasesSection() {
                     )}
                   </div>
 
-                  {/* Visual Side - 2 columns with metrics */}
-                  <div className="lg:col-span-2 relative flex items-center justify-center">
-                    <div className="w-full max-w-lg space-y-6 pt-2">
+                  {/* Visual Side - Hidden on mobile, shown on tablet+ */}
+                  <div className="hidden sm:block lg:col-span-2 relative sm:flex items-center justify-center">
+                    <div className="w-full max-w-lg space-y-4 sm:space-y-6 pt-2">
                       {/* Chart Section - 3D Card Style */}
                       <div className="group relative overflow-hidden rounded-3xl p-8 transition-all duration-300"
                            style={{

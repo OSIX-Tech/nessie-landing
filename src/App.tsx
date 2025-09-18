@@ -26,6 +26,8 @@ function App() {
       {/* Content */}
       <div className="relative">
         <Navbar />
+        {/* Mobile spacer to avoid overlap with fixed navbar */}
+        <div className="block md:hidden h-16 sm:h-20" aria-hidden="true" />
         <Hero />
       
         {/* New sections from v0.6 */}

@@ -7,16 +7,16 @@ function Footer() {
       background: 'rgba(5, 5, 5, 0.95)',
       backdropFilter: 'blur(10px)'
     }}>
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-16">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-8 sm:py-12 md:py-16">
         {/* Main footer content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12">
           {/* Brand column */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-1 sm:col-span-2 md:col-span-1">
             <div className="mb-4">
-              <h3 className="text-2xl font-bold" style={{ color: 'rgb(var(--color-white))' }}>
+              <h3 className="text-xl sm:text-2xl font-bold" style={{ color: 'rgb(var(--color-white))' }}>
                 Nessie
               </h3>
-              <p className="text-sm mt-2" style={{ color: 'rgb(var(--color-gray-400))' }}>
+              <p className="text-xs sm:text-sm mt-2" style={{ color: 'rgb(var(--color-gray-400))' }}>
                 Tu conocimiento empresarial, reinventado con IA.
               </p>
             </div>
@@ -42,13 +42,13 @@ function Footer() {
           
           {/* Product column */}
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: 'rgb(var(--color-white))' }}>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base" style={{ color: 'rgb(var(--color-white))' }}>
               Producto
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5 sm:space-y-2">
               {['Características', 'Integraciones', 'Precios', 'Roadmap', 'Changelog'].map(item => (
                 <li key={item}>
-                  <a href="#" className="text-sm hover:text-white transition-colors" 
+                  <a href="#" className="text-xs sm:text-sm hover:text-white transition-colors" 
                      style={{ color: 'rgb(var(--color-gray-400))' }}>
                     {item}
                   </a>
@@ -59,13 +59,13 @@ function Footer() {
           
           {/* Company column */}
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: 'rgb(var(--color-white))' }}>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base" style={{ color: 'rgb(var(--color-white))' }}>
               Empresa
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5 sm:space-y-2">
               {['Sobre nosotros', 'Blog', 'Carreras', 'Contacto', 'Partners'].map(item => (
                 <li key={item}>
-                  <a href="#" className="text-sm hover:text-white transition-colors" 
+                  <a href="#" className="text-xs sm:text-sm hover:text-white transition-colors" 
                      style={{ color: 'rgb(var(--color-gray-400))' }}>
                     {item}
                   </a>
@@ -76,13 +76,13 @@ function Footer() {
           
           {/* Resources column */}
           <div>
-            <h4 className="font-semibold mb-4" style={{ color: 'rgb(var(--color-white))' }}>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base" style={{ color: 'rgb(var(--color-white))' }}>
               Recursos
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5 sm:space-y-2">
               {['Documentación', 'API', 'Guías', 'Status', 'Seguridad'].map(item => (
                 <li key={item}>
-                  <a href="#" className="text-sm hover:text-white transition-colors" 
+                  <a href="#" className="text-xs sm:text-sm hover:text-white transition-colors" 
                      style={{ color: 'rgb(var(--color-gray-400))' }}>
                     {item}
                   </a>
@@ -93,12 +93,12 @@ function Footer() {
         </div>
         
         {/* Bottom bar */}
-        <div className="pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-xs text-center md:text-left" style={{ color: 'rgb(var(--color-gray-400))' }}>
+        <div className="pt-6 sm:pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+            <div className="text-[10px] sm:text-xs text-center sm:text-left" style={{ color: 'rgb(var(--color-gray-400))' }}>
               © {currentYear} Nessie by OSIX Tech. Todos los derechos reservados.
             </div>
-            <div className="flex gap-6 text-xs">
+            <div className="flex gap-4 sm:gap-6 text-[10px] sm:text-xs">
               <a href="#" className="hover:text-white transition-colors" 
                  style={{ color: 'rgb(var(--color-gray-400))' }}>
                 Privacidad
