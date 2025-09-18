@@ -297,7 +297,7 @@ function ProductSection() {
               key={feature.id}
               className="feature-card flex-none w-full px-3 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-48 snap-center flex items-center py-4 sm:py-0"
               aria-current={index === activeIndex}
-              style={{ minHeight: '70vh', minHeight: 'min(70vh, 600px)' }}
+              style={{ minHeight: 'min(70vh, 600px)' }}
             >
               <div
                 className="w-full max-w-5xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden transform transition-all duration-500"
@@ -356,7 +356,7 @@ function ProductSection() {
                 {/* Video Container - Mobile optimized */}
                 <div className="relative aspect-[4/3] sm:aspect-video bg-black">
                   <video
-                    ref={el => videoRefs.current[index] = el}
+                    ref={el => { videoRefs.current[index] = el }}
                     poster={feature.video.poster}
                     muted={mutedVideos.has(index)}
                     playsInline
@@ -488,7 +488,7 @@ function ProductSection() {
       </div>
 
       {/* CSS for hiding scrollbar */}
-      <style jsx>{`
+      <style>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }

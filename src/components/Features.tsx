@@ -220,7 +220,6 @@ function Features() {
                 >
                   <FeatureCard3D
                     feature={feature}
-                    index={index}
                   />
                 </div>
               ))}

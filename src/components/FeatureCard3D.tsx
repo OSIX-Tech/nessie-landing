@@ -7,10 +7,9 @@ interface FeatureCard3DProps {
     icon: React.ReactNode
     gradient: string
   }
-  index: number
 }
 
-function FeatureCard3D({ feature, index }: FeatureCard3DProps) {
+function FeatureCard3D({ feature }: FeatureCard3DProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const glowRef = useRef<HTMLDivElement>(null)
 

@@ -401,10 +401,10 @@ function UseCasesSection() {
                     <div className={`transition-colors duration-300 ${
                       activeIndex === index ? 'text-white' : 'text-white/70'
                     }`}>
-                      {React.cloneElement(useCase.visual.icon, {
+                      {useCase.visual.icon && React.isValidElement(useCase.visual.icon) ? React.cloneElement(useCase.visual.icon as React.ReactElement<any>, {
                         className: "w-4 h-4 sm:w-5 sm:h-5",
                         strokeWidth: activeIndex === index ? 2 : 1.5
-                      })}
+                      }) : useCase.visual.icon}
                     </div>
                   </div>
                   
@@ -582,7 +582,7 @@ function UseCasesSection() {
                                    transform: 'translateZ(20px)'
                                  }}>
                               <div className="text-white transition-transform duration-500">
-                                {React.cloneElement(useCase.visual.icon, { className: "w-6 h-6" })}
+                                {useCase.visual.icon && React.isValidElement(useCase.visual.icon) ? React.cloneElement(useCase.visual.icon as React.ReactElement<any>, { className: "w-6 h-6" }) : useCase.visual.icon}
                               </div>
                             </div>
                             <div>
