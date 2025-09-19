@@ -1,49 +1,61 @@
 import { useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { supabase } from '../lib/supabase'
 
 function Wishlist() {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const [emailError, setEmailError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const sectionRef = useScrollAnimation()
 
-  const validateCorporateEmail = (email: string) => {
-    const freeEmailProviders = [
-      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 
-      'aol.com', 'icloud.com', 'protonmail.com', 'mail.com',
-      'yandex.com', 'zoho.com'
-    ]
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     
-    const emailDomain = email.split('@')[1]?.toLowerCase()
-    
-    if (!emailDomain) {
+    if (!emailRegex.test(email)) {
       return 'Email inválido'
-    }
-    
-    if (freeEmailProviders.includes(emailDomain)) {
-      return 'Por favor, usa tu email corporativo'
     }
     
     return ''
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    const error = validateCorporateEmail(email)
+    const error = validateEmail(email)
     if (error) {
       setEmailError(error)
       return
     }
     
-    if (email) {
-      setEmailError('')
-      setIsSubscribed(true)
-      setTimeout(() => {
-        setIsSubscribed(false)
-        setEmail('')
-      }, 3000)
+    if (!email) return
+
+    setIsLoading(true)
+    setEmailError('')
+
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([{ email }])
+
+      if (error) {
+        if (error.code === '23505') {
+          setEmailError('Este email ya está registrado')
+        } else {
+          setEmailError('Error al registrar. Inténtalo de nuevo.')
+        }
+      } else {
+        setIsSubscribed(true)
+        setTimeout(() => {
+          setIsSubscribed(false)
+          setEmail('')
+        }, 3000)
+      }
+    } catch (error) {
+      setEmailError('Error de conexión. Inténtalo de nuevo.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -105,7 +117,7 @@ function Wishlist() {
               }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              placeholder="Ingresa tu email corporativo"
+              placeholder="Ingresa tu email"
               className="flex-1 px-3 sm:px-4 md:px-6 py-2.5 sm:py-2 bg-transparent text-[13px] md:text-base outline-none rounded-xl sm:rounded-none"
               style={{
                 color: 'rgb(var(--color-black))'
@@ -114,13 +126,22 @@ function Wishlist() {
             />
             <button
               type="submit"
-              className="w-full sm:w-auto mt-1.5 sm:mt-0 px-5 md:px-8 py-2.5 sm:py-2.5 md:py-3 rounded-xl sm:rounded-full font-semibold text-[13px] md:text-base transition-all hover:scale-105 whitespace-nowrap"
+              disabled={isLoading}
+              className="w-full sm:w-auto mt-1.5 sm:mt-0 px-5 md:px-8 py-2.5 sm:py-2.5 md:py-3 rounded-xl sm:rounded-full font-semibold text-[13px] md:text-base transition-all hover:scale-105 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               style={{
                 background: isSubscribed ? 'rgb(var(--color-emerald-500))' : 'rgb(var(--color-black))',
                 color: 'rgb(var(--color-white))',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
               }}>
-              {isSubscribed ? (
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Guardando...
+                </span>
+              ) : isSubscribed ? (
                 <span className="flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
