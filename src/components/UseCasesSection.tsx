@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, AreaChart, Area } from 'recharts'
+import MobileCarousel from './UseCasesSectionMobile'
 
 type UseCase = { 
   id: string
@@ -288,10 +289,10 @@ function UseCasesSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   
   return (
-    <section ref={sectionRef} id="use-cases" className="relative min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 flex flex-col justify-center">
-      <div className="max-w-[1600px] mx-auto">
+    <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden md:min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center">
+      <div className="md:max-w-[1600px] w-full mx-auto">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 md:mb-8">
+        <div className="text-center md:max-w-3xl mx-auto mb-4 sm:mb-6 md:mb-8">
           <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold mb-4 sm:mb-6"
                 style={{ 
                   background: 'rgba(255, 255, 255, 0.1)',
@@ -300,29 +301,33 @@ function UseCasesSection() {
                 }}>
             CASOS DE USO
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6" style={{ color: 'rgb(var(--color-white))' }}>
-            Transforma tu forma
-            <br />
-            <span style={{
+          <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 px-2 sm:px-0" style={{ color: 'rgb(var(--color-white))' }}>
+            <span className="block md:inline">Transforma tu forma</span>
+            <span className="md:hidden"> </span>
+            <span className="block md:inline" style={{
               background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>de trabajar con documentos</span>
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-0" style={{
+          <p className="text-xs sm:text-base md:text-lg lg:text-xl px-2 sm:px-0" style={{
             color: 'rgb(var(--color-gray-400))',
             lineHeight: 1.6
           }}>
-            Descubre cómo profesionales de diferentes sectores están revolucionando
-            su productividad con Nessie.
+            <span className="hidden md:inline">Descubre cómo profesionales de diferentes sectores están revolucionando
+            su productividad con Nessie.</span>
+            <span className="md:hidden">Desliza para explorar</span>
           </p>
         </div>
 
-        {/* Interactive Use Case Showcase */}
-        <div className="relative">
-          {/* Section instruction - Hidden on mobile */}
-          <div className="hidden sm:block text-center mb-4 sm:mb-6">
+        {/* Mobile Carousel - Only visible on mobile */}
+        <MobileCarousel useCases={useCases} />
+
+        {/* Desktop Interactive Use Case Showcase - Hidden on mobile */}
+        <div className="hidden md:block relative">
+          {/* Section instruction */}
+          <div className="text-center mb-4 sm:mb-6">
             <p className="text-xs sm:text-sm font-medium animate-pulse" style={{ color: 'rgb(var(--color-gray-400))' }}>
               ← Haz clic en un perfil para explorar su caso de uso →
             </p>
@@ -333,7 +338,7 @@ function UseCasesSection() {
             </div>
           </div>
 
-          {/* Navigation Tabs - Scrollable on mobile */}
+          {/* Navigation Tabs */}
           <div className="flex justify-center mb-6 sm:mb-8">
             <div className="inline-flex p-1.5 sm:p-2 gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl overflow-x-auto max-w-full"
                  style={{

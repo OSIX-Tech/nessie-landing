@@ -1,112 +1,87 @@
-# Especificación — Carrusel horizontal de features con video (mobile-first)
+# Encargo: Adaptación Mobile-Only — Sección “Casos de uso” (SaaS técnico)
+
+**IMPORTANTE:**  
+- **No modifiques el diseño de escritorio (≥ 1024px).**  
+- La adaptación es **exclusiva para móviles** (≤ 768px).  
+- Mantén intacta la API de datos, props y estructura general usada en desktop.  
+- Si necesitas estilos, condicionalos con breakpoints (`md:`, `lg:`) para no afectar desktop.
+
+---
 
 ## Objetivo
-Presentar las funcionalidades clave del SaaS en **tarjetas deslizables** (swipe) con **video corto** por feature, optimizado para móviles, claro, rápido y medible.
+Convertir la sección “Casos de uso” en **móvil** a un **carrusel de tarjetas swipeables** con **scroll-snap**, mostrando **un perfil por pantalla** (tipo slides/stories), con navegación fluida y CTA claro. En **desktop** debe verse **exactamente igual que hoy**.
 
 ---
 
-## User stories
-- **US1 – Descubrimiento:** Como visitante móvil, quiero **deslizar** entre features para entender rápidamente qué hace el producto.
-- **US2 – Profundizar:** Como visitante, quiero **reproducir un micro-video** por feature sin salir de la página.
-- **US3 – Control:** Quiero **pausar/reanudar** el video fácilmente y **silenciar** por defecto.
-- **US4 – Orientación:** Quiero ver **indicadores de progreso** (dots) y el **título** de la feature actual.
-- **US5 – Conversión:** Quiero un **CTA visible** para probar la funcionalidad o pedir demo.
-- **US6 – Rendimiento:** Quiero que los videos **carguen solo cuando los necesito** (lazy) para que no se trabe el scroll.
+## UX (Mobile)
+- **Estructura por card (1 por perfil):**
+  1) Badge + highlight (beneficio corto),  
+  2) H2 del caso,  
+  3) Copy breve (2–3 líneas),  
+  4) Bullets (máx. 6, textos cortos),  
+  5) Tarjeta de métricas (placeholder de gráfico + 3 KPIs),  
+  6) CTA ancho (botón primario).
+- **Carrusel horizontal** con **scroll-snap** (nativo, sin librerías):  
+  - 1 card visible por vez (min-width ~ 90–100% del viewport).  
+  - **Dots** de paginación (abajo) que reflejan la card activa.  
+  - **Swipe** nativo; flechas **opcionales** y ocultas en mobile por defecto.
+- **Deep-link**: `?usecase=<id>` abre la card correspondiente (scroll hasta ella).  
+- **Sticky header opcional (mobile)**: label + título/subtítulo compactos.
 
 ---
 
-## Arquitectura de la sección
-- **Header:** Título + subtítulo corto.
-- **Controles:**  
-  - Botones Prev/Next (opcional en mobile; visibles en tablet/desktop).  
-  - **Dots** de paginación (mostrando la tarjeta activa).
-- **Carrusel (scroll horizontal, snap):** Lista de tarjetas.
-- **Tarjeta de feature (por ítem):**
-  - Ícono/emoji o pictograma.
-  - Título (H3) y **copy corto** (≤ 160 caracteres).
-  - **Chips** de capacidades (3–5).
-  - **Video preview** (muted, playsinline, loop, poster; 6–12s).
-  - **CTA primario** (“Probar”, “Ver demo”, “Empezar gratis”) y CTA secundario (opcional).
-
----
-
-## Comportamiento e interacción
-- **Desplazamiento principal:** Scroll horizontal con **snap-center** (tarjeta centrada al soltar).
-- **Autoplay de video:**  
-  - Solo **la tarjeta visible** (≥60% en viewport) **se reproduce** (muted, loop).  
-  - Al perder visibilidad, **pausa** y hace `currentTime = 0`.
-- **Lazy load:**  
-  - `loading="lazy"` en `<video poster>`.  
-  - `preload="metadata"`; reemplazar `src` desde `data-src` cuando el ítem esté a ≤ 1 tarjeta de distancia (IntersectionObserver).
-- **Gestos:** Swipe nativo. No bloquear el scroll vertical.
-- **Dots:** Clic o tap salta a la tarjeta correspondiente (scroll suave).
-- **Accesos directos:** Prev/Next desplazan **exactamente una tarjeta**.
-- **Estados de video:**  
-  - **Muted** por defecto; botón **unmute** dentro del video.  
-  - Tap en el video → **pausa/reanuda** (mostrar overlay breve “Pausado/Reproduciendo”).
+## Comportamiento
+- **Autofoco visual**: card centrada en el viewport al soltar (scroll-snap).  
+- **Activación por visibilidad**: cuando una card está ≥ 60% visible →  
+  - activar estado “activa” (para dots y animaciones leves),  
+  - **lazy-load** de métricas (renderizar KPIs/gráfico).  
+- **Dots**: tap salta a la card (scroll suave).  
+- **History**: al cambiar card, usar `history.replaceState` para actualizar `?usecase=` (opcional).
 
 ---
 
 ## Accesibilidad (a11y)
-- **Roles/labels:**  
-  - Contenedor: `role="region"`, `aria-label="Carrusel de funcionalidades"`.  
-  - Dots: `role="tablist"`, cada dot `role="tab"` con `aria-selected`.  
-  - Tarjeta activa: `aria-current="true"`.
-- **Teclado:**  
-  - Flechas izquierda/derecha → desplazan 1 tarjeta.  
-  - Enter/Space sobre dot → activa tarjeta.  
-- **Contraste:** ≥ 4.5:1 para texto/íconos.  
-- **Texto alternativo:** `aria-label`/`title` para íconos; `aria-description` breve para el video.  
-- **Reduce motion:** Si `prefers-reduced-motion`, desactivar auto-scroll/animaciones.
+- El carrusel: `role="region"` + `aria-label="Casos de uso"`.  
+- Dots: `role="tablist"`, cada dot `role="tab"` con `aria-selected`.  
+- Card activa: `aria-current="true"`.  
+- Teclado (si aplica): ← → cambia card; Enter/Space activa dot.  
+- **Contraste** ≥ 4.5:1; respetar `prefers-reduced-motion` (sin animaciones).
 
 ---
 
-## Contenido y microcopy
-- **Título de sección:** “Explora nuestras funcionalidades” (máx. 60 caracteres).  
-- **Subtítulo:** “Desliza para ver demos cortas en vídeo.”  
-- **Tarjetas (recomendado 4–6):**  
-  - **H3:** 30–40 caracteres.  
-  - **Descripción:** 120–160 caracteres, 1 frase de valor.  
-  - **Chips:** sustantivos claros (2–3 palabras).  
-  - **Video:** 6–12s, 9:16 o 4:5 para móvil, sin texto importante pegado a bordes.  
-- **CTA primario:** “Probar esta funcionalidad” o “Empezar gratis”.
+## Rendimiento
+- **Lazy-load** de métricas (IntersectionObserver, umbral 0.5–0.6).  
+- Diferir cualquier animación pesada; usar opacidad/translate suave solo si no hay reduced-motion.  
+- Evitar reflow forzado y listeners en scroll continuo; usar IO.
 
 ---
 
-## Data model (contenido)
+## Restricciones (críticas)
+- **No tocar desktop**: nada en ≥ `lg:` debe cambiar.  
+- **Mobile-only**: usa utilidades `md:hidden`/`md:flex` o clases condicionadas para mostrar la **vista swipeable** solo en mobile y mantener la vista actual para desktop.  
+- **Sin dependencias** externas (no libs de carrusel).  
+- Mantener props/contratos existentes del componente.
+
+---
+
+## Data model (referencia)
+*(Usa el modelo actual. Si hace falta ejemplo para pruebas, sigue este esquema)*
+
 ```yaml
-section:
-  title: "Explora nuestras funcionalidades"
-  subtitle: "Desliza para ver demos cortas en vídeo."
-  cta_global: null  # opcional
-
-features:
-  - id: "investigacion-instantanea"
-    icon: "🔎"
-    title: "Investigación Instantánea"
-    description: "Analiza miles de documentos en segundos y encuentra conexiones ocultas."
-    chips: ["Búsqueda semántica", "Referencias cruzadas", "Resúmenes automáticos"]
-    video:
-      poster: "/videos/investigacion/poster.jpg"
-      src_mp4: "/videos/investigacion/preview.mp4"
-      duration_s: 9
-    cta:
-      label: "Probar esta funcionalidad"
-      href: "/demo/investigacion"
-  - id: "compliance-automatizado"
-    icon: "🛡️"
-    title: "Compliance Automatizado"
-    description: "Auditoría continua con alertas en tiempo real y audit trail completo."
-    chips: ["Detección proactiva", "Alertas en tiempo 
-    Velocidad extrema
-    Respuestas en milisegundos con caché inteligente y arquitectura optimizada.
-    
-    Explorar
-    real", "Audit trail"]
-    video:
-      poster: "/videos/compliance/poster.jpg"
-      src_mp4: "/videos/compliance/preview.mp4"
-      duration_s: 8
-    cta:
-      label: "Ver demo"
-      href: "/demo/compliance"
+use_cases:
+  - id: "estudiantes"
+    badge: { text: "Personal", highlight: "87% menos tiempo" }
+    h2: "Estudio inteligente con IA"
+    copy: "Transforma PDFs largos en resúmenes estructurados con citas verificables."
+    bullets:
+      - "Resúmenes jerárquicos"
+      - "Citas trazables"
+      - "Fichas por tema"
+      - "Conceptos clave"
+      - "Integración gestores"
+      - "Preguntas de repaso"
+    kpis:
+      - { value: "87%", label: "Tiempo ahorrado" }
+      - { value: "156", label: "Papers procesados" }
+      - { value: "340", label: "Notas generadas" }
+    cta: { label: "Probar demo estudiantil", href: "/demo/estudiantes" }
