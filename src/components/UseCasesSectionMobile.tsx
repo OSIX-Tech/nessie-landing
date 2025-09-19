@@ -33,27 +33,6 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
   const observerRef = useRef<IntersectionObserver | null>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  // Deep linking support
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const usecase = params.get('usecase')
-    if (usecase) {
-      const index = useCases.findIndex(uc => uc.id === usecase)
-      if (index !== -1) {
-        setActiveIndex(index)
-        setTimeout(() => {
-          cardRefs.current[index]?.scrollIntoView({ behavior: 'smooth', inline: 'center' })
-        }, 100)
-      }
-    }
-  }, [useCases])
-
-  // Update URL when active card changes
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    params.set('usecase', useCases[activeIndex].id)
-    window.history.replaceState({}, '', `${window.location.pathname}?${params}`)
-  }, [activeIndex, useCases])
 
   // Intersection Observer for detecting active card
   useEffect(() => {
