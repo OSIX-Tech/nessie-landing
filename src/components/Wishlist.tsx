@@ -48,14 +48,14 @@ function Wishlist() {
   }
 
   return (
-    <section ref={sectionRef} id="wishlist" className="py-12 sm:py-16 md:py-24 relative overflow-hidden opacity-0">
+    <section ref={sectionRef} id="wishlist" className="py-10 sm:py-16 md:py-24 relative overflow-hidden opacity-0">
       {/* Subtle overlay for depth */}
       <div className="absolute inset-0 opacity-30"
            style={{
              background: 'radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%)'
            }}></div>
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 md:px-12 text-center">
+      <div className="relative max-w-4xl mx-auto px-5 sm:px-6 md:px-12 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6"
              style={{
@@ -69,7 +69,7 @@ function Wishlist() {
         </div>
 
         {/* Heading */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 px-2 sm:px-0"
+        <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 px-0 sm:px-0"
             style={{ color: 'rgb(var(--color-white))' }}>
           Sé de los primeros
           <br />
@@ -82,14 +82,14 @@ function Wishlist() {
         </h2>
 
         {/* Description */}
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 md:mb-12 max-w-xs sm:max-w-md md:max-w-2xl mx-auto leading-relaxed px-2 sm:px-0"
+        <p className="text-[13px] sm:text-base md:text-lg lg:text-xl mb-5 sm:mb-8 md:mb-12 max-w-[280px] sm:max-w-md md:max-w-2xl mx-auto leading-relaxed px-0 sm:px-0"
            style={{ color: 'rgb(var(--color-gray-400))' }}>
           Únete a la lista de espera y obtén acceso prioritario cuando lancemos.
           Sin spam, solo actualizaciones importantes.
         </p>
 
         {/* Email form */}
-        <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-4 sm:mb-6 md:mb-8 px-2 sm:px-0">
+        <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-3 sm:mb-6 md:mb-8 px-0 sm:px-0">
           <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center p-2 rounded-2xl sm:rounded-full transition-all duration-300"
                style={{ 
                  background: 'rgb(var(--color-white))',
@@ -106,7 +106,7 @@ function Wishlist() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="Ingresa tu email corporativo"
-              className="flex-1 px-4 sm:px-4 md:px-6 py-3 sm:py-2 bg-transparent text-sm md:text-base outline-none rounded-xl sm:rounded-none"
+              className="flex-1 px-3 sm:px-4 md:px-6 py-2.5 sm:py-2 bg-transparent text-[13px] md:text-base outline-none rounded-xl sm:rounded-none"
               style={{
                 color: 'rgb(var(--color-black))'
               }}
@@ -114,7 +114,7 @@ function Wishlist() {
             />
             <button
               type="submit"
-              className="w-full sm:w-auto mt-2 sm:mt-0 px-6 md:px-8 py-3 sm:py-2.5 md:py-3 rounded-xl sm:rounded-full font-semibold text-sm md:text-base transition-all hover:scale-105 whitespace-nowrap"
+              className="w-full sm:w-auto mt-1.5 sm:mt-0 px-5 md:px-8 py-2.5 sm:py-2.5 md:py-3 rounded-xl sm:rounded-full font-semibold text-[13px] md:text-base transition-all hover:scale-105 whitespace-nowrap"
               style={{
                 background: isSubscribed ? 'rgb(var(--color-emerald-500))' : 'rgb(var(--color-black))',
                 color: 'rgb(var(--color-white))',
@@ -140,7 +140,7 @@ function Wishlist() {
             </button>
           </div>
           {emailError && (
-            <p className="text-sm text-red-500 mt-2 text-center">{emailError}</p>
+            <p className="text-xs text-red-500 mt-2 text-center">{emailError}</p>
           )}
         </form>
 
@@ -156,7 +156,7 @@ function Wishlist() {
                      }}></div>
               ))}
             </div>
-            <span className="text-xs sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
+            <span className="text-[11px] sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
               <span className="font-semibold" style={{ color: 'rgb(var(--color-white))' }}>
                 2,847
               </span> personas esperando
@@ -169,7 +169,7 @@ function Wishlist() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            <span className="text-xs sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
+            <span className="text-[11px] sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
               No compartimos tu email
             </span>
           </div>
@@ -180,7 +180,7 @@ function Wishlist() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span className="text-xs sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
+            <span className="text-[11px] sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
               Acceso prioritario garantizado
             </span>
           </div>

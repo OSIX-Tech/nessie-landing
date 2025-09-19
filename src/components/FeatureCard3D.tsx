@@ -51,7 +51,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
   return (
     <div 
       ref={cardRef}
-      className="group relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 transition-all duration-300 h-full"
+      className="group relative overflow-hidden rounded-xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 h-full"
       style={{
         background: 'rgba(10, 10, 10, 0.9)',
         border: '1px solid rgba(255, 255, 255, 0.15)',
@@ -80,7 +80,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
       
       {/* Content */}
       <div className="relative z-10">
-        <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl mb-4 md:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
+        <div className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-2xl mb-3 md:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
              style={{ 
                background: 'rgba(255, 255, 255, 0.1)',
                color: 'rgb(var(--color-white))',
@@ -92,7 +92,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
           </div>
         </div>
         
-        <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-500" 
+        <h3 className="text-base md:text-xl font-bold mb-1.5 md:mb-3 transition-colors duration-500" 
             style={{ 
               color: 'rgb(var(--color-white))',
               transform: 'translateZ(15px)'
@@ -100,7 +100,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
           {feature.title}
         </h3>
         
-        <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
+        <p className="text-xs md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
            style={{ 
              color: 'rgb(var(--color-gray-400))',
              transform: 'translateZ(10px)'
@@ -109,9 +109,9 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
         </p>
         
         {/* Interactive indicator */}
-        <div className="mt-4 md:mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+        <div className="mt-3 md:mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-white">Explorar</span>
+            <span className="text-xs md:text-sm text-white">Explorar</span>
             <svg className="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                     d="M17 8l4 4m0 0l-4 4m4-4H3" />

@@ -292,8 +292,8 @@ function UseCasesSection() {
     <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden md:min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center">
       <div className="md:max-w-[1600px] w-full mx-auto">
         {/* Section header */}
-        <div className="text-center md:max-w-3xl mx-auto mb-4 sm:mb-6 md:mb-8">
-          <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold mb-4 sm:mb-6"
+        <div className="text-center md:max-w-3xl mx-auto mb-3 sm:mb-6 md:mb-8">
+          <span className="inline-block px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-[9px] sm:text-xs md:text-sm font-semibold mb-3 sm:mb-6"
                 style={{ 
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -301,7 +301,7 @@ function UseCasesSection() {
                 }}>
             CASOS DE USO
           </span>
-          <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 px-2 sm:px-0" style={{ color: 'rgb(var(--color-white))' }}>
+          <h2 className="text-3xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 px-3 sm:px-0" style={{ color: 'rgb(var(--color-white))' }}>
             <span className="block md:inline">Transforma tu forma</span>
             <span className="md:hidden"> </span>
             <span className="block md:inline" style={{

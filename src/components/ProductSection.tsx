@@ -203,14 +203,14 @@ function ProductSection() {
     <section
       ref={sectionRef}
       id="product"
-      className="relative py-16 sm:py-20 md:py-28 lg:py-36 opacity-0"
+      className="relative py-12 sm:py-20 md:py-28 lg:py-36 opacity-0"
       role="region"
       aria-label="Carrusel de funcionalidades"
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
       {/* Section Header - Mobile optimized */}
-      <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8 lg:mb-12 px-4 sm:px-6">
+      <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-8 lg:mb-12 px-5 sm:px-6">
         <div className="flex justify-center mb-4 sm:mb-6">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full"
                style={{
@@ -225,7 +225,7 @@ function ProductSection() {
             </span>
           </div>
         </div>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-3 sm:mb-4 lg:mb-6"
+        <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-3 sm:mb-4 lg:mb-6"
             style={{ color: 'rgb(var(--color-white))' }}>
           Explora nuestras
           <br className="sm:hidden" />
@@ -239,7 +239,7 @@ function ProductSection() {
             funcionalidades
           </span>
         </h2>
-        <p className="text-sm sm:text-base md:text-lg lg:text-2xl max-w-2xl mx-auto px-2 sm:px-0"
+        <p className="text-[13px] sm:text-base md:text-lg lg:text-2xl max-w-2xl mx-auto px-0 sm:px-0"
            style={{ color: 'rgb(var(--color-gray-500))' }}>
           Desliza para ver demos cortas
         </p>
@@ -295,7 +295,7 @@ function ProductSection() {
           {features.map((feature, index) => (
             <div
               key={feature.id}
-              className="feature-card flex-none w-full px-3 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-48 snap-center flex items-center py-4 sm:py-0"
+              className="feature-card flex-none w-full px-4 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-48 snap-center flex items-center py-2 sm:py-0"
               aria-current={index === activeIndex}
               style={{ minHeight: 'min(70vh, 600px)' }}
             >
@@ -311,10 +311,10 @@ function ProductSection() {
                 }}
               >
                 {/* Card Header */}
-                <div className="p-4 sm:p-6 lg:p-10">
-                  <div className="flex items-start gap-3 sm:gap-4 lg:gap-5 mb-4 sm:mb-6">
+                <div className="p-3 sm:p-6 lg:p-10">
+                  <div className="flex items-start gap-2 sm:gap-4 lg:gap-5 mb-3 sm:mb-6">
                     <div
-                      className="w-11 h-11 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0"
+                      className="w-9 h-9 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg sm:rounded-2xl flex items-center justify-center flex-shrink-0"
                       style={{
                         background: 'rgba(255, 255, 255, 0.03)',
                         border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -324,11 +324,11 @@ function ProductSection() {
                       {feature.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg sm:text-xl lg:text-3xl font-bold mb-1 sm:mb-2"
+                      <h3 className="text-base sm:text-xl lg:text-3xl font-bold mb-0.5 sm:mb-2"
                           style={{ color: 'rgb(var(--color-white))' }}>
                         {feature.title}
                       </h3>
-                      <p className="text-xs sm:text-sm lg:text-lg leading-relaxed"
+                      <p className="text-[11px] sm:text-sm lg:text-lg leading-relaxed"
                          style={{ color: 'rgb(var(--color-gray-500))' }}>
                         {feature.description}
                       </p>
@@ -340,7 +340,7 @@ function ProductSection() {
                     {feature.chips.map((chip, i) => (
                       <span
                         key={i}
-                        className="px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-full text-[10px] sm:text-xs lg:text-sm font-medium"
+                        className="px-2 py-0.5 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-full text-[9px] sm:text-xs lg:text-sm font-medium"
                         style={{
                           background: 'rgba(255, 255, 255, 0.05)',
                           color: 'rgb(var(--color-gray-400))',

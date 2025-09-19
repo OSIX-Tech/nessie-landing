@@ -34,8 +34,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
   const navItems = [
     { label: 'Producto', href: '#product' },
     { label: 'Características', href: '#features' },
-    { label: 'Casos de uso', href: '#use-cases' },
-    { label: 'Precios', href: '#pricing' }
+    { label: 'Casos de uso', href: '#use-cases' }
   ]
 
   const handleNavClick = (href: string) => {
@@ -174,33 +173,22 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
               style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
             />
 
-            {/* CTA Buttons */}
-            <div className="px-4 py-8 space-y-3">
-              <button
-                className="w-full px-6 py-3 rounded-full text-sm font-medium transition-all duration-200 hover:bg-white/10 active:scale-95"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  color: 'white',
-                  opacity: 0,
-                  animation: 'fadeInUp 0.5s ease-out 0.4s forwards'
-                }}
-                onClick={() => setIsOpen(false)}
-              >
-                Iniciar sesión
-              </button>
-
+            {/* CTA Button */}
+            <div className="px-4 py-8">
               <button
                 className="w-full px-6 py-3 rounded-full text-sm font-medium transition-all duration-200 hover:bg-gray-100 active:scale-95"
                 style={{
                   background: 'white',
                   color: 'black',
                   opacity: 0,
-                  animation: 'fadeInUp 0.5s ease-out 0.5s forwards'
+                  animation: 'fadeInUp 0.5s ease-out 0.4s forwards'
                 }}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false)
+                  document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
+                }}
               >
-                Probar gratis
+                Únete a la lista de espera
               </button>
             </div>
 

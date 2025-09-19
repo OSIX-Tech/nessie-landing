@@ -150,10 +150,10 @@ function Features() {
   }
 
   return (
-    <section ref={sectionRef} id="features" className="relative py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0">
+    <section ref={sectionRef} id="features" className="relative py-10 sm:py-16 md:py-24 lg:py-32 px-5 sm:px-6 md:px-12 lg:px-24 opacity-0">
       <div className="max-w-[1400px] mx-auto">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 md:mb-20 lg:mb-24">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12 md:mb-20 lg:mb-24">
           <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold mb-4 md:mb-6"
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
@@ -162,7 +162,7 @@ function Features() {
                 }}>
             CARACTERÍSTICAS
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 px-2 sm:px-0" style={{ color: 'rgb(var(--color-white))' }}>
+          <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-6 px-0 sm:px-0" style={{ color: 'rgb(var(--color-white))' }}>
             Diseñado para equipos
             <br />
             que <span style={{
@@ -172,7 +172,7 @@ function Features() {
               backgroundClip: 'text'
             }}>exigen excelencia</span>
           </h2>
-          <p className="text-sm sm:text-base md:text-lg px-4 sm:px-0" style={{ color: 'rgb(var(--color-gray-400))' }}>
+          <p className="text-[13px] sm:text-base md:text-lg px-2 sm:px-0" style={{ color: 'rgb(var(--color-gray-400))' }}>
             Cada funcionalidad está pensada para maximizar la productividad
             y minimizar la fricción en el acceso al conocimiento.
           </p>
@@ -188,7 +188,7 @@ function Features() {
             onTouchEnd={handleTouchEnd}
           >
             <div
-              className="flex gap-4 sm:gap-6 transition-transform duration-700 ease-in-out"
+              className="flex gap-3 sm:gap-6 transition-transform duration-700 ease-in-out"
               style={{
                 transform: (() => {
                   // Calculate cards to move based on group and cards per view
@@ -274,8 +274,8 @@ function Features() {
           </div>
 
           {/* Mobile Swipe Hint */}
-          <div className="flex justify-center mt-4 sm:hidden">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full"
+          <div className="flex justify-center mt-3 sm:hidden">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
                  style={{
                    background: 'rgba(255, 255, 255, 0.05)',
                    border: '1px solid rgba(255, 255, 255, 0.1)'
@@ -284,7 +284,7 @@ function Features() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M7 11l5-5m0 0l5 5m-5-5v12" transform="rotate(-90 12 12)" />
               </svg>
-              <span className="text-xs text-white/50">Desliza</span>
+              <span className="text-[11px] text-white/50">Desliza</span>
               <svg className="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M17 13l-5 5m0 0l-5-5m5 5V6" transform="rotate(-90 12 12)" />

@@ -87,11 +87,11 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
             <div
               key={useCase.id}
               ref={(el) => { cardRefs.current[index] = el }}
-              className="flex-none w-full px-4 snap-center flex items-center justify-center min-h-[500px]"
+              className="flex-none w-full px-4 snap-center flex items-center justify-center min-h-[450px]"
               aria-current={activeIndex === index ? 'true' : 'false'}
             >
               <div
-                className="relative w-full max-w-[340px] mx-auto rounded-3xl p-5 flex flex-col justify-between"
+                className="relative w-full max-w-[320px] mx-auto rounded-2xl p-4 flex flex-col justify-between"
                 style={{
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -99,13 +99,13 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                   boxShadow: activeIndex === index
                     ? '0 20px 40px rgba(0, 0, 0, 0.3)'
                     : '0 10px 30px rgba(0, 0, 0, 0.2)',
-                  minHeight: '480px'
+                  minHeight: '420px'
                 }}
               >
                 {/* Top Content */}
                 <div>
                   {/* Profile Badge & Time Saved */}
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-3">
                     <span
                       className="px-3 py-1.5 text-[10px] font-semibold rounded-full"
                       style={{
@@ -122,12 +122,12 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold mb-3 leading-tight text-center" style={{ color: 'rgb(var(--color-white))' }}>
+                  <h3 className="text-2xl font-bold mb-2 leading-tight text-center" style={{ color: 'rgb(var(--color-white))' }}>
                     {useCase.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs mb-4 line-clamp-3 leading-relaxed text-center" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                  <p className="text-[11px] mb-3 line-clamp-3 leading-relaxed text-center" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
                     {useCase.description}
                   </p>
                 </div>
@@ -136,14 +136,14 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                 <div className="flex-grow flex flex-col justify-center">
                   {/* Main Metric Highlight */}
                   <div
-                    className="rounded-2xl p-4 mb-3"
+                    className="rounded-xl p-3 mb-2"
                     style={{
                       background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
                       border: '1px solid rgba(255, 255, 255, 0.06)'
                     }}
                   >
                     <div className="text-center">
-                      <div className="text-3xl font-bold mb-1" style={{ color: 'rgb(var(--color-white))' }}>
+                      <div className="text-2xl font-bold mb-1" style={{ color: 'rgb(var(--color-white))' }}>
                         {useCase.mainMetric.value}
                       </div>
                       <div className="text-[10px] uppercase tracking-wide" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
@@ -196,7 +196,7 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                     <a
                       href={useCase.cta.href}
                       data-analytics-id={useCase.cta.analyticsId}
-                      className="block w-full text-center px-4 py-3 rounded-full text-xs font-semibold transition-all duration-200"
+                      className="block w-full text-center px-4 py-2.5 rounded-full text-xs font-semibold transition-all duration-200"
                       style={{
                         background: 'rgb(var(--color-white))',
                         color: 'rgb(var(--color-black))'
