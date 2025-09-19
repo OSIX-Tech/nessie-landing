@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { supabase } from '../lib/supabase'
+import UserInfoDialog from './UserInfoDialog'
 
 function Wishlist() {
   const [email, setEmail] = useState('')
@@ -8,6 +9,8 @@ function Wishlist() {
   const [isFocused, setIsFocused] = useState(false)
   const [emailError, setEmailError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
+  const [currentEmailId, setCurrentEmailId] = useState<number | null>(null)
   const sectionRef = useScrollAnimation()
 
   const validateEmail = (email: string) => {
@@ -18,6 +21,22 @@ function Wishlist() {
     }
     
     return ''
+  }
+
+  const getMetadata = () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    
+    return {
+      browser_language: navigator.language || navigator.languages?.[0] || 'unknown',
+      user_agent: navigator.userAgent,
+      referrer: document.referrer || 'direct',
+      country_code: null, // Se podría obtener con un servicio de geolocalización
+      utm_source: urlParams.get('utm_source'),
+      utm_medium: urlParams.get('utm_medium'),
+      utm_campaign: urlParams.get('utm_campaign'),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      screen_resolution: `${screen.width}x${screen.height}`
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,9 +54,14 @@ function Wishlist() {
     setEmailError('')
 
     try {
-      const { error } = await supabase
+      const metadata = getMetadata()
+      const { data, error } = await supabase
         .from('waitlist')
-        .insert([{ email }])
+        .insert([{ 
+          email,
+          ...metadata
+        }])
+        .select('id')
 
       if (error) {
         if (error.code === '23505') {
@@ -47,16 +71,49 @@ function Wishlist() {
         }
       } else {
         setIsSubscribed(true)
+        setCurrentEmailId(data[0]?.id || null)
+        
+        // Mostrar diálogo después de un breve delay
         setTimeout(() => {
           setIsSubscribed(false)
           setEmail('')
-        }, 3000)
+          setShowDialog(true)
+        }, 1500)
       }
     } catch (error) {
       setEmailError('Error de conexión. Inténtalo de nuevo.')
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleDialogSubmit = async (userType: string, expectedPrice: string) => {
+    if (!currentEmailId) return
+    
+    try {
+      await supabase
+        .from('waitlist')
+        .update({ 
+          user_type: userType,
+          expected_price: expectedPrice
+        })
+        .eq('id', currentEmailId)
+      
+      setShowDialog(false)
+      setCurrentEmailId(null)
+    } catch (error) {
+      console.error('Error updating user info:', error)
+    }
+  }
+
+  const handleDialogSkip = () => {
+    setShowDialog(false)
+    setCurrentEmailId(null)
+  }
+
+  const handleDialogClose = () => {
+    setShowDialog(false)
+    setCurrentEmailId(null)
   }
 
   return (
@@ -207,6 +264,14 @@ function Wishlist() {
           </div>
         </div>
       </div>
+
+      {/* Diálogo de información adicional */}
+      <UserInfoDialog
+        isOpen={showDialog}
+        onClose={handleDialogClose}
+        onSubmit={handleDialogSubmit}
+        onSkip={handleDialogSkip}
+      />
     </section>
   )
 }
