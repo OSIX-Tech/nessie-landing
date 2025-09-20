@@ -120,11 +120,6 @@ function Wishlist() {
     setCurrentEmailId(null)
   }
 
-  const handleDialogClose = () => {
-    setShowDialog(false)
-    setCurrentEmailId(null)
-  }
-
   return (
     <section ref={sectionRef} id="wishlist" className="py-10 sm:py-16 md:py-24 relative overflow-hidden opacity-0">
       {/* Subtle overlay for depth */}
@@ -277,7 +272,6 @@ function Wishlist() {
       {/* Diálogo de información adicional */}
       <UserInfoDialog
         isOpen={showDialog}
-        onClose={handleDialogClose}
         onSubmit={handleDialogSubmit}
         onSkip={handleDialogSkip}
       />

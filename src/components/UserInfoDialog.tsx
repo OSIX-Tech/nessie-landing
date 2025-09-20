@@ -3,12 +3,11 @@ import { createPortal } from 'react-dom'
 
 interface UserInfoDialogProps {
   isOpen: boolean
-  onClose: () => void
   onSubmit: (userType: string, expectedPrice: string) => void
   onSkip: () => void
 }
 
-function UserInfoDialog({ isOpen, onClose, onSubmit, onSkip }: UserInfoDialogProps) {
+function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
   const [userType, setUserType] = useState('')
   const [customUserType, setCustomUserType] = useState('')
   const [expectedPrice, setExpectedPrice] = useState('')
