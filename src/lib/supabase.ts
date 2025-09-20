@@ -12,5 +12,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 export interface WaitlistEntry {
   id?: number
   email: string
+  user_type?: string
+  expected_price?: string
   created_at?: string
+  browser_language?: string
+  user_agent?: string
+  referrer?: string
+  country_code?: string
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  timezone?: string
+  screen_resolution?: string
 }
