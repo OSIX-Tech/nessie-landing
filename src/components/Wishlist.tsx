@@ -59,13 +59,22 @@ function Wishlist() {
         .from('waitlist')
         .insert([{ 
           email,
-          ...metadata
+          browser_language: metadata.browser_language,
+          user_agent: metadata.user_agent,
+          referrer: metadata.referrer,
+          utm_source: metadata.utm_source,
+          utm_medium: metadata.utm_medium,
+          utm_campaign: metadata.utm_campaign,
+          timezone: metadata.timezone,
+          screen_resolution: metadata.screen_resolution
         }])
         .select('id')
 
       if (error) {
         if (error.code === '23505') {
           setEmailError('Este email ya está registrado')
+        } else if (error.code === '42501') {
+          setEmailError('Error de permisos. Contacta al administrador.')
         } else {
           setEmailError('Error al registrar. Inténtalo de nuevo.')
         }
