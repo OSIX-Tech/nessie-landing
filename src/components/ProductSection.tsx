@@ -90,8 +90,57 @@ function ProductSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [mutedVideos, setMutedVideos] = useState<Set<number>>(new Set(features.map((_, i) => i)))
+  const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set())
   const carouselRef = useRef<HTMLDivElement>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+
+  // Autoplay deshabilitado en desktop y móvil; solo reproducción por interacción del usuario
+
+  // Ensure first card video is initialized on mount (handles cases where IO doesn't trigger immediately)
+  useEffect(() => {
+    const firstVideo = videoRefs.current[0]
+    if (firstVideo && !loadedVideos.has(0)) {
+      firstVideo.src = '/video.mp4'
+      try {
+        firstVideo.preload = 'auto'
+        firstVideo.load()
+      } catch {}
+      setLoadedVideos(prev => new Set(prev).add(0))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Sync overlay visibility with native video controls via play/pause events
+  useEffect(() => {
+    const playHandlers: Array<(() => void) | null> = []
+    const pauseHandlers: Array<(() => void) | null> = []
+
+    videoRefs.current.forEach((video, idx) => {
+      if (!video) { playHandlers[idx] = null; pauseHandlers[idx] = null; return }
+      const onPlay = () => {
+        setPlayingVideos(prev => new Set(prev).add(idx))
+      }
+      const onPause = () => {
+        setPlayingVideos(prev => {
+          const s = new Set(prev)
+          s.delete(idx)
+          return s
+        })
+      }
+      video.addEventListener('play', onPlay)
+      video.addEventListener('pause', onPause)
+      playHandlers[idx] = onPlay
+      pauseHandlers[idx] = onPause
+    })
+
+    return () => {
+      videoRefs.current.forEach((video, idx) => {
+        if (!video) return
+        if (playHandlers[idx]) video.removeEventListener('play', playHandlers[idx] as () => void)
+        if (pauseHandlers[idx]) video.removeEventListener('pause', pauseHandlers[idx] as () => void)
+      })
+    }
+  }, [features.length])
 
   // Handle scroll to update active index and video playback
   useEffect(() => {
@@ -116,21 +165,45 @@ function ProductSection() {
           (Math.min(rect.right, containerRect.right) - Math.max(rect.left, containerRect.left)) / rect.width
         ))
 
-        // Play video if more than 60% visible
+        // Lazy load video if visible and not loaded
         if (visibilityRatio >= 0.6) {
-          if (!playingVideos.has(index) && videoRefs.current[index]) {
-            videoRefs.current[index]?.play().catch(() => {})
-            setPlayingVideos(prev => new Set(prev).add(index))
+          // Load video source if not already loaded
+          if (!loadedVideos.has(index) && videoRefs.current[index]) {
+            const video = videoRefs.current[index]!
+            if (!video.src) {
+              // Cargar el video de la carpeta public
+              video.src = '/video.mp4'
+              setLoadedVideos(prev => new Set(prev).add(index))
+            }
           }
         } else {
-          if (playingVideos.has(index) && videoRefs.current[index]) {
-            videoRefs.current[index]?.pause()
-            videoRefs.current[index]!.currentTime = 0
-            setPlayingVideos(prev => {
-              const newSet = new Set(prev)
-              newSet.delete(index)
-              return newSet
-            })
+          const video = videoRefs.current[index]
+          if (video) {
+            // Pause and reset time
+            if (!video.paused) video.pause()
+            try { video.currentTime = 0 } catch {}
+
+            // Reset to poster: drop src and reload
+            if (video.src) {
+              video.removeAttribute('src')
+              try { video.load() } catch {}
+            }
+
+            // Update tracking sets
+            if (playingVideos.has(index)) {
+              setPlayingVideos(prev => {
+                const newSet = new Set(prev)
+                newSet.delete(index)
+                return newSet
+              })
+            }
+            if (loadedVideos.has(index)) {
+              setLoadedVideos(prev => {
+                const newSet = new Set(prev)
+                newSet.delete(index)
+                return newSet
+              })
+            }
           }
         }
       })
@@ -193,9 +266,16 @@ function ProductSection() {
     if (!video) return
 
     if (video.paused) {
-      video.play().catch(() => {})
+      video.play().then(() => {
+        setPlayingVideos(prev => new Set(prev).add(index))
+      }).catch(() => {})
     } else {
       video.pause()
+      setPlayingVideos(prev => {
+        const s = new Set(prev)
+        s.delete(index)
+        return s
+      })
     }
   }
 
@@ -203,7 +283,7 @@ function ProductSection() {
     <section
       ref={sectionRef}
       id="product"
-      className="relative py-12 sm:py-20 md:py-28 lg:py-36 opacity-0"
+      className="relative py-12 sm:py-20 md:py-28 lg:py-36 opacity-0 scroll-mt-16 md:scroll-mt-24"
       role="region"
       aria-label="Carrusel de funcionalidades"
       onKeyDown={handleKeyDown}
@@ -354,24 +434,24 @@ function ProductSection() {
                 </div>
 
                 {/* Video Container - Mobile optimized */}
-                <div className="relative aspect-[4/3] sm:aspect-video bg-black">
+                <div className="relative aspect-video bg-black">
                   <video
                     ref={el => { videoRefs.current[index] = el }}
-                    poster={feature.video.poster}
+                    poster={'/nessie.png'}
                     muted={mutedVideos.has(index)}
                     playsInline
                     loop
-                    preload="metadata"
-                    data-src={feature.video.src_mp4}
+                    preload={'metadata'}
+                    controls={false}
                     onClick={() => togglePlayPause(index)}
-                    className="w-full h-full object-cover cursor-pointer"
+                    className="w-full h-full cursor-pointer object-contain sm:object-cover"
                     aria-label={`Video demo de ${feature.title}`}
                   >
-                    <source src={feature.video.src_mp4} type="video/mp4" />
+                    {/* Source will be set dynamically via lazy loading */}
                   </video>
 
                   {/* Play/Pause Overlay */}
-                  {videoRefs.current[index]?.paused && (
+                  {!playingVideos.has(index) && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                       <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full flex items-center justify-center"
                            style={{
@@ -450,41 +530,26 @@ function ProductSection() {
         </div>
       </div>
 
-      {/* Dots Pagination - Mobile optimized */}
+      {/* Dots Pagination - estilo unificado con Casos de Uso */}
       <div className="flex justify-center items-center gap-1.5 sm:gap-2 mt-3 sm:mt-6 px-4" role="tablist">
         {features.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollToCard(index)}
-            className={`transition-all duration-300 ${
-              index === activeIndex
-                ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full'
-                : 'w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white/20 hover:bg-white/30 rounded-full'
-            }`}
+            className="transition-all duration-300"
+            style={{
+              width: index === activeIndex ? '24px' : '6px',
+              height: '6px',
+              borderRadius: '3px',
+              background: index === activeIndex
+                ? 'rgb(var(--color-white))'
+                : 'rgba(255, 255, 255, 0.2)'
+            }}
             role="tab"
             aria-selected={index === activeIndex}
             aria-label={`Ir a funcionalidad ${index + 1}`}
           />
         ))}
-      </div>
-
-      {/* Mobile Swipe Hint */}
-      <div className="flex justify-center mt-2 sm:mt-4 lg:hidden">
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-             style={{
-               background: 'rgba(255, 255, 255, 0.03)',
-               border: '1px solid rgba(255, 255, 255, 0.08)'
-             }}>
-          <svg className="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M7 11l5-5m0 0l5 5m-5-5v12" transform="rotate(-90 12 12)" />
-          </svg>
-          <span className="text-[10px] text-white/50">Desliza</span>
-          <svg className="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M17 13l-5 5m0 0l-5-5m5 5V6" transform="rotate(-90 12 12)" />
-          </svg>
-        </div>
       </div>
 
       {/* CSS for hiding scrollbar */}

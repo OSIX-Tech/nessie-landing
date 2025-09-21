@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { navItems } from './navItems'
 
 interface MobileNavbarProps {
   className?: string
@@ -31,11 +32,24 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
     }
   }, [isOpen])
 
-  const navItems = [
-    { label: 'Producto', href: '#product' },
-    { label: 'Características', href: '#features' },
-    { label: 'Casos de uso', href: '#use-cases' }
-  ]
+  // IO para resaltar sección activa
+  const [activeId, setActiveId] = useState<string>('')
+  useEffect(() => {
+    const sections = navItems.map(n => n.id)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          setActiveId(entry.target.id)
+        }
+      })
+    }, { threshold: [0.5] })
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [])
 
   const handleNavClick = (href: string) => {
     setIsOpen(false)
@@ -46,86 +60,127 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
     }
   }
 
+  // Focus trap when menu is open
+  useEffect(() => {
+    if (!isOpen) return
+    const focusable = Array.from(document.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    ))
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    const handler = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last?.focus()
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault()
+          first?.focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [isOpen])
+
   return (
     <>
       {/* Mobile Navbar - Only visible on mobile */}
       <nav
-        className={`md:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${className}`}
+        className={`md:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-300 safe-top ${className}`}
+        aria-label="Navegación principal móvil"
         style={{
-          background: isScrolled || isOpen
-            ? 'rgba(0, 0, 0, 0.95)'
-            : 'rgba(0, 0, 0, 0.7)',
-          backdropFilter: 'blur(20px)',
-          borderBottom: isScrolled || isOpen
-            ? '1px solid rgba(255, 255, 255, 0.1)'
-            : '1px solid transparent'
+          background: 'transparent'
         }}
       >
-        <div className="flex items-center justify-between px-4 py-4">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <img
-              src="/favicon.png"
-              alt="Nessie"
-              className="w-8 h-8"
-              style={{
-                filter: isScrolled || isOpen ? 'brightness(1)' : 'brightness(1.2)'
-              }}
-            />
-            <span className="text-white font-semibold text-base">Nessie</span>
-          </div>
-
-          {/* Hamburger Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="relative w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-200"
+        <div className="px-3 py-3">
+          <div
+            className="relative flex items-center justify-between transition-all duration-300"
             style={{
-              background: isOpen ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
+              background: (isScrolled || isOpen) ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.55)',
+              border: '1px solid rgba(255,255,255,0.12)',
+              borderRadius: '9999px',
+              boxShadow: (isScrolled || isOpen) ? '0 10px 30px rgba(0,0,0,0.35)' : '0 6px 18px rgba(0,0,0,0.2)',
+              padding: (isScrolled || isOpen) ? '10px 12px' : '8px 12px',
+              backdropFilter: (isScrolled || isOpen) ? 'blur(10px)' : 'none'
             }}
-            aria-label="Toggle navigation menu"
-            aria-expanded={isOpen}
           >
-            <div className="w-6 h-6 relative">
-              {/* Top line */}
-              <span
-                className="absolute left-0 w-full transition-all duration-300 ease-in-out"
-                style={{
-                  height: '2px',
-                  backgroundColor: 'white',
-                  borderRadius: '1px',
-                  top: isOpen ? '50%' : '25%',
-                  transform: isOpen
-                    ? 'translateY(-50%) rotate(45deg)'
-                    : 'translateY(-50%) rotate(0deg)'
-                }}
+            {/* Logo + brand clickable to hero */}
+            <a
+              href="#hero"
+              onClick={(e) => { e.preventDefault(); document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}
+              className="flex items-center gap-2 pl-1 pr-2"
+              aria-label="Ir al inicio"
+            >
+              <img
+                src="/favicon.png"
+                alt="Nessie"
+                className="w-8 h-8"
+                style={{ filter: isScrolled || isOpen ? 'brightness(1)' : 'brightness(1.1)' }}
               />
-              {/* Middle line */}
-              <span
-                className="absolute left-0 top-1/2 w-full transition-all duration-300 ease-in-out"
-                style={{
-                  height: '2px',
-                  backgroundColor: 'white',
-                  borderRadius: '1px',
-                  transform: 'translateY(-50%)',
-                  opacity: isOpen ? 0 : 1
-                }}
-              />
-              {/* Bottom line */}
-              <span
-                className="absolute left-0 w-full transition-all duration-300 ease-in-out"
-                style={{
-                  height: '2px',
-                  backgroundColor: 'white',
-                  borderRadius: '1px',
-                  bottom: isOpen ? '50%' : '25%',
-                  transform: isOpen
-                    ? 'translateY(50%) rotate(-45deg)'
-                    : 'translateY(50%) rotate(0deg)'
-                }}
-              />
+              <span className="text-white font-semibold text-sm">Nessie</span>
+            </a>
+
+            {/* Center nav (compact, visible desde sm+) */}
+            <div className="hidden sm:flex items-center gap-2 sm:gap-3">
+              {navItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  aria-current={activeId === item.id ? 'page' : undefined}
+                  aria-label={`Ir a ${item.label}`}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.href) }}
+                  className="text-[12px] font-medium px-2 py-1 rounded-full transition-colors"
+                  style={{
+                    color: activeId === item.id ? 'rgb(0,0,0)' : 'rgba(255,255,255,0.85)',
+                    background: activeId === item.id ? 'rgb(255,255,255)' : 'transparent',
+                    border: activeId === item.id ? '1px solid rgba(255,255,255,0.9)' : '1px solid transparent'
+                  }}
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
-          </button>
+
+            <div className="flex items-center gap-2">
+              {/* CTA, estilo similar a desktop pero compacto */}
+              <a
+                href="#wishlist"
+                onClick={(e) => { e.preventDefault(); document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' }) }}
+                className="hidden sm:inline-block px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-100"
+                style={{
+                  background: isScrolled || isOpen ? 'rgb(255,255,255)' : 'rgba(255,255,255,0.12)',
+                  color: isScrolled || isOpen ? 'rgb(0,0,0)' : 'rgb(255,255,255)',
+                  border: isScrolled || isOpen ? 'none' : '1px solid rgba(255,255,255,0.25)',
+                  boxShadow: isScrolled || isOpen ? '0 6px 16px rgba(255,255,255,0.25)' : 'none'
+                }}
+              >
+                Acceso Anticipado
+              </a>
+
+              {/* Hamburger Button */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="relative w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-all duration-200"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid transparent'
+                }}
+                aria-label="Toggle navigation menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-menu"
+              >
+                <div className="w-6 h-6 relative" aria-hidden>
+                  <span className="absolute left-0 w-full transition-all duration-300 ease-in-out" style={{ height: '2px', backgroundColor: 'rgba(255,255,255,0.9)', borderRadius: '2px', top: isOpen ? '50%' : '28%', transform: isOpen ? 'translateY(-50%) rotate(45deg)' : 'translateY(-50%) rotate(0deg)' }} />
+                  <span className="absolute left-0 top-1/2 w-full transition-all duration-300 ease-in-out" style={{ height: '2px', backgroundColor: 'rgba(255,255,255,0.9)', borderRadius: '2px', transform: 'translateY(-50%)', opacity: isOpen ? 0 : 1 }} />
+                  <span className="absolute left-0 w-full transition-all duration-300 ease-in-out" style={{ height: '2px', backgroundColor: 'rgba(255,255,255,0.9)', borderRadius: '2px', bottom: isOpen ? '50%' : '28%', transform: isOpen ? 'translateY(50%) rotate(-45deg)' : 'translateY(50%) rotate(0deg)' }} />
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </nav>
 
@@ -141,6 +196,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
           onClick={() => setIsOpen(false)}
         >
           <div
+            id="mobile-menu"
             className="h-full overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
@@ -148,7 +204,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
             <div className="px-4 py-8 space-y-2">
               {navItems.map((item, index) => (
                 <a
-                  key={item.label}
+                  key={item.id}
                   href={item.href}
                   onClick={(e) => {
                     e.preventDefault()
@@ -163,6 +219,9 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
                   <span className="text-white text-lg font-medium">
                     {item.label}
                   </span>
+                  {activeId === item.id && (
+                    <span className="ml-2 align-middle inline-block w-2 h-2 rounded-full bg-white/70" />
+                  )}
                 </a>
               ))}
             </div>

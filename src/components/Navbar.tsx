@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { navItems } from './navItems'
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -15,8 +16,27 @@ function Navbar() {
     }
   }, [])
 
+  // Track active section via IntersectionObserver
+  const [activeId, setActiveId] = useState<string>('')
+  useEffect(() => {
+    const sections = navItems.map(n => n.id)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          setActiveId(entry.target.id)
+        }
+      })
+    }, { threshold: [0.5] })
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 safe-top ${
       scrolled ? 'py-4' : 'py-6'
     }`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -35,50 +55,43 @@ function Navbar() {
 
           {/* Logo - always visible */}
           <div className="flex items-center gap-3">
-            <img
-              src="/favicon.png"
-              alt="Nessie"
-              className="w-9 h-9 transition-all duration-500"
-              style={{
-                filter: scrolled ? 'brightness(1)' : 'brightness(1.2)'
-              }}
-            />
-            <span className={`font-semibold text-lg transition-all duration-500 ${
-              scrolled ? 'hidden md:block' : 'block'
-            }`} style={{ color: 'rgb(255, 255, 255)' }}>
-              Nessie
-            </span>
+            <a
+              href="#hero"
+              onClick={(e) => { e.preventDefault(); document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}
+              className="flex items-center gap-3"
+              aria-label="Ir al inicio"
+            >
+              <img
+                src="/favicon.png"
+                alt="Nessie"
+                className="w-9 h-9 transition-all duration-500"
+                style={{
+                  filter: scrolled ? 'brightness(1)' : 'brightness(1.2)'
+                }}
+              />
+              <span className={`font-semibold text-lg transition-all duration-500 ${
+                scrolled ? 'hidden md:block' : 'block'
+              }`} style={{ color: 'rgb(255, 255, 255)' }}>
+                Nessie
+              </span>
+            </a>
           </div>
 
           {/* Center Navigation - Desktop */}
           <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
-            <a href="#product"
-               onClick={(e) => {
-                 e.preventDefault()
-                 document.getElementById('product')?.scrollIntoView({ behavior: 'smooth' })
-               }}
-               className="text-sm font-medium transition-colors hover:text-white"
-               style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Producto
-            </a>
-            <a href="#features"
-               onClick={(e) => {
-                 e.preventDefault()
-                 document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
-               }}
-               className="text-sm font-medium transition-colors hover:text-white"
-               style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Características
-            </a>
-            <a href="#use-cases"
-               onClick={(e) => {
-                 e.preventDefault()
-                 document.getElementById('use-cases')?.scrollIntoView({ behavior: 'smooth' })
-               }}
-               className="text-sm font-medium transition-colors hover:text-white"
-               style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              Casos de uso
-            </a>
+            {navItems.map((item) => (
+              <a key={item.id}
+                 href={item.href}
+                 aria-current={activeId === item.id ? 'page' : undefined}
+                 onClick={(e) => {
+                   e.preventDefault()
+                   document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                 }}
+                 className="text-sm font-medium transition-colors hover:text-white"
+                 style={{ color: activeId === item.id ? 'rgb(255,255,255)' : 'rgba(255, 255, 255, 0.7)' }}>
+                {item.label}
+              </a>
+            ))}
           </div>
 
           {/* Right side - CTA */}

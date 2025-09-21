@@ -289,7 +289,7 @@ function UseCasesSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   
   return (
-    <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden md:min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center">
+    <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden md:min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center scroll-mt-16 md:scroll-mt-24">
       <div className="md:max-w-[1600px] w-full mx-auto">
         {/* Section header */}
         <div className="text-center md:max-w-3xl mx-auto mb-3 sm:mb-6 md:mb-8">

@@ -66,7 +66,7 @@ function Pricing() {
   const sectionRef = useScrollAnimation()
   
   return (
-    <section ref={sectionRef} id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0">
+    <section ref={sectionRef} id="pricing" className="py-16 md:py-24 lg:py-32 px-6 md:px-12 lg:px-24 opacity-0 scroll-mt-16 md:scroll-mt-24">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20">

@@ -8,7 +8,7 @@ function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-screen md:flex md:items-center md:justify-center overflow-hidden">
+    <section id="hero" className="relative pt-16 md:pt-0 min-h-[85vh] md:min-h-screen md:flex md:items-center md:justify-center overflow-hidden">
       {/* Subtle depth effect */}
       <div className="absolute inset-0 -z-10">
         {/* Center glow */}
@@ -37,12 +37,12 @@ function Hero() {
           <span className="relative inline-block">
             <span style={{
               color: 'rgb(var(--color-white))',
-              textShadow: '0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.2)'
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.25)'
             }}>
               segundos
             </span>
             {/* Subtle glow behind text - smaller on mobile */}
-            <div className="absolute inset-0 blur-2xl sm:blur-3xl opacity-20"
+            <div className="absolute inset-0 blur-xl sm:blur-3xl opacity-15"
                  style={{
                    background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%)'
                  }}/>
@@ -50,7 +50,7 @@ function Hero() {
         </h1>
 
         {/* Subheadline - minimal */}
-        <p className="text-base text-neutral-400 mt-2 mb-12 md:text-2xl md:max-w-2xl mx-auto md:mb-12 md:px-0"
+        <p className="text-[15px] sm:text-base text-neutral-400 mt-2 mb-10 md:text-2xl md:max-w-2xl mx-auto md:mb-12 md:px-0"
            style={{
              color: 'rgb(var(--color-gray-500))',
              animation: 'fade-in-up 0.8s ease-out 0.3s both'
@@ -61,7 +61,7 @@ function Hero() {
         {/* Dual CTA */}
         <div className="flex flex-col items-center gap-4"
              style={{ animation: 'fade-in-up 0.8s ease-out 0.4s both' }}>
-          <div className="flex flex-row items-center gap-3 w-full max-w-md">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
 
           {/* Primary CTA */}
           <a href="#wishlist"
@@ -69,7 +69,7 @@ function Hero() {
                e.preventDefault()
                document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
              }}
-             className="group relative flex-1 py-3 text-sm rounded-full font-medium transition-all duration-300 text-center"
+            className="group relative w-full sm:flex-1 py-3 text-sm rounded-full font-medium transition-all duration-300 text-center"
              style={{
                background: 'rgba(255, 255, 255, 0.95)',
                color: 'rgb(var(--color-black))',
@@ -107,7 +107,7 @@ function Hero() {
                e.preventDefault()
                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
              }}
-             className="group relative flex-1 py-3 text-sm rounded-full font-medium transition-all duration-300 text-center"
+            className="group relative w-full sm:flex-1 py-3 text-sm rounded-full font-medium transition-all duration-300 text-center"
              style={{
                background: 'rgba(255, 255, 255, 0.05)',
                color: 'rgb(var(--color-white))',
@@ -132,7 +132,7 @@ function Hero() {
           </div>
 
           {/* Minimal trust signal */}
-          <p className="text-xs text-neutral-500 mt-2 text-center md:text-sm md:flex md:flex-row md:items-center md:gap-3"
+          <p className="text-xs text-neutral-500 mt-1 text-center md:text-sm md:flex md:flex-row md:items-center md:gap-3"
              style={{ color: 'rgb(var(--color-gray-600))' }}>
             <span className="block md:inline">Sin tarjeta</span>
             <span className="hidden md:inline opacity-40">•</span>

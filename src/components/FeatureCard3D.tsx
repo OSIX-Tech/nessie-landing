@@ -14,6 +14,10 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
   const glowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Check if device supports hover (desktop with mouse)
+    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    if (!supportsHover) return // Skip 3D effects on mobile/touch devices
+
     const card = cardRef.current
     const glow = glowRef.current
     if (!card || !glow) return
@@ -24,12 +28,12 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
       const y = e.clientY - rect.top
       const centerX = rect.width / 2
       const centerY = rect.height / 2
-      
+
       const rotateX = (y - centerY) / 15
       const rotateY = (centerX - x) / 15
-      
+
       card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
-      
+
       // Move glow effect
       glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2) 0%, transparent 50%)`
     }

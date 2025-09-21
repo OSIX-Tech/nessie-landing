@@ -101,7 +101,7 @@ function Performance() {
 
 
   return (
-    <section ref={sectionRef} id="performance" className="py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section ref={sectionRef} id="performance" className="py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden scroll-mt-16 md:scroll-mt-24">
       <div className="max-w-[1400px] mx-auto relative">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 md:mb-24">

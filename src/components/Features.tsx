@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import FeatureCard3D from './FeatureCard3D'
 
@@ -67,90 +67,39 @@ const features = [
 
 function Features() {
   const sectionRef = useScrollAnimation()
-  const [currentGroup, setCurrentGroup] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [viewportWidth, setViewportWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024)
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const mobileCarouselRef = useRef<HTMLDivElement | null>(null)
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [activeIndex, setActiveIndex] = useState(0)
 
-  // Determine cards per view based on viewport
-  const getCardsPerView = () => {
-    if (viewportWidth >= 1024) return 3 // Desktop
-    if (viewportWidth >= 640) return 2  // Tablet
-    return 1 // Mobile
-  }
-
-  const cardsPerView = getCardsPerView()
-  const totalGroups = Math.ceil(features.length / cardsPerView)
-
-  // Handle window resize
+  // Detect active card on mobile via IntersectionObserver
   useEffect(() => {
-    const handleResize = () => {
-      setViewportWidth(window.innerWidth)
-      // Reset to valid group if current is out of bounds
-      const newTotalGroups = Math.ceil(features.length / getCardsPerView())
-      if (currentGroup >= newTotalGroups) {
-        setCurrentGroup(newTotalGroups - 1)
-      }
-    }
+    if (!mobileCarouselRef.current) return
+    const root = mobileCarouselRef.current
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let bestIdx = 0
+        let bestRatio = 0
+        for (const entry of entries) {
+          const idx = cardRefs.current.findIndex((el) => el === entry.target)
+          if (idx !== -1 && entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio
+            bestIdx = idx
+          }
+        }
+        setActiveIndex(bestIdx)
+      },
+      { root, threshold: [0.5, 0.75, 1] }
+    )
+    cardRefs.current.forEach((el) => el && observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [currentGroup])
-
-  // Auto-advance slideshow
-  useEffect(() => {
-    if (!isAutoPlaying) return
-
-    const interval = setInterval(() => {
-      setCurrentGroup((prev) => (prev + 1) % totalGroups)
-    }, 7000)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, totalGroups])
-
-  const handlePrevious = () => {
-    setIsAutoPlaying(false)
-    setCurrentGroup((prev) => (prev === 0 ? totalGroups - 1 : prev - 1))
-  }
-
-  const handleNext = () => {
-    setIsAutoPlaying(false)
-    setCurrentGroup((prev) => (prev + 1) % totalGroups)
-  }
-
-  const handleDotClick = (index: number) => {
-    setIsAutoPlaying(false)
-    setCurrentGroup(index)
-  }
-
-  // Touch handlers for swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe) {
-      handleNext()
-    }
-    if (isRightSwipe) {
-      handlePrevious()
-    }
+  const scrollToIndex = (index: number) => {
+    cardRefs.current[index]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
   }
 
   return (
-    <section ref={sectionRef} id="features" className="relative py-10 sm:py-16 md:py-24 lg:py-32 px-5 sm:px-6 md:px-12 lg:px-24 opacity-0">
+    <section ref={sectionRef} id="features" className="relative py-10 sm:py-16 md:py-24 lg:py-32 px-5 sm:px-6 md:px-12 lg:px-24 opacity-0 scroll-mt-16 md:scroll-mt-24">
       <div className="max-w-[1400px] mx-auto">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12 md:mb-20 lg:mb-24">
@@ -178,120 +127,53 @@ function Features() {
           </p>
         </div>
 
-        {/* Slideshow Container */}
-        <div className="relative">
-          {/* Cards Container - Responsive carousel */}
+        {/* Vista móvil: scroll-snap horizontal con dots controlados por IO */}
+        <div className="md:hidden">
           <div
-            className="overflow-hidden"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            id="features-carousel"
+            ref={mobileCarouselRef}
+            className="overflow-x-auto snap-x snap-mandatory px-4"
+            style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <div
-              className="flex gap-3 sm:gap-6 transition-transform duration-700 ease-in-out"
-              style={{
-                transform: (() => {
-                  // Calculate cards to move based on group and cards per view
-                  const cardsToMove = currentGroup * cardsPerView
-
-                  if (cardsPerView === 3) {
-                    // Desktop: Each card is 33.333%, move by group
-                    const percentage = (cardsToMove * 100) / 3
-                    const gapOffset = cardsToMove * 24 // 24px gap between cards
-                    return `translateX(calc(-${percentage}% - ${gapOffset}px))`
-                  } else if (cardsPerView === 2) {
-                    // Tablet: Each card is 50%, move by group
-                    const percentage = (cardsToMove * 100) / 2
-                    const gapOffset = cardsToMove * 16 // 16px gap between cards
-                    return `translateX(calc(-${percentage}% - ${gapOffset}px))`
-                  } else {
-                    // Mobile: Each card is 100%
-                    const percentage = cardsToMove * 100
-                    const gapOffset = cardsToMove * 16
-                    return `translateX(calc(-${percentage}% - ${gapOffset}px))`
-                  }
-                })()
-              }}>
-              {/* All cards with extras for smooth loop */}
+            <div className="flex gap-3">
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-16px)]"
+                  ref={(el) => { cardRefs.current[index] = el }}
+                  className="snap-center w-[88%] flex-shrink-0"
                 >
-                  <FeatureCard3D
-                    feature={feature}
-                  />
+                  <FeatureCard3D feature={feature} />
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Navigation Arrows - Hidden on mobile */}
-          <div className="hidden sm:flex absolute inset-y-0 left-0 right-0 items-center justify-between pointer-events-none">
-            <button
-              onClick={handlePrevious}
-              className="pointer-events-auto -ml-4 lg:-ml-12 p-3 rounded-full transition-all duration-300 hover:scale-110"
-              style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
-              }}
-            >
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <button
-              onClick={handleNext}
-              className="pointer-events-auto -mr-4 lg:-mr-12 p-3 rounded-full transition-all duration-300 hover:scale-110"
-              style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
-              }}
-            >
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Dots Indicator - Show one dot per group */}
-          <div className="flex justify-center gap-1.5 sm:gap-2 mt-6 sm:mt-8">
-            {Array.from({ length: totalGroups }).map((_, index) => (
+          {/* Dots móviles */}
+          <div className="flex justify-center gap-1.5 mt-6" role="tablist">
+            {features.map((_, index) => (
               <button
                 key={index}
-                onClick={() => handleDotClick(index)}
-                className={`h-2 sm:h-2 rounded-full transition-all duration-300 ${
-                  index === currentGroup
-                    ? 'w-6 sm:w-8 bg-white'
-                    : 'w-2 sm:w-2 bg-white/30 hover:bg-white/50'
-                }`}
-                aria-label={`Ir a grupo ${index + 1}`}
+                role="tab"
+                aria-selected={activeIndex === index}
+                aria-controls="features-carousel"
+                onClick={() => scrollToIndex(index)}
+                className="transition-all duration-300"
+                style={{
+                  width: activeIndex === index ? '24px' : '6px',
+                  height: '6px',
+                  borderRadius: '3px',
+                  background: activeIndex === index ? 'rgb(var(--color-white))' : 'rgba(255, 255, 255, 0.3)'
+                }}
+                aria-label={`Ver feature ${index + 1}`}
               />
             ))}
           </div>
+        </div>
 
-          {/* Mobile Swipe Hint */}
-          <div className="flex justify-center mt-3 sm:hidden">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-                 style={{
-                   background: 'rgba(255, 255, 255, 0.05)',
-                   border: '1px solid rgba(255, 255, 255, 0.1)'
-                 }}>
-              <svg className="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M7 11l5-5m0 0l5 5m-5-5v12" transform="rotate(-90 12 12)" />
-              </svg>
-              <span className="text-[11px] text-white/50">Desliza</span>
-              <svg className="w-3 h-3 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M17 13l-5 5m0 0l-5-5m5 5V6" transform="rotate(-90 12 12)" />
-              </svg>
-            </div>
-          </div>
-
+        {/* Vista tablet/desktop: grid simple */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <FeatureCard3D key={index} feature={feature} />
+          ))}
         </div>
       </div>
     </section>

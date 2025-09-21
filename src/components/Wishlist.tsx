@@ -123,7 +123,7 @@ function Wishlist() {
   }
 
   return (
-    <section ref={sectionRef} id="wishlist" className="py-10 sm:py-16 md:py-24 relative overflow-hidden opacity-0">
+    <section ref={sectionRef} id="wishlist" className="py-10 sm:py-16 md:py-24 relative overflow-hidden opacity-0 scroll-mt-16 md:scroll-mt-24">
       {/* Subtle overlay for depth */}
       <div className="absolute inset-0 opacity-30"
            style={{
@@ -181,10 +181,12 @@ function Wishlist() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="Ingresa tu email"
-              className="flex-1 px-3 sm:px-4 md:px-6 py-2.5 sm:py-2 bg-transparent text-[13px] md:text-base outline-none rounded-xl sm:rounded-none"
+              className="flex-1 px-3 sm:px-4 md:px-6 py-2.5 sm:py-2 bg-transparent text-[16px] sm:text-[15px] md:text-base outline-none rounded-xl sm:rounded-none"
               style={{
                 color: 'rgb(var(--color-black))'
               }}
+              inputMode="email"
+              autoComplete="email"
               required
             />
             <button
