@@ -293,7 +293,7 @@ function UseCasesSection() {
       <div className="md:max-w-[1600px] w-full mx-auto">
         {/* Section header */}
         <div className="text-center md:max-w-3xl mx-auto mb-3 sm:mb-6 md:mb-8">
-          <span className="inline-block px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-[9px] sm:text-xs md:text-sm font-semibold mb-3 sm:mb-6"
+          <span className="inline-block px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm md:text-base font-semibold mb-3 sm:mb-6"
                 style={{ 
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -311,7 +311,7 @@ function UseCasesSection() {
               backgroundClip: 'text'
             }}>de trabajar con documentos</span>
           </h2>
-          <p className="text-xs sm:text-base md:text-lg lg:text-xl px-2 sm:px-0" style={{
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl px-2 sm:px-0" style={{
             color: 'rgb(var(--color-gray-400))',
             lineHeight: 1.6
           }}>

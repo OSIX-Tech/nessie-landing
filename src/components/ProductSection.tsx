@@ -283,7 +283,7 @@ function ProductSection() {
     <section
       ref={sectionRef}
       id="product"
-      className="relative py-12 sm:py-20 md:py-28 lg:py-36 opacity-0 scroll-mt-16 md:scroll-mt-24"
+      className="relative py-12 sm:py-18 md:py-20 lg:py-24 opacity-0 scroll-mt-16 md:scroll-mt-24"
       role="region"
       aria-label="Carrusel de funcionalidades"
       onKeyDown={handleKeyDown}
@@ -292,20 +292,20 @@ function ProductSection() {
       {/* Section Header - Mobile optimized */}
       <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-8 lg:mb-12 px-5 sm:px-6">
         <div className="flex justify-center mb-4 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full"
+          <div className="relative inline-flex px-5 sm:px-6 py-1.5 sm:py-2 rounded-full"
                style={{
                  background: 'rgba(255, 255, 255, 0.05)',
                  border: '1px solid rgba(255, 255, 255, 0.1)',
                  backdropFilter: 'blur(10px)'
                }}>
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white animate-pulse"/>
-            <span className="text-[10px] sm:text-xs lg:text-sm font-medium uppercase tracking-wider"
+            <div className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white animate-pulse" aria-hidden="true"/>
+            <span className="block w-full text-center text-xs sm:text-sm lg:text-base font-medium uppercase tracking-wider leading-none"
                   style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
               Funcionalidades
             </span>
           </div>
         </div>
-        <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-3 sm:mb-4 lg:mb-6"
+        <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 lg:mb-6"
             style={{ color: 'rgb(var(--color-white))' }}>
           Explora nuestras
           <br className="sm:hidden" />
@@ -319,7 +319,7 @@ function ProductSection() {
             funcionalidades
           </span>
         </h2>
-        <p className="text-[13px] sm:text-base md:text-lg lg:text-2xl max-w-2xl mx-auto px-0 sm:px-0"
+        <p className="text-sm sm:text-base md:text-lg lg:text-2xl max-w-2xl mx-auto px-0 sm:px-0"
            style={{ color: 'rgb(var(--color-gray-500))' }}>
           Desliza para ver demos cortas
         </p>
@@ -377,7 +377,7 @@ function ProductSection() {
               key={feature.id}
               className="feature-card flex-none w-full px-4 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-48 snap-center flex items-center py-2 sm:py-0"
               aria-current={index === activeIndex}
-              style={{ minHeight: 'min(70vh, 600px)' }}
+              style={{ minHeight: 'min(58vh, 520px)' }}
             >
               <div
                 className="w-full max-w-5xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden transform transition-all duration-500"

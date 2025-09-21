@@ -96,7 +96,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
           </div>
         </div>
         
-        <h3 className="text-base md:text-xl font-bold mb-1.5 md:mb-3 transition-colors duration-500" 
+        <h3 className="text-lg md:text-xl font-bold mb-1.5 md:mb-3 transition-colors duration-500" 
             style={{ 
               color: 'rgb(var(--color-white))',
               transform: 'translateZ(15px)'
@@ -104,7 +104,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
           {feature.title}
         </h3>
         
-        <p className="text-xs md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
+        <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
            style={{ 
              color: 'rgb(var(--color-gray-400))',
              transform: 'translateZ(10px)'

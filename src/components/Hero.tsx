@@ -8,7 +8,7 @@ function Hero() {
   }, [])
 
   return (
-    <section id="hero" className="relative pt-16 md:pt-0 min-h-[85vh] md:min-h-screen md:flex md:items-center md:justify-center overflow-hidden">
+    <section id="hero" className="relative pt-16 md:pt-0 min-h-[85vh] md:min-h-screen md:flex md:items-end md:justify-center md:pb-12 overflow-hidden">
       {/* Subtle depth effect */}
       <div className="absolute inset-0 -z-10">
         {/* Center glow */}
@@ -19,9 +19,11 @@ function Hero() {
       </div>
 
       {/* Content */}
-      <div className={`w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-all duration-1000 flex flex-col justify-center min-h-[85vh] md:min-h-0 md:py-0 ${
+      <div className={`w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-all duration-1000 flex flex-col justify-center md:justify-end min-h-[85vh] md:min-h-0 md:py-0 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       }`}>
+
+        
 
         {/* Main headline - ultra clean */}
         <h1 className="text-4xl font-bold leading-tight md:text-6xl lg:text-7xl xl:text-8xl md:font-bold md:leading-[0.95] lg:leading-[0.9] tracking-tight mb-4 md:mb-8"
@@ -157,31 +159,7 @@ function Hero() {
              }}/>
       </div>
 
-      {/* Minimal scroll indicator - hidden on mobile */}
-      <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2"
-           style={{ animation: 'fade-in 1s ease-out 0.8s both' }}>
-        <div className="flex flex-col items-center gap-3">
-          <div className="grid grid-cols-3 gap-1">
-            {[...Array(9)].map((_, i) => (
-              <div key={i}
-                   className="w-1 h-1 rounded-full"
-                   style={{
-                     background: 'rgba(255, 255, 255, 0.3)',
-                     animation: `pulse-grid 2s ease-in-out infinite`,
-                     animationDelay: `${i * 0.1}s`
-                   }}/>
-            ))}
-          </div>
-          <div className="w-[1px] h-8 relative overflow-hidden"
-               style={{ background: 'rgba(255, 255, 255, 0.1)' }}>
-            <div className="absolute top-0 left-0 w-full h-3"
-                 style={{
-                   background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent)',
-                   animation: 'scroll-indicator 2s ease-in-out infinite'
-                 }}/>
-          </div>
-        </div>
-      </div>
+      {/* Scroll indicator removed for a cleaner bottom area */}
 
       <style>{`
         @keyframes grid-fade {

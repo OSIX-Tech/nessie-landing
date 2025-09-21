@@ -107,7 +107,7 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                   {/* Profile Badge & Time Saved */}
                   <div className="flex items-center justify-between mb-3">
                     <span
-                      className="px-3 py-1.5 text-[10px] font-semibold rounded-full"
+                      className="px-3.5 py-1.5 text-sm font-semibold rounded-full"
                       style={{
                         background: 'rgba(255, 255, 255, 0.08)',
                         border: '1px solid rgba(255, 255, 255, 0.12)',
@@ -116,18 +116,18 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                     >
                       {useCase.audience.split(' ')[0].toUpperCase()}
                     </span>
-                    <span className="text-[11px] font-medium" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                       {useCase.timesSaved}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl font-bold mb-2 leading-tight text-center" style={{ color: 'rgb(var(--color-white))' }}>
+                  <h3 className="text-3xl font-bold mb-2 leading-tight text-center" style={{ color: 'rgb(var(--color-white))' }}>
                     {useCase.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[11px] mb-3 line-clamp-3 leading-relaxed text-center" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                  <p className="text-sm mb-3 line-clamp-3 leading-relaxed text-center" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
                     {useCase.description}
                   </p>
                 </div>
@@ -143,10 +143,10 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                     }}
                   >
                     <div className="text-center">
-                      <div className="text-2xl font-bold mb-1" style={{ color: 'rgb(var(--color-white))' }}>
+                      <div className="text-3xl font-bold mb-1" style={{ color: 'rgb(var(--color-white))' }}>
                         {useCase.mainMetric.value}
                       </div>
-                      <div className="text-[10px] uppercase tracking-wide" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                      <div className="text-xs uppercase tracking-wide" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
                         {useCase.mainMetric.label}
                       </div>
                     </div>
@@ -161,7 +161,7 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                             className="w-1 h-1 rounded-full flex-shrink-0 mt-1"
                             style={{ background: 'rgba(255, 255, 255, 0.4)' }}
                           />
-                          <span className="text-[11px] leading-tight" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                          <span className="text-sm leading-tight" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                             {benefit}
                           </span>
                         </div>
@@ -179,10 +179,10 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                   >
                     {useCase.metrics.kpis.slice(0, 3).map((kpi, idx) => (
                       <div key={idx} className="text-center">
-                        <div className="text-sm font-bold" style={{ color: 'rgb(var(--color-white))' }}>
+                        <div className="text-base font-bold" style={{ color: 'rgb(var(--color-white))' }}>
                           {kpi.value}
                         </div>
-                        <div className="text-[8px] uppercase tracking-wider mt-0.5" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>
+                        <div className="text-[10px] uppercase tracking-wider mt-0.5" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>
                           {kpi.label}
                         </div>
                       </div>
@@ -196,7 +196,7 @@ const MobileCarousel: React.FC<MobileCarouselProps> = ({ useCases }) => {
                     <a
                       href={useCase.cta.href}
                       data-analytics-id={useCase.cta.analyticsId}
-                      className="block w-full text-center px-4 py-2.5 rounded-full text-xs font-semibold transition-all duration-200"
+                      className="block w-full text-center px-4 py-3 rounded-full text-sm font-semibold transition-all duration-200"
                       style={{
                         background: 'rgb(var(--color-white))',
                         color: 'rgb(var(--color-black))'

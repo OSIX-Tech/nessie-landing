@@ -102,7 +102,7 @@ function Navbar() {
                  e.preventDefault()
                  document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
                }}
-               className="px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+               className="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
                style={{
                  background: scrolled
                    ? 'rgb(255, 255, 255)'

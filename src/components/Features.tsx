@@ -103,7 +103,7 @@ function Features() {
       <div className="max-w-[1400px] mx-auto">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12 md:mb-20 lg:mb-24">
-          <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold mb-4 md:mb-6"
+          <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base font-semibold mb-4 md:mb-6"
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -121,7 +121,7 @@ function Features() {
               backgroundClip: 'text'
             }}>exigen excelencia</span>
           </h2>
-          <p className="text-[13px] sm:text-base md:text-lg px-2 sm:px-0" style={{ color: 'rgb(var(--color-gray-400))' }}>
+          <p className="text-sm sm:text-base md:text-lg px-2 sm:px-0" style={{ color: 'rgb(var(--color-gray-400))' }}>
             Cada funcionalidad está pensada para maximizar la productividad
             y minimizar la fricción en el acceso al conocimiento.
           </p>

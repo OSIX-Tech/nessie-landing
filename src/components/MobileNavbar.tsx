@@ -60,6 +60,35 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
     }
   }
 
+  // Meta de navegación para mejorar el diseño de los ítems (icono + subtítulo)
+  const navMeta: Record<string, { subtitle: string; icon: React.ReactNode }> = {
+    product: {
+      subtitle: 'Visión general y demos',
+      icon: (
+        <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 7l9-4 9 4-9 4-9-4z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 7v6l-9 4-9-4V7" />
+        </svg>
+      )
+    },
+    features: {
+      subtitle: 'Lo que puedes hacer',
+      icon: (
+        <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 6h16M4 12h16M4 18h7" />
+        </svg>
+      )
+    },
+    'use-cases': {
+      subtitle: 'Ejemplos reales',
+      icon: (
+        <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7h8M6 11h12M4 15h16M10 19h4" />
+        </svg>
+      )
+    }
+  }
+
   // Focus trap when menu is open
   useEffect(() => {
     if (!isOpen) return
@@ -187,21 +216,21 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div
-          className="md:hidden fixed inset-0 z-40 transition-all duration-500"
+          className="md:hidden fixed inset-0 z-40 transition-all duration-300"
           style={{
             paddingTop: '57px',
-            background: 'rgba(0, 0, 0, 0.98)',
-            backdropFilter: 'blur(20px)'
+            background: 'rgba(0, 0, 0, 0.98)'
           }}
           onClick={() => setIsOpen(false)}
+          aria-modal
+          role="dialog"
         >
           <div
-            id="mobile-menu"
-            className="h-full overflow-y-auto"
+            className="h-full flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Navigation Links */}
-            <div className="px-4 py-8 space-y-2">
+            <div className="px-3 pt-7 pb-3 space-y-1 overflow-y-auto flex-1 overscroll-contain">
               {navItems.map((item, index) => (
                 <a
                   key={item.id}
@@ -210,59 +239,65 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
                     e.preventDefault()
                     handleNavClick(item.href)
                   }}
-                  className="block py-4 px-4 rounded-2xl transition-all duration-200 hover:bg-white/5 active:bg-white/10"
+                  className={`group relative flex items-center justify-between rounded-2xl pl-4 pr-5 py-4 transition-all duration-200 ${activeId === item.id ? 'bg-white/10' : 'hover:bg-white/5 active:bg-white/10'}`}
                   style={{
                     opacity: 0,
-                    animation: `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`
+                    animation: `fadeInUp 0.45s ease-out ${index * 0.04}s forwards`
                   }}
                 >
-                  <span className="text-white text-lg font-medium">
-                    {item.label}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center border text-white/80"
+                         style={{ borderColor: 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
+                      <span className="block">{navMeta[item.id]?.icon}</span>
+                    </div>
+                    <div className="leading-tight">
+                      <div className="text-white text-lg font-semibold tracking-tight">{item.label}</div>
+                      {navMeta[item.id]?.subtitle && (
+                        <div className="text-xs leading-snug text-white/45">{navMeta[item.id].subtitle}</div>
+                      )}
+                    </div>
+                  </div>
+                  <svg className="w-5 h-5 text-white/70 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                   {activeId === item.id && (
-                    <span className="ml-2 align-middle inline-block w-2 h-2 rounded-full bg-white/70" />
+                    <span className="absolute left-2 top-1/2 -translate-y-1/2 h-6 w-[2px] rounded bg-white/70" />
                   )}
                 </a>
               ))}
+              
             </div>
 
-            {/* Divider */}
-            <div
-              className="mx-6 border-t"
-              style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-            />
-
-            {/* CTA Button */}
-            <div className="px-4 py-8">
-              <button
-                className="w-full px-6 py-3 rounded-full text-sm font-medium transition-all duration-200 hover:bg-gray-100 active:scale-95"
-                style={{
-                  background: 'white',
-                  color: 'black',
-                  opacity: 0,
-                  animation: 'fadeInUp 0.5s ease-out 0.4s forwards'
-                }}
-                onClick={() => {
-                  setIsOpen(false)
-                  document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                Únete a la lista de espera
-              </button>
-            </div>
-
-            {/* Footer Info */}
-            <div className="px-4 pb-8">
-              <p
-                className="text-center text-xs"
-                style={{
-                  color: 'rgba(255, 255, 255, 0.4)',
-                  opacity: 0,
-                  animation: 'fadeInUp 0.5s ease-out 0.6s forwards'
-                }}
-              >
-                © 2024 Nessie AI. Todos los derechos reservados.
-              </p>
+            {/* Bottom CTA + copyright */}
+            <div className="pt-6" style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}>
+              <div className="mx-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+              <div className="px-4 pt-6">
+                <button
+                  className="group relative w-full max-w-[520px] mx-auto px-7 py-4 rounded-full text-base font-semibold transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-white/60 overflow-hidden"
+                  style={{ background: 'white', color: 'black', boxShadow: '0 10px 30px rgba(255,255,255,0.15), 0 6px 16px rgba(0,0,0,0.25)' }}
+                  onClick={() => {
+                    setIsOpen(false)
+                    document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  <span className="relative z-10">Únete a la lista de espera</span>
+                  <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                       style={{
+                         backgroundImage: `linear-gradient(105deg, transparent 40%, rgba(0,0,0,0.08) 50%, transparent 60%)`,
+                         animation: 'shimmer-slide 1s ease-out'
+                       }} />
+                </button>
+              </div>
+              <div className="px-4 pb-3 mt-4">
+                <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  © 2025 Nessie AI. Todos los derechos reservados.
+                </p>
+              </div>
+              <div className="px-4 pb-3 flex items-center justify-center gap-4 text-[11px] text-white/45">
+                <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white/70">Privacidad</a>
+                <span className="opacity-30">•</span>
+                <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-white/70">Términos</a>
+              </div>
             </div>
           </div>
         </div>
