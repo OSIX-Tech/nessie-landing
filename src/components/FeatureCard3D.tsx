@@ -12,50 +12,22 @@ interface FeatureCard3DProps {
 function FeatureCard3D({ feature }: FeatureCard3DProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const glowRef = useRef<HTMLDivElement>(null)
+  const iconRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
+  
 
   useEffect(() => {
-    // Check if device supports hover (desktop with mouse)
-    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    if (!supportsHover) return // Skip 3D effects on mobile/touch devices
-
-    const card = cardRef.current
     const glow = glowRef.current
-    if (!card || !glow) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      const centerX = rect.width / 2
-      const centerY = rect.height / 2
-
-      const rotateX = (y - centerY) / 15
-      const rotateY = (centerX - x) / 15
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
-
-      // Move glow effect
-      glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2) 0%, transparent 50%)`
-    }
-
-    const handleMouseLeave = () => {
-      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
-      glow.style.background = 'transparent'
-    }
-
-    card.addEventListener('mousemove', handleMouseMove)
-    card.addEventListener('mouseleave', handleMouseLeave)
-
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove)
-      card.removeEventListener('mouseleave', handleMouseLeave)
+    if (glow) {
+      glow.style.background = 'radial-gradient(300px 300px at 50% 40%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 30%, transparent 65%)'
     }
   }, [])
 
   return (
     <div 
       ref={cardRef}
-      className="group relative overflow-hidden rounded-xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 h-full"
+      className="group relative overflow-hidden rounded-xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 h-full md:hover:scale-[1.02]"
       style={{
         background: 'rgba(10, 10, 10, 0.9)',
         border: '1px solid rgba(255, 255, 255, 0.15)',
@@ -84,7 +56,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
       
       {/* Content */}
       <div className="relative z-10">
-        <div className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-2xl mb-3 md:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
+        <div ref={iconRef} className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-2xl mb-3 md:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
              style={{ 
                background: 'rgba(255, 255, 255, 0.1)',
                color: 'rgb(var(--color-white))',
@@ -96,7 +68,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
           </div>
         </div>
         
-        <h3 className="text-lg md:text-xl font-bold mb-1.5 md:mb-3 transition-colors duration-500" 
+        <h3 ref={titleRef} className="text-lg md:text-xl font-bold mb-1.5 md:mb-3 transition-colors duration-500" 
             style={{ 
               color: 'rgb(var(--color-white))',
               transform: 'translateZ(15px)'
@@ -104,7 +76,7 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
           {feature.title}
         </h3>
         
-        <p className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
+        <p ref={descRef} className="text-sm md:text-base leading-relaxed transition-colors duration-500 group-hover:text-gray-200" 
            style={{ 
              color: 'rgb(var(--color-gray-400))',
              transform: 'translateZ(10px)'

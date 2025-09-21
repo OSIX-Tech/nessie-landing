@@ -145,9 +145,9 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
               aria-label="Ir al inicio"
             >
               <img
-                src="/favicon.png"
+                src="/nessiee.png"
                 alt="Nessie"
-                className="w-8 h-8"
+                className="h-8 w-auto object-contain"
                 style={{ filter: isScrolled || isOpen ? 'brightness(1)' : 'brightness(1.1)' }}
               />
               <span className="text-white font-semibold text-sm">Nessie</span>

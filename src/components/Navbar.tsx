@@ -62,9 +62,9 @@ function Navbar() {
               aria-label="Ir al inicio"
             >
               <img
-                src="/favicon.png"
+                src="/nessiee.png"
                 alt="Nessie"
-                className="w-9 h-9 transition-all duration-500"
+                className="h-9 w-auto object-contain transition-all duration-500"
                 style={{
                   filter: scrolled ? 'brightness(1)' : 'brightness(1.2)'
                 }}
