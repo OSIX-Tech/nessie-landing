@@ -14,54 +14,71 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
   const [step, setStep] = useState(1)
   const [isClosing, setIsClosing] = useState(false)
   const savedScrollY = useRef(0)
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
 
   // Resetear estado cuando se abre el diálogo
   useEffect(() => {
     if (isOpen) {
-      // Resetear todos los estados del diálogo
       setUserType('')
       setCustomUserType('')
       setExpectedPrice('')
       setStep(1)
       setIsClosing(false)
+      // Focus inicial para accesibilidad
+      setTimeout(() => {
+        closeButtonRef.current?.focus()
+      }, 0)
     }
   }, [isOpen])
 
   // Bloquear/desbloquear scroll del body
   useEffect(() => {
     if (isOpen) {
-      // Guardar la posición actual del scroll
       savedScrollY.current = window.scrollY
       document.body.style.position = 'fixed'
       document.body.style.top = `-${savedScrollY.current}px`
       document.body.style.width = '100%'
       document.body.style.overflow = 'hidden'
     } else {
-      // Restaurar el scroll a la posición guardada
       document.body.style.position = ''
       document.body.style.top = ''
       document.body.style.width = ''
       document.body.style.overflow = ''
-      
+
       if (savedScrollY.current > 0) {
         window.scrollTo(0, savedScrollY.current)
       }
     }
 
-    // Cleanup al desmontar - restaurar scroll si está bloqueado
     return () => {
       if (document.body.style.position === 'fixed') {
         document.body.style.position = ''
         document.body.style.top = ''
         document.body.style.width = ''
         document.body.style.overflow = ''
-        
+
         if (savedScrollY.current > 0) {
           window.scrollTo(0, savedScrollY.current)
         }
       }
     }
   }, [isOpen])
+
+  // Accesibilidad: Escape para cerrar
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onSkip()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onSkip])
 
   const handleNext = () => {
     if (step === 1 && userType) {
@@ -77,68 +94,66 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
 
   const handleSubmit = () => {
     const finalUserType = userType === 'otros' ? customUserType : userType
-    
-    // Mostrar animación de cierre
     setIsClosing(true)
-    
-    // Esperar la animación antes de cerrar
     setTimeout(() => {
       onSubmit(finalUserType, expectedPrice)
-    }, 600)
+    }, 300)
   }
 
   const userTypeOptions = [
-    { 
-      value: 'estudiante', 
+    {
+      value: 'estudiante',
       label: 'Estudiante',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
         </svg>
       ),
       description: 'Uso académico y aprendizaje'
     },
-    { 
-      value: 'investigador', 
+    {
+      value: 'investigador',
       label: 'Investigador',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      description: 'Investigación y análisis'
+      description: 'Investigación y análisis de datos'
     },
-    { 
-      value: 'profesional-individual', 
+    {
+      value: 'profesional',
       label: 'Profesional',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
       description: 'Uso personal profesional'
     },
-    { 
-      value: 'profesional-empresa', 
+    {
+      value: 'empresa',
       label: 'Empresa',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                 d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
         </svg>
       ),
       description: 'Equipo y organización'
     },
-    { 
-      value: 'otros', 
+    {
+      value: 'otros',
       label: 'Otros',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
       ),
       description: 'Otro tipo de uso'
@@ -146,297 +161,394 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
   ]
 
   const priceOptions = [
-    { value: '5-15', label: '5€ - 15€', subtitle: '/mes', description: 'Básico' },
-    { value: '15-30', label: '15€ - 30€', subtitle: '/mes', description: 'Estándar' },
-    { value: '30-60', label: '30€ - 60€', subtitle: '/mes', description: 'Profesional' },
-    { value: '60-100', label: '60€ - 100€', subtitle: '/mes', description: 'Premium' },
-    { value: '100-150', label: '100€ - 150€', subtitle: '/mes', description: 'Enterprise' },
-    { value: '150+', label: '+150€', subtitle: '/mes', description: 'Custom' }
+    { value: '5-15', label: '5-15€', description: 'Básico' },
+    { value: '15-30', label: '15-30€', description: 'Estándar' },
+    { value: '30-60', label: '30-60€', description: 'Pro' },
+    { value: '60-100', label: '60-100€', description: 'Premium' },
+    { value: '100-150', label: '100-150€', description: 'Business' },
+    { value: '150+', label: '+150€', description: 'Enterprise' }
   ]
 
   if (!isOpen) return null
 
   const dialogContent = (
-    <>
+    <div>
       <style>{`
-        @keyframes slide-out {
-          from { transform: scale(1) translateY(0); opacity: 1; }
-          to { transform: scale(0.95) translateY(-20px); opacity: 0; }
+        @keyframes modalFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
-        @keyframes fade-out {
+        @keyframes modalScaleIn {
+          from {
+            transform: translate(-50%, -50%) scale(0.95);
+            opacity: 0;
+          }
+          to {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+          }
+        }
+         @keyframes modalFadeOut {
           from { opacity: 1; }
           to { opacity: 0; }
         }
-        .dialog-closing {
-          animation: slide-out 0.6s ease-in-out forwards;
+         @keyframes modalScaleOut {
+          from {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+          }
+          to {
+            transform: translate(-50%, -50%) scale(0.95);
+            opacity: 0;
+          }
+        }
+         /* Safe content animations that don't override centering */
+         @keyframes contentIn {
+           from { opacity: 0; transform: translateY(16px) scale(0.98); }
+           to { opacity: 1; transform: translateY(0) scale(1); }
+         }
+         @keyframes contentOut {
+           from { opacity: 1; transform: translateY(0) scale(1); }
+           to { opacity: 0; transform: translateY(10px) scale(0.98); }
+         }
+        .backdrop-entering {
+          animation: modalFadeIn 0.2s ease-out forwards;
         }
         .backdrop-closing {
-          animation: fade-out 0.6s ease-in-out forwards;
+          animation: modalFadeOut 0.2s ease-in forwards;
+        }
+         .dialog-entering { animation: contentIn 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+         .dialog-closing { animation: contentOut 0.2s ease-in forwards; }
+        .option-hover:hover {
+          transform: translateY(-2px);
+          transition: all 0.2s ease;
+        }
+        /* Custom scrollbar for dark theme */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.15);
         }
       `}</style>
-      <div className={`fixed inset-0 flex items-center justify-center p-4 ${isClosing ? 'backdrop-closing' : ''}`}
-           onClick={onSkip}
-           style={{ 
-             zIndex: 999999,
-             background: 'rgba(0, 0, 0, 0.8)',
-             backdropFilter: 'blur(8px)',
-             isolation: 'isolate'
-           }}>
-      <div className={`relative w-full max-w-2xl rounded-3xl overflow-hidden ${isClosing ? 'dialog-closing' : ''}`}
-           onClick={(e) => e.stopPropagation()}
-           style={{ 
-             zIndex: 1000000,
-             background: 'linear-gradient(145deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-50)) 100%)',
-             boxShadow: '0 32px 64px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1)'
-           }}>
-        
-        {/* Header con progreso */}
-        <div className="relative px-8 pt-8 pb-6"
-             style={{
-               background: 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
-             }}>
-          
-          {/* Progress bar */}
-          <div className="absolute top-0 left-0 h-1 transition-all duration-500"
-               style={{ 
-                 width: step === 1 ? '50%' : '100%',
-                 background: 'linear-gradient(90deg, rgb(var(--color-white)) 0%, rgba(255, 255, 255, 0.7) 100%)'
-               }}></div>
 
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-2"
-                style={{ color: 'rgb(var(--color-white))' }}>
-              ¡Gracias por unirte! 🎉
-            </h3>
-            <p className="text-sm opacity-80"
-               style={{ color: 'rgb(var(--color-white))' }}>
-              {step === 1 ? 'Ayúdanos a personalizar Nessie para ti' : 'Último paso: precio esperado'}
-            </p>
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 ${isClosing ? 'backdrop-closing' : 'backdrop-entering'}`}
+        onClick={onSkip}
+        style={{
+          zIndex: 999999,
+          background: 'rgba(0, 0, 0, 0.9)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)'
+        }}
+      />
+
+      {/* Dialog Container - perfectly centered */}
+      <div
+        className={`
+          fixed
+          left-1/2 top-1/2
+          -translate-x-1/2 -translate-y-1/2
+          max-h-[92vh] md:max-h-[88vh]
+          rounded-[32px]
+          overflow-hidden
+          flex flex-col
+        `}
+        style={{
+          zIndex: 1000000,
+          width: 'min(calc(100vw - 16px), 56rem)',
+          background: '#0a0a0a',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02)'
+        }}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        ref={dialogRef}
+      >
+        <div className={`${isClosing ? 'dialog-closing' : 'dialog-entering'}`} style={{ willChange: 'transform', display: 'grid', gridTemplateRows: 'auto 1fr auto', minHeight: 0 }}>
+        {/* Header */}
+        <div className="relative px-8 pt-8 pb-6" style={{ background: '#0f0f0f' }}>
+          {/* Step Indicator */}
+          <div className="absolute top-6 left-8">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                Paso
+              </span>
+              <span className="text-sm font-bold" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                {step}
+              </span>
+              <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                de 2
+              </span>
+            </div>
           </div>
 
-          {/* Skip button */}
+          {/* Close Button */}
           <button
             onClick={onSkip}
-            className="absolute top-4 right-4 text-sm px-4 py-2 rounded-full transition-all hover:scale-105 hover:bg-white hover:bg-opacity-20"
-            style={{ 
-              background: 'rgba(255, 255, 255, 0.1)',
-              color: 'rgb(var(--color-white))',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-            Omitir
+            ref={closeButtonRef}
+            className="absolute top-6 right-6 w-8 h-8 rounded-lg flex items-center justify-center transition-all hover:scale-110"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}
+            aria-label="Cerrar"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
+
+          <div className="text-center mt-8">
+            <h3 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: '#ffffff', letterSpacing: '-0.02em' }}>
+              {step === 1 ? '¿Cómo usarás Nessie?' : '¿Cuánto pagarías?'}
+            </h3>
+            <p className="text-sm md:text-base max-w-md mx-auto" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+              {step === 1
+                ? 'Selecciona tu perfil para personalizar la experiencia'
+                : 'Ayúdanos a definir el mejor precio'}
+            </p>
+          </div>
         </div>
 
-        <div className="p-8">
+        {/* Content */}
+        <div className="overflow-y-auto custom-scrollbar px-8 py-8 relative" style={{
+          background: '#0a0a0a',
+          maxHeight: 'calc(90vh - 280px)'
+        }}>
+          {/* Grid Pattern Background */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            backgroundImage: `
+              linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '24px 24px',
+            backgroundPosition: '0 0',
+            opacity: 0.5,
+            maskImage: 'radial-gradient(ellipse at center, transparent 0%, black 50%)'
+          }} />
           {step === 1 ? (
-            <div className="space-y-6">
-              <h4 className="text-xl font-bold text-center mb-8"
-                  style={{ color: 'rgb(var(--color-black))' }}>
-                ¿Qué tipo de usuario eres?
-              </h4>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {userTypeOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    onClick={() => setUserType(option.value)}
-                    className="relative p-6 rounded-2xl text-left transition-all duration-300 hover:scale-105 group"
-                    style={{
-                      background: userType === option.value 
-                        ? 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
-                        : 'rgb(var(--color-white))',
-                      border: userType === option.value 
-                        ? '2px solid rgb(var(--color-black))'
-                        : '2px solid rgb(var(--color-gray-200))',
-                      boxShadow: userType === option.value 
-                        ? '0 8px 32px rgba(0, 0, 0, 0.2)'
-                        : '0 4px 12px rgba(0, 0, 0, 0.05)'
-                    }}>
-                    
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 flex items-center justify-center rounded-lg"
-                           style={{
-                             background: userType === option.value 
-                               ? 'rgba(255, 255, 255, 0.2)' 
-                               : 'rgba(255, 255, 255, 0.1)',
-                             border: '1px solid rgba(255, 255, 255, 0.2)'
-                           }}>
-                        <div style={{ 
-                          color: userType === option.value 
-                            ? 'rgb(var(--color-white))' 
-                            : 'rgb(var(--color-gray-400))' 
-                        }}>
-                          {option.icon}
-                        </div>
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              {userTypeOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => setUserType(option.value)}
+                  className={`option-hover relative p-4 md:p-5 rounded-2xl text-left transition-all ${
+                    option.value === 'otros' ? 'md:col-span-2' : ''
+                  }`}
+                  style={{
+                    background: userType === option.value
+                      ? 'rgba(255, 255, 255, 0.12)'
+                      : 'rgba(255, 255, 255, 0.05)',
+                    border: userType === option.value
+                      ? '1.5px solid rgba(255, 255, 255, 0.25)'
+                      : '1px solid rgba(255, 255, 255, 0.1)',
+                    boxShadow: userType === option.value
+                      ? '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08)'
+                      : '0 2px 8px rgba(0, 0, 0, 0.2)',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className={`flex ${option.value === 'otros' ? 'items-center gap-4' : 'flex-row items-center gap-4 md:flex-col md:items-center md:text-center md:gap-3'}`}>
+                    <div className="w-11 h-11 md:w-14 md:h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+                         style={{
+                           background: userType === option.value
+                             ? 'rgba(255, 255, 255, 0.1)'
+                             : 'rgba(255, 255, 255, 0.03)',
+                           border: '1px solid rgba(255, 255, 255, 0.08)'
+                         }}>
+                      <div style={{ color: userType === option.value ? '#ffffff' : 'rgba(255, 255, 255, 0.4)' }}>
+                        {option.icon}
                       </div>
-                      <div className="flex-1">
-                        <h5 className="font-semibold text-lg mb-1"
-                            style={{ 
-                              color: userType === option.value 
-                                ? 'rgb(var(--color-white))' 
-                                : 'rgb(var(--color-black))' 
-                            }}>
-                          {option.label}
-                        </h5>
-                        <p className="text-sm opacity-75"
-                           style={{ 
-                             color: userType === option.value 
-                               ? 'rgb(var(--color-white))' 
-                               : 'rgb(var(--color-gray-600))' 
-                           }}>
-                          {option.description}
-                        </p>
-                      </div>
-                      
+                    </div>
+
+                    <div className="flex-1 md:flex-none">
+                      <h4 className="font-semibold text-base mb-0.5 md:mb-1"
+                          style={{ color: userType === option.value ? '#ffffff' : 'rgba(255, 255, 255, 0.8)' }}>
+                        {option.label}
+                      </h4>
+                      <p className="text-sm"
+                         style={{ color: userType === option.value ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.4)' }}>
+                        {option.description}
+                      </p>
+                    </div>
+
+                    {/* Checkmark for mobile - inline */}
+                    <div className="md:hidden">
                       {userType === option.value && (
-                        <div className="absolute top-4 right-4">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                               style={{ color: 'rgb(var(--color-white))' }}>
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                             style={{ background: '#ffffff' }}>
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#0a0a0a' }}>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
                       )}
                     </div>
-                  </button>
-                ))}
-              </div>
+                  </div>
+
+                  {/* Checkmark for desktop - absolute positioned */}
+                  {userType === option.value && (
+                    <div className="hidden md:flex absolute top-4 right-4 w-5 h-5 rounded-full items-center justify-center"
+                         style={{ background: '#ffffff' }}>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#0a0a0a' }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
 
               {userType === 'otros' && (
-                <div className="mt-6">
+                <div className="mt-4">
                   <input
                     type="text"
                     placeholder="Especifica tu tipo de uso..."
                     value={customUserType}
                     onChange={(e) => setCustomUserType(e.target.value)}
-                    className="w-full p-4 text-base rounded-xl outline-none transition-all focus:scale-105"
-                    style={{ 
-                      border: '2px solid rgb(var(--color-gray-200))',
-                      background: 'rgb(var(--color-white))',
-                      color: 'rgb(var(--color-black))',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)'
+                    className="w-full p-4 text-base rounded-xl outline-none transition-all"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.03)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: 'rgba(255, 255, 255, 0.9)'
                     }}
+                    autoFocus
                   />
                 </div>
               )}
-
-              <div className="flex justify-center pt-6">
-                <button
-                  onClick={handleNext}
-                  disabled={!userType || (userType === 'otros' && !customUserType)}
-                  className="px-8 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                  style={{
-                    background: userType && (userType !== 'otros' || customUserType)
-                      ? 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
-                      : 'rgb(var(--color-gray-300))',
-                    color: 'rgb(var(--color-white))',
-                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
-                  }}>
-                  Continuar →
-                </button>
-              </div>
             </div>
           ) : (
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {priceOptions.map((option) => (
                 <button
-                  onClick={handleBack}
-                  className="p-2 rounded-full transition-all hover:scale-105"
-                  style={{ 
-                    background: 'rgb(var(--color-gray-100))',
-                    color: 'rgb(var(--color-black))'
-                  }}>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                
-                <h4 className="text-xl font-bold flex-1"
-                    style={{ color: 'rgb(var(--color-black))' }}>
-                  ¿Qué precio esperarías?
-                </h4>
-              </div>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {priceOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    onClick={() => setExpectedPrice(option.value)}
-                    className="relative p-5 rounded-2xl text-center transition-all duration-300 hover:scale-105"
-                    style={{
-                      background: expectedPrice === option.value 
-                        ? 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
-                        : 'rgb(var(--color-white))',
-                      border: expectedPrice === option.value 
-                        ? '2px solid rgb(var(--color-black))'
-                        : '2px solid rgb(var(--color-gray-200))',
-                      boxShadow: expectedPrice === option.value 
-                        ? '0 8px 32px rgba(0, 0, 0, 0.2)'
-                        : '0 4px 12px rgba(0, 0, 0, 0.05)'
-                    }}>
-                    
-                    <div className="text-lg font-bold mb-1"
-                         style={{ 
-                           color: expectedPrice === option.value 
-                             ? 'rgb(var(--color-white))' 
-                             : 'rgb(var(--color-black))' 
-                         }}>
-                      {option.label}
-                    </div>
-                    
-                    <div className="text-xs opacity-75 mb-2"
-                         style={{ 
-                           color: expectedPrice === option.value 
-                             ? 'rgb(var(--color-white))' 
-                             : 'rgb(var(--color-gray-600))' 
-                         }}>
-                      {option.subtitle}
-                    </div>
-                    
-                    <div className="text-xs px-2 py-1 rounded-full"
-                         style={{ 
-                           background: expectedPrice === option.value 
-                             ? 'rgba(255, 255, 255, 0.2)' 
-                             : 'rgb(var(--color-gray-100))',
-                           color: expectedPrice === option.value 
-                             ? 'rgb(var(--color-white))' 
-                             : 'rgb(var(--color-gray-600))'
-                         }}>
-                      {option.description}
-                    </div>
-
-                    {expectedPrice === option.value && (
-                      <div className="absolute top-3 right-3">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                             style={{ color: 'rgb(var(--color-white))' }}>
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              <div className="flex justify-center pt-6">
-                <button
-                  onClick={handleSubmit}
-                  disabled={!expectedPrice}
-                  className="px-8 py-4 rounded-full font-semibold text-lg transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  key={option.value}
+                  onClick={() => setExpectedPrice(option.value)}
+                  className="option-hover p-5 rounded-2xl text-center transition-all"
                   style={{
-                    background: expectedPrice
-                      ? 'linear-gradient(135deg, rgb(var(--color-black)) 0%, rgb(var(--color-gray-800)) 100%)'
-                      : 'rgb(var(--color-gray-300))',
-                    color: 'rgb(var(--color-white))',
-                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
-                  }}>
-                  Finalizar 🎉
+                    background: expectedPrice === option.value
+                      ? 'rgba(255, 255, 255, 0.12)'
+                      : 'rgba(255, 255, 255, 0.05)',
+                    border: expectedPrice === option.value
+                      ? '1.5px solid rgba(255, 255, 255, 0.25)'
+                      : '1px solid rgba(255, 255, 255, 0.1)',
+                    boxShadow: expectedPrice === option.value
+                      ? '0 4px 12px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08)'
+                      : '0 2px 8px rgba(0, 0, 0, 0.2)',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <div className="text-xl font-bold mb-1"
+                       style={{ color: expectedPrice === option.value ? '#ffffff' : 'rgba(255, 255, 255, 0.8)' }}>
+                    {option.label}
+                  </div>
+                  <div className="text-xs mb-2"
+                       style={{ color: expectedPrice === option.value ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.4)' }}>
+                    /mes
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full inline-block"
+                       style={{
+                         background: expectedPrice === option.value
+                           ? 'rgba(255, 255, 255, 0.1)'
+                           : 'rgba(255, 255, 255, 0.03)',
+                         color: expectedPrice === option.value
+                           ? 'rgba(255, 255, 255, 0.7)'
+                           : 'rgba(255, 255, 255, 0.3)'
+                       }}>
+                    {option.description}
+                  </div>
+                  {expectedPrice === option.value && (
+                    <div className="absolute top-3 right-3 w-5 h-5 rounded-full flex items-center justify-center"
+                         style={{ background: '#ffffff' }}>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#0a0a0a' }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  )}
                 </button>
-              </div>
+              ))}
             </div>
           )}
         </div>
+
+        {/* Footer */}
+        <div className="px-8 py-6 flex items-center justify-between"
+             style={{
+               background: '#0f0f0f',
+               borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+             }}>
+          <div>
+            {step === 2 ? (
+              <button
+                onClick={handleBack}
+                className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:scale-105"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                }}
+              >
+                ← Atrás
+              </button>
+            ) : (
+              <button
+                onClick={onSkip}
+                className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:scale-105"
+                style={{
+                  background: 'transparent',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                }}
+              >
+                Omitir
+              </button>
+            )}
+          </div>
+
+          <div>
+            {step === 1 ? (
+              <button
+                onClick={handleNext}
+                disabled={!userType || (userType === 'otros' && !customUserType)}
+                className="px-7 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100"
+                style={{
+                  background: userType && (userType !== 'otros' || customUserType)
+                    ? '#ffffff'
+                    : 'rgba(255, 255, 255, 0.1)',
+                  color: userType && (userType !== 'otros' || customUserType)
+                    ? '#0a0a0a'
+                    : 'rgba(255, 255, 255, 0.3)'
+                }}
+              >
+                Continuar →
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                disabled={!expectedPrice}
+                className="px-7 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100"
+                style={{
+                  background: expectedPrice ? '#ffffff' : 'rgba(255, 255, 255, 0.1)',
+                  color: expectedPrice ? '#0a0a0a' : 'rgba(255, 255, 255, 0.3)'
+                }}
+              >
+                Finalizar ✓
+              </button>
+            )}
+          </div>
+        </div>
+        </div>
       </div>
     </div>
-    </>
   )
 
   return createPortal(dialogContent, document.body)

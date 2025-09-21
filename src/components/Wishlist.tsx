@@ -81,13 +81,15 @@ function Wishlist() {
       } else {
         setIsSubscribed(true)
         setCurrentEmailId(data[0]?.id || null)
-        
-        // Mostrar diálogo después de un breve delay
+
+        // Mostrar diálogo inmediatamente
+        setShowDialog(true)
+
+        // Limpiar el formulario después de mostrar el diálogo
         setTimeout(() => {
           setIsSubscribed(false)
           setEmail('')
-          setShowDialog(true)
-        }, 1500)
+        }, 500)
       }
     } catch (error) {
       setEmailError('Error de conexión. Inténtalo de nuevo.')
