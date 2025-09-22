@@ -46,13 +46,13 @@ const useCases: UseCase[] = [
       color: "rgba(59, 130, 246, 0.1)" 
     },
     metrics: {
-      chartType: 'area',
+      chartType: 'bar',
       primaryColor: '#3B82F6',
       data: [
-        { semana: 'S1', tiempoTradicional: 8, tiempoIA: 1 },
-        { semana: 'S2', tiempoTradicional: 10, tiempoIA: 1.5 },
-        { semana: 'S3', tiempoTradicional: 12, tiempoIA: 2 },
-        { semana: 'S4', tiempoTradicional: 9, tiempoIA: 1.2 },
+        { tarea: 'Investigación', antes: 6, despues: 1.5 },
+        { tarea: 'Escritura', antes: 4, despues: 2.5 },
+        { tarea: 'Revisión', antes: 3, despues: 1 },
+        { tarea: 'Citas', antes: 2, despues: 0.5 },
       ],
       kpis: [
         { label: 'Tiempo ahorrado', value: '87%', change: '+12%' },
@@ -85,18 +85,18 @@ const useCases: UseCase[] = [
       color: "rgba(16, 185, 129, 0.1)" 
     },
     metrics: {
-      chartType: 'bar',
+      chartType: 'line',
       primaryColor: '#10B981',
       data: [
-        { mes: 'Ene', tradicional: 15, conIA: 45 },
-        { mes: 'Feb', tradicional: 18, conIA: 54 },
-        { mes: 'Mar', tradicional: 12, conIA: 38 },
-        { mes: 'Abr', tradicional: 20, conIA: 65 },
+        { mes: 'Ene', papersAnalizados: 12, citasEncontradas: 85 },
+        { mes: 'Feb', papersAnalizados: 18, citasEncontradas: 142 },
+        { mes: 'Mar', papersAnalizados: 24, citasEncontradas: 189 },
+        { mes: 'Abr', papersAnalizados: 31, citasEncontradas: 248 },
       ],
       kpis: [
-        { label: 'Papers analizados', value: '3x', change: '+200%' },
-        { label: 'Citas encontradas', value: '2.1K', change: '+180%' },
-        { label: 'Conexiones identificadas', value: '847', change: '+340%' }
+        { label: 'Papers por sesión', value: '15-20', change: '+300%' },
+        { label: 'Tiempo por paper', value: '-75%', change: '+75%' },
+        { label: 'Precisión citas', value: '99.2%', change: '+35%' }
       ]
     },
     cta: { 
@@ -106,42 +106,42 @@ const useCases: UseCase[] = [
     } 
   },
   { 
-    id: "consultant", 
-    audience: "Consultores", 
-    category: "Profesional",
-    title: "Consultoría basada en datos", 
-    description: "Extrae insights de documentos complejos para crear propuestas y análisis detallados. Nessie procesa informes financieros, estudios de mercado y documentación empresarial para generar recomendaciones estratégicas. Permite a consultores manejar múltiples proyectos simultáneamente mientras mantienen la calidad y profundidad del análisis que esperan sus clientes.", 
-    benefits: ["Análisis competitivo automatizado", "Extracción de KPIs y métricas clave", "Propuestas automáticas personalizadas", "Benchmarking contra industria", "Identificación de riesgos y oportunidades", "Generación de executive summaries", "Dashboard de seguimiento de proyectos"],
-    timesSaved: "60% menos tiempo",
-    mainMetric: { value: "5x", label: "más proyectos simultáneos" },
+    id: "general", 
+    audience: "General", 
+    category: "Personal",
+    title: "Organización personal y profesionales independientes", 
+    description: "Gestiona tu biblioteca personal de documentos, manuales, recetas, guías y cualquier información importante. Nessie te ayuda a organizar y encontrar rápidamente contenido de tus hobbies, proyectos personales, finanzas domésticas o actividad profesional independiente. Perfecto para freelancers, creativos y cualquier persona que necesite tener su información accesible.", 
+    benefits: ["Organización automática de documentos personales", "Búsqueda instantánea en manuales y guías", "Gestión de recetas y proyectos creativos", "Seguimiento de finanzas personales", "Archivo de garantías y documentos importantes", "Base de conocimiento personal", "Sincronización entre dispositivos"],
+    timesSaved: "70% menos tiempo buscando",
+    mainMetric: { value: "500+", label: "documentos organizados" },
     visual: { 
       icon: (
         <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m9 5.197v0M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
       ), 
-      color: "rgba(168, 85, 247, 0.1)" 
+      color: "rgba(34, 197, 94, 0.1)" 
     },
     metrics: {
-      chartType: 'line',
-      primaryColor: '#A855F7',
+      chartType: 'area',
+      primaryColor: '#22C55E',
       data: [
-        { trimestre: 'Q1', ingresos: 120, proyectos: 8 },
-        { trimestre: 'Q2', ingresos: 180, proyectos: 12 },
-        { trimestre: 'Q3', ingresos: 240, proyectos: 16 },
-        { trimestre: 'Q4', ingresos: 350, proyectos: 22 },
+        { mes: 'Ene', documentosOrganizados: 45, documentosBuscados: 12 },
+        { mes: 'Feb', documentosOrganizados: 128, documentosBuscados: 34 },
+        { mes: 'Mar', documentosOrganizados: 285, documentosBuscados: 67 },
+        { mes: 'Abr', documentosOrganizados: 520, documentosBuscados: 89 },
       ],
       kpis: [
-        { label: 'Proyectos activos', value: '5x', change: '+400%' },
-        { label: 'Ingresos por hora', value: '€180', change: '+65%' },
-        { label: 'Tiempo análisis', value: '-60%', change: '+40%' }
+        { label: 'Documentos indexados', value: '500+', change: '+300%' },
+        { label: 'Tiempo búsqueda', value: '-70%', change: '+50%' },
+        { label: 'Productividad personal', value: '+85%', change: '+85%' }
       ]
     },
     cta: { 
-      label: "Explorar consultoría", 
-      href: "/demo?preset=consultant", 
-      analyticsId: "usecase_demo_consultant_click" 
+      label: "Explorar uso personal", 
+      href: "/demo?preset=general", 
+      analyticsId: "usecase_demo_general_click" 
     } 
   },
   { 
@@ -173,9 +173,9 @@ const useCases: UseCase[] = [
         { metric: 'Colaboración', antes: 55, despues: 80 },
       ],
       kpis: [
-        { label: 'ROI anual', value: '$2.3M', change: '+180%' },
+        { label: 'Ahorro por empleado/año', value: '€4,800', change: '+180%' },
         { label: 'Tiempo búsqueda', value: '-45%', change: '+25%' },
-        { label: 'Empleados activos', value: '12K', change: '+67%' }
+        { label: 'Adopción usuarios', value: '87%', change: '+67%' }
       ]
     },
     cta: { 
@@ -201,7 +201,7 @@ const renderChart = (metrics: UseCase['metrics']) => {
                 <stop offset="95%" stopColor={primaryColor} stopOpacity={0.05}/>
               </linearGradient>
             </defs>
-            <XAxis dataKey="semana" axisLine={false} tickLine={false} 
+            <XAxis dataKey="mes" axisLine={false} tickLine={false} 
                    tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10 }} />
             <YAxis hide />
             <Tooltip 
@@ -212,9 +212,9 @@ const renderChart = (metrics: UseCase['metrics']) => {
                 fontSize: '12px'
               }} 
             />
-            <Area type="monotone" dataKey="tiempoTradicional" stackId="1" 
+            <Area type="monotone" dataKey="documentosBuscados" stackId="1" 
                   stroke="rgba(255,255,255,0.3)" fill="rgba(255,255,255,0.1)" />
-            <Area type="monotone" dataKey="tiempoIA" stackId="1" 
+            <Area type="monotone" dataKey="documentosOrganizados" stackId="1" 
                   stroke={primaryColor} fill="url(#colorArea)" strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>
@@ -224,7 +224,7 @@ const renderChart = (metrics: UseCase['metrics']) => {
       return (
         <ResponsiveContainer width="100%" height={240}>
           <BarChart data={data}>
-            <XAxis dataKey="mes" axisLine={false} tickLine={false} 
+            <XAxis dataKey="tarea" axisLine={false} tickLine={false} 
                    tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10 }} />
             <YAxis hide />
             <Tooltip 
@@ -239,8 +239,8 @@ const renderChart = (metrics: UseCase['metrics']) => {
               cursor={{ fill: 'rgba(255,255,255,0.04)' }}
               animationDuration={200}
             />
-            <Bar dataKey="tradicional" fill="rgba(255,255,255,0.2)" />
-            <Bar dataKey="conIA" fill={primaryColor} />
+            <Bar dataKey="antes" fill="rgba(255,255,255,0.2)" />
+            <Bar dataKey="despues" fill={primaryColor} />
           </BarChart>
         </ResponsiveContainer>
       )
@@ -249,7 +249,7 @@ const renderChart = (metrics: UseCase['metrics']) => {
       return (
         <ResponsiveContainer width="100%" height={240}>
           <LineChart data={data}>
-            <XAxis dataKey="trimestre" axisLine={false} tickLine={false} 
+            <XAxis dataKey="mes" axisLine={false} tickLine={false} 
                    tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10 }} />
             <YAxis hide />
             <Tooltip 
@@ -260,8 +260,8 @@ const renderChart = (metrics: UseCase['metrics']) => {
                 fontSize: '12px'
               }} 
             />
-            <Line type="monotone" dataKey="ingresos" stroke={primaryColor} strokeWidth={3} dot={{ r: 4 }} />
-            <Line type="monotone" dataKey="proyectos" stroke="rgba(255,255,255,0.5)" strokeWidth={2} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="papersAnalizados" stroke={primaryColor} strokeWidth={3} dot={{ r: 4 }} />
+            <Line type="monotone" dataKey="citasEncontradas" stroke="rgba(255,255,255,0.5)" strokeWidth={2} dot={{ r: 3 }} />
           </LineChart>
         </ResponsiveContainer>
       )
@@ -406,7 +406,7 @@ function UseCasesSection() {
                     <div className={`transition-colors duration-300 ${
                       activeIndex === index ? 'text-white' : 'text-white/70'
                     }`}>
-                      {useCase.visual.icon && React.isValidElement(useCase.visual.icon) ? React.cloneElement(useCase.visual.icon as React.ReactElement<any>, {
+                      {useCase.visual.icon && React.isValidElement(useCase.visual.icon) ? React.cloneElement(useCase.visual.icon as React.ReactElement<{className?: string; strokeWidth?: number}>, {
                         className: "w-4 h-4 sm:w-5 sm:h-5",
                         strokeWidth: activeIndex === index ? 2 : 1.5
                       }) : useCase.visual.icon}
@@ -452,7 +452,7 @@ function UseCasesSection() {
                 width: `${useCases.length * 100}%`
               }}
             >
-              {useCases.map((useCase, index) => (
+              {useCases.map((useCase) => (
                 <div
                   key={useCase.id}
                   className="flex-shrink-0 px-2 sm:px-4 md:px-6"
@@ -502,43 +502,25 @@ function UseCasesSection() {
 
                     {/* CTA */}
                     {useCase.cta && (
-                      <a 
-                        href={useCase.cta.href}
+                      <button 
+                        disabled={true}
                         data-analytics-id={useCase.cta.analyticsId}
-                        className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300"
+                        className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 cursor-not-allowed"
                         style={{
-                          background: index === 3 ? 'rgb(var(--color-white))' : 'rgba(15, 15, 15, 0.9)',
-                          color: index === 3 ? 'rgb(var(--color-black))' : 'rgb(var(--color-white))',
-                          border: index === 3 ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          color: 'rgba(255, 255, 255, 0.4)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
                           backdropFilter: 'blur(10px)',
-                          boxShadow: '0 6px 20px rgba(0, 0, 0, 0.3)'
-                        }}
-                        onMouseEnter={(e) => {
-                          if (index !== 3) {
-                            e.currentTarget.style.background = 'rgba(25, 25, 25, 0.95)'
-                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-                          } else {
-                            e.currentTarget.style.transform = 'translateY(-2px)'
-                            e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 255, 255, 0.2)'
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (index !== 3) {
-                            e.currentTarget.style.background = 'rgba(15, 15, 15, 0.9)'
-                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                          } else {
-                            e.currentTarget.style.transform = 'translateY(0)'
-                            e.currentTarget.style.boxShadow = 'none'
-                          }
+                          boxShadow: 'none'
                         }}
                       >
                         {useCase.cta.label}
-                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" 
+                        <svg className="w-5 h-5 opacity-40" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                                 d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
-                      </a>
+                      </button>
                     )}
                   </div>
 
@@ -587,7 +569,7 @@ function UseCasesSection() {
                                    transform: 'translateZ(20px)'
                                  }}>
                               <div className="text-white transition-transform duration-500">
-                                {useCase.visual.icon && React.isValidElement(useCase.visual.icon) ? React.cloneElement(useCase.visual.icon as React.ReactElement<any>, { className: "w-6 h-6" }) : useCase.visual.icon}
+                                {useCase.visual.icon && React.isValidElement(useCase.visual.icon) ? React.cloneElement(useCase.visual.icon as React.ReactElement<{className?: string; strokeWidth?: number}>, { className: "w-6 h-6" }) : useCase.visual.icon}
                               </div>
                             </div>
                             <div>
@@ -614,7 +596,7 @@ function UseCasesSection() {
                           </div>
                           
                           {/* KPIs Grid */}
-                          <div className="grid grid-cols-3 gap-4" style={{ transform: 'translateZ(5px)' }}>
+                          <div className="grid grid-cols-3 gap-4 mb-4" style={{ transform: 'translateZ(5px)' }}>
                             {useCase.metrics.kpis.map((kpi, idx) => (
                               <div key={idx} className="text-center p-4 rounded-2xl transition-all duration-300 hover:scale-105"
                                    style={{
@@ -648,6 +630,16 @@ function UseCasesSection() {
                                 )}
                               </div>
                             ))}
+                          </div>
+                          
+                          {/* Disclaimer */}
+                          <div className="text-center mt-4">
+                            <p className="text-xs" style={{ 
+                              color: 'rgba(255, 255, 255, 0.4)',
+                              fontStyle: 'italic'
+                            }}>
+                              *Datos estimados
+                            </p>
                           </div>
                         </div>
                       </div>
