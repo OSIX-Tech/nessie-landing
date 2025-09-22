@@ -1,86 +1,106 @@
 import { useState, useRef, useEffect } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
-// Definir los casos de uso con placeholders para videos
+// Definir las funcionalidades core de Nessie
 const features = [
   {
-    id: 'investigacion-instantanea',
+    id: 'busqueda-inteligente',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
     ),
-    title: 'Investigación Instantánea',
-    description: 'Analiza miles de documentos en segundos y encuentra conexiones ocultas.',
-    chips: ['Búsqueda semántica', 'Referencias cruzadas', 'Resúmenes automáticos'],
+    title: 'Búsqueda Inteligente',
+    description: 'Búsqueda inteligente en toda tu base documental usando lenguaje natural.',
+    chips: ['Búsqueda semántica', 'Múltiples formatos', 'Resultados instantáneos'],
     video: {
-      poster: '/videos/investigacion/poster.jpg',
-      src_mp4: '/videos/investigacion/preview.mp4'
+      poster: '/videos/busqueda/poster.jpg',
+      src_mp4: '/videos/busqueda/preview.mp4'
     },
     cta: {
-      label: 'Probar esta funcionalidad',
-      href: '/demo/investigacion'
+      label: 'Probar búsqueda',
+      href: '/demo/busqueda'
     }
   },
   {
-    id: 'compliance-automatizado',
+    id: 'respuestas-precisas',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     ),
-    title: 'Compliance Automatizado',
-    description: 'Auditoría continua con alertas en tiempo real y audit trail completo.',
-    chips: ['Detección proactiva', 'Alertas en tiempo real', 'Audit trail'],
+    title: 'Respuestas Precisas',
+    description: 'Respuestas precisas con citas y referencias exactas a los documentos fuente.',
+    chips: ['Citas automáticas', 'Trazabilidad completa', 'Verificación de fuentes'],
     video: {
-      poster: '/videos/compliance/poster.jpg',
-      src_mp4: '/videos/compliance/preview.mp4'
+      poster: '/videos/respuestas/poster.jpg',
+      src_mp4: '/videos/respuestas/preview.mp4'
     },
     cta: {
-      label: 'Ver demo',
-      href: '/demo/compliance'
+      label: 'Ver precisión',
+      href: '/demo/respuestas'
     }
   },
   {
-    id: 'knowledge-sharing',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-      </svg>
-    ),
-    title: 'Knowledge Sharing',
-    description: 'Colaboración sin fricciones con workspaces compartidos y co-edición.',
-    chips: ['Workspaces', 'Tiempo real', 'Versionado'],
-    video: {
-      poster: '/videos/sharing/poster.jpg',
-      src_mp4: '/videos/sharing/preview.mp4'
-    },
-    cta: {
-      label: 'Empezar gratis',
-      href: '/demo/sharing'
-    }
-  },
-  {
-    id: 'analytics-inteligente',
+    id: 'analisis-sintesis',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
               d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
       </svg>
     ),
-    title: 'Analytics Inteligente',
-    description: 'Insights automáticos con dashboards y predicciones ML de tu data.',
-    chips: ['Dashboards', 'ML Predictions', 'Reportes'],
+    title: 'Análisis y Síntesis',
+    description: 'Análisis y síntesis del contenido con resúmenes y comparaciones automáticas.',
+    chips: ['Resúmenes automáticos', 'Análisis comparativo', 'Insights inteligentes'],
     video: {
-      poster: '/videos/analytics/poster.jpg',
-      src_mp4: '/videos/analytics/preview.mp4'
+      poster: '/videos/analisis/poster.jpg',
+      src_mp4: '/videos/analisis/preview.mp4'
     },
     cta: {
-      label: 'Ver capacidades',
-      href: '/demo/analytics'
+      label: 'Ver análisis',
+      href: '/demo/analisis'
+    }
+  },
+  {
+    id: 'generacion-documentos',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+      </svg>
+    ),
+    title: 'Generación de Contenido',
+    description: 'Generación de ideas y documentos basados en tu base de conocimiento.',
+    chips: ['Generación automática', 'Templates inteligentes', 'Consistencia de marca'],
+    video: {
+      poster: '/videos/generacion/poster.jpg',
+      src_mp4: '/videos/generacion/preview.mp4'
+    },
+    cta: {
+      label: 'Crear contenido',
+      href: '/demo/generacion'
+    }
+  },
+  {
+    id: 'integracion-herramientas',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      </svg>
+    ),
+    title: 'Integración Externa',
+    description: 'Integración de herramientas externas para un flujo de trabajo unificado.',
+    chips: ['APIs nativas', 'Sincronización automática', 'Workflow integrado'],
+    video: {
+      poster: '/videos/integracion/poster.jpg',
+      src_mp4: '/videos/integracion/preview.mp4'
+    },
+    cta: {
+      label: 'Ver integraciones',
+      href: '/demo/integracion'
     }
   }
 ]
@@ -104,7 +124,9 @@ function ProductSection() {
       try {
         firstVideo.preload = 'auto'
         firstVideo.load()
-      } catch {}
+      } catch {
+        // Ignore load errors
+      }
       setLoadedVideos(prev => new Set(prev).add(0))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,12 +203,16 @@ function ProductSection() {
           if (video) {
             // Pause and reset time
             if (!video.paused) video.pause()
-            try { video.currentTime = 0 } catch {}
+            try { video.currentTime = 0 } catch {
+        // Ignore errors
+      }
 
             // Reset to poster: drop src and reload
             if (video.src) {
               video.removeAttribute('src')
-              try { video.load() } catch {}
+              try { video.load() } catch {
+        // Ignore errors
+      }
             }
 
             // Update tracking sets
@@ -268,7 +294,9 @@ function ProductSection() {
     if (video.paused) {
       video.play().then(() => {
         setPlayingVideos(prev => new Set(prev).add(index))
-      }).catch(() => {})
+      }).catch(() => {
+        // Ignore play errors
+      })
     } else {
       video.pause()
       setPlayingVideos(prev => {
@@ -307,7 +335,7 @@ function ProductSection() {
         </div>
         <h2 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 lg:mb-6"
             style={{ color: 'rgb(var(--color-white))' }}>
-          Explora nuestras
+          Explora nuestras{' '}
           <br className="sm:hidden" />
           <span className="sm:hidden"> </span>
           <span style={{
