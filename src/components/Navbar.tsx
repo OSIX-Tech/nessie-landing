@@ -62,7 +62,7 @@ function Navbar() {
               aria-label="Ir al inicio"
             >
               <img
-                src="/nessiee.png"
+                src="/nessiee2.png"
                 alt="Nessie"
                 className="h-9 w-auto object-contain transition-all duration-500"
                 style={{
