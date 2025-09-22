@@ -91,7 +91,7 @@ function Wishlist() {
           setEmail('')
         }, 500)
       }
-    } catch (error) {
+    } catch {
       setEmailError('Error de conexión. Inténtalo de nuevo.')
     } finally {
       setIsLoading(false)
