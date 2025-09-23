@@ -8,7 +8,7 @@ function Hero() {
   }, [])
 
   return (
-    <section id="hero" className="relative pt-16 md:pt-0 min-h-[85vh] md:min-h-screen md:flex md:items-end md:justify-center md:pb-12 overflow-hidden">
+    <section id="hero" className="relative pt-16 md:pt-0 min-h-[85vh] md:min-h-screen md:flex md:items-center md:justify-center md:pb-0 overflow-hidden">
       {/* Subtle depth effect */}
       <div className="absolute inset-0 -z-10">
         {/* Center glow */}
@@ -19,7 +19,7 @@ function Hero() {
       </div>
 
       {/* Content */}
-      <div className={`w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-all duration-1000 flex flex-col justify-center md:justify-end min-h-[85vh] md:min-h-0 md:py-0 ${
+      <div className={`w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-all duration-1000 flex flex-col justify-center md:justify-center min-h-[85vh] md:min-h-0 md:py-0 md:mt-8 lg:mt-12 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       }`}>
 
@@ -61,7 +61,7 @@ function Hero() {
         </p>
 
         {/* Dual CTA */}
-        <div className="flex flex-col items-center gap-4"
+        <div className="flex flex-col items-center gap-4 mt-4 md:mt-10 lg:mt-12"
              style={{ animation: 'fade-in-up 0.8s ease-out 0.4s both' }}>
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
 

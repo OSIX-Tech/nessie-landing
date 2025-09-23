@@ -37,7 +37,7 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 safe-top ${
-      scrolled ? 'py-4' : 'py-6'
+      scrolled ? 'py-3' : 'py-4'
     }`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className={`relative flex items-center justify-between transition-all duration-500 ${
@@ -48,7 +48,7 @@ function Navbar() {
             ? 'rgba(0, 0, 0, 0.5)'
             : 'transparent',
           borderRadius: scrolled ? '9999px' : '0',
-          padding: scrolled ? '12px 24px' : '0',
+          padding: scrolled ? '8px 16px' : '0',
           border: scrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
           boxShadow: scrolled ? '0 10px 40px rgba(0, 0, 0, 0.3)' : 'none'
         }}>
@@ -62,9 +62,9 @@ function Navbar() {
               aria-label="Ir al inicio"
             >
               <img
-                src="/nessiee2.png"
+                src="/loguito.svg"
                 alt="Nessie"
-                className="h-9 w-auto object-contain transition-all duration-500"
+                className="h-14 w-auto object-contain transition-all duration-500"
                 style={{
                   filter: scrolled ? 'brightness(1)' : 'brightness(1.2)'
                 }}

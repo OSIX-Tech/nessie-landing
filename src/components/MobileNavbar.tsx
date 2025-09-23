@@ -125,7 +125,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
           background: 'transparent'
         }}
       >
-        <div className="px-3 py-3">
+        <div className="px-3 py-2.5">
           <div
             className="relative flex items-center justify-between transition-all duration-300"
             style={{
@@ -133,7 +133,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
               border: '1px solid rgba(255,255,255,0.12)',
               borderRadius: '9999px',
               boxShadow: (isScrolled || isOpen) ? '0 10px 30px rgba(0,0,0,0.35)' : '0 6px 18px rgba(0,0,0,0.2)',
-              padding: (isScrolled || isOpen) ? '10px 12px' : '8px 12px',
+              padding: (isScrolled || isOpen) ? '8px 12px' : '6px 10px',
               backdropFilter: (isScrolled || isOpen) ? 'blur(10px)' : 'none'
             }}
           >
@@ -145,9 +145,9 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
               aria-label="Ir al inicio"
             >
               <img
-                src="/nessiee2.png"
+                src="/loguito.svg"
                 alt="Nessie"
-                className="h-8 w-auto object-contain"
+                className="h-12 w-auto object-contain"
                 style={{ filter: isScrolled || isOpen ? 'brightness(1)' : 'brightness(1.1)' }}
               />
               <span className="text-white font-semibold text-sm">Nessie</span>
@@ -304,7 +304,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
       )}
 
       {/* Spacer to prevent content from going under fixed navbar */}
-      <div className="md:hidden h-[57px]" />
+      <div className="md:hidden h-[50px]" />
 
       {/* Animation Styles */}
       <style>{`
