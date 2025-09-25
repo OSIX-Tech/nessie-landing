@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { supabase } from '../lib/supabase'
-import UserInfoDialog from './UserInfoDialog'
+import { API_ENDPOINTS, apiRequest } from '../lib/api'
 
 function Wishlist() {
   const [email, setEmail] = useState('')
@@ -9,9 +8,21 @@ function Wishlist() {
   const [isFocused, setIsFocused] = useState(false)
   const [emailError, setEmailError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [showDialog, setShowDialog] = useState(false)
-  const [currentEmailId, setCurrentEmailId] = useState<number | null>(null)
+  const [confirmedCount, setConfirmedCount] = useState(2847) // Valor por defecto
   const sectionRef = useScrollAnimation()
+
+  // Cargar contador al montar el componente
+  useEffect(() => {
+    const loadCount = async () => {
+      try {
+        const response = await apiRequest(API_ENDPOINTS.count)
+        setConfirmedCount(response.confirmed || 2847)
+      } catch {
+        // Mantener el valor por defecto si falla
+      }
+    }
+    loadCount()
+  }, [])
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -55,9 +66,9 @@ function Wishlist() {
 
     try {
       const metadata = getMetadata()
-      const { data, error } = await supabase
-        .from('waitlist')
-        .insert([{ 
+      await apiRequest(API_ENDPOINTS.register, {
+        method: 'POST',
+        body: JSON.stringify({
           email,
           browser_language: metadata.browser_language,
           user_agent: metadata.user_agent,
@@ -67,60 +78,34 @@ function Wishlist() {
           utm_campaign: metadata.utm_campaign,
           timezone: metadata.timezone,
           screen_resolution: metadata.screen_resolution
-        }])
-        .select('id')
+        })
+      })
 
-      if (error) {
-        if (error.code === '23505') {
-          setEmailError('Este email ya está registrado')
-        } else if (error.code === '42501') {
-          setEmailError('Error de permisos. Contacta al administrador.')
-        } else {
-          setEmailError('Error al registrar. Inténtalo de nuevo.')
-        }
+      // Éxito - mostrar mensaje de confirmación
+      setIsSubscribed(true)
+      setEmailError('')
+      
+      // Limpiar el formulario después de un momento
+      setTimeout(() => {
+        setIsSubscribed(false)
+        setEmail('')
+      }, 3000)
+
+    } catch (error: unknown) {
+      // Manejo de errores específicos del backend
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      if (errorMessage.includes('400')) {
+        setEmailError('Este email ya está registrado')
+      } else if (errorMessage.includes('422')) {
+        setEmailError('Email inválido')
       } else {
-        setIsSubscribed(true)
-        setCurrentEmailId(data[0]?.id || null)
-
-        // Mostrar diálogo inmediatamente
-        setShowDialog(true)
-
-        // Limpiar el formulario después de mostrar el diálogo
-        setTimeout(() => {
-          setIsSubscribed(false)
-          setEmail('')
-        }, 500)
+        setEmailError('Error al registrar. Inténtalo de nuevo.')
       }
-    } catch {
-      setEmailError('Error de conexión. Inténtalo de nuevo.')
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleDialogSubmit = async (userType: string, expectedPrice: string) => {
-    if (!currentEmailId) return
-    
-    try {
-      await supabase
-        .from('waitlist')
-        .update({ 
-          user_type: userType,
-          expected_price: expectedPrice
-        })
-        .eq('id', currentEmailId)
-      
-      setShowDialog(false)
-      setCurrentEmailId(null)
-    } catch (error) {
-      console.error('Error updating user info:', error)
-    }
-  }
-
-  const handleDialogSkip = () => {
-    setShowDialog(false)
-    setCurrentEmailId(null)
-  }
 
   return (
     <section ref={sectionRef} id="wishlist" className="py-10 sm:py-16 md:py-24 relative overflow-hidden opacity-0 scroll-mt-16 md:scroll-mt-24">
@@ -204,7 +189,7 @@ function Wishlist() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                           d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
-                  Guardando...
+                  Enviando...
                 </span>
               ) : isSubscribed ? (
                 <span className="flex items-center gap-2">
@@ -212,7 +197,7 @@ function Wishlist() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                           d="M5 13l4 4L19 7" />
                   </svg>
-                  ¡Listo!
+                  Revisa tu correo
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
@@ -244,7 +229,7 @@ function Wishlist() {
             </div>
             <span className="text-[11px] sm:text-sm" style={{ color: 'rgb(var(--color-gray-400))' }}>
               <span className="font-semibold" style={{ color: 'rgb(var(--color-white))' }}>
-                2,847
+                {confirmedCount.toLocaleString()}
               </span> personas esperando
             </span>
           </div>
@@ -273,12 +258,6 @@ function Wishlist() {
         </div>
       </div>
 
-      {/* Diálogo de información adicional */}
-      <UserInfoDialog
-        isOpen={showDialog}
-        onSubmit={handleDialogSubmit}
-        onSkip={handleDialogSkip}
-      />
     </section>
   )
 }
