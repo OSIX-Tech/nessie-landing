@@ -1,5 +1,5 @@
 // Configuración de la API del backend
-const API_BASE_URL = 'https://your-backend.railway.app' // TODO: Reemplazar con la URL real
+const API_BASE_URL = 'http://localhost:3002'
 
 export const API_ENDPOINTS = {
   register: `${API_BASE_URL}/api/waitlist/register`,
