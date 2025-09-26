@@ -483,7 +483,7 @@ function UseCasesSection() {
                       <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3 md:mb-4" style={{ color: 'rgb(var(--color-white))' }}>
                         {useCase.title}
                       </h3>
-                      <p className="text-sm sm:text-base md:text-lg" style={{ color: 'rgb(var(--color-gray-300))', lineHeight: 1.6 }}>
+                      <p className="text-sm sm:text-base md:text-lg" style={{ color: 'rgb(var(--color-gray-400))', lineHeight: 1.6 }}>
                         {useCase.description}
                       </p>
                     </div>
@@ -493,7 +493,7 @@ function UseCasesSection() {
                       {useCase.benefits.slice(0, 4).map((benefit, idx) => (
                         <div key={idx} className="flex items-start gap-2 sm:gap-3">
                           <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white mt-1.5 sm:mt-2 flex-shrink-0"></div>
-                          <span className="text-xs sm:text-sm leading-relaxed" style={{ color: 'rgb(var(--color-gray-300))' }}>
+                          <span className="text-xs sm:text-sm leading-relaxed" style={{ color: 'rgb(var(--color-gray-400))' }}>
                             {benefit}
                           </span>
                         </div>

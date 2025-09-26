@@ -168,7 +168,7 @@ function Wishlist() {
           <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center p-2 rounded-2xl sm:rounded-full transition-all duration-300"
                style={{ 
                  background: 'rgb(var(--color-white))',
-                 border: isFocused ? '2px solid rgb(var(--color-black))' : '2px solid rgb(var(--color-gray-200))',
+                 border: isFocused ? '2px solid rgb(var(--color-black))' : '2px solid rgb(var(--color-gray-400))',
                  boxShadow: isFocused ? '0 0 0 4px rgba(0, 0, 0, 0.05)' : 'none'
                }}>
             <input
@@ -238,7 +238,7 @@ function Wishlist() {
                 <div key={i}
                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 border-white"
                      style={{ 
-                       background: `rgb(var(--color-gray-${i * 2}00))`
+                       background: 'rgb(var(--color-gray-400))'
                      }}></div>
               ))}
             </div>
@@ -250,7 +250,7 @@ function Wishlist() {
           </div>
 
           <div className="flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: 'rgb(var(--color-gray-500))' }}
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: 'rgb(var(--color-gray-400))' }}
                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -261,7 +261,7 @@ function Wishlist() {
           </div>
 
           <div className="flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: 'rgb(var(--color-gray-500))' }}
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: 'rgb(var(--color-gray-400))' }}
                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M13 10V3L4 14h7v7l9-11h-7z" />

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   /* Premium monochrome palette with subtle warmth */
   --color-white: 255 255 255;
@@ -43,6 +43,7 @@
 
 /* Premium dark background with grid */
 body {
+  font-weight: 400; /* Inter Regular por defecto */
   background:
     /* Grid pattern */
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),

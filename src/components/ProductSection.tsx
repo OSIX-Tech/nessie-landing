@@ -339,7 +339,7 @@ function ProductSection() {
           <br className="sm:hidden" />
           <span className="sm:hidden"> </span>
           <span style={{
-            background: 'linear-gradient(90deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-500)) 100%)',
+            background: 'linear-gradient(90deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -348,7 +348,7 @@ function ProductSection() {
           </span>
         </h2>
         <p className="text-sm sm:text-base md:text-lg lg:text-2xl max-w-2xl mx-auto px-0 sm:px-0"
-           style={{ color: 'rgb(var(--color-gray-500))' }}>
+           style={{ color: 'rgb(var(--color-gray-400))' }}>
           Desliza para ver demos cortas
         </p>
       </div>
@@ -437,7 +437,7 @@ function ProductSection() {
                         {feature.title}
                       </h3>
                       <p className="text-[11px] sm:text-sm lg:text-lg leading-relaxed"
-                         style={{ color: 'rgb(var(--color-gray-500))' }}>
+                         style={{ color: 'rgb(var(--color-gray-400))' }}>
                         {feature.description}
                       </p>
                     </div>
@@ -546,7 +546,7 @@ function ProductSection() {
                       </svg>
                     </a>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] sm:text-xs" style={{ color: 'rgb(var(--color-gray-600))' }}>
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'rgb(var(--color-gray-400))' }}>
                         {index + 1} / {features.length}
                       </span>
                     </div>

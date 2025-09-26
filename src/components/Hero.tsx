@@ -38,8 +38,10 @@ function Hero() {
           {' '}
           <span className="relative inline-block">
             <span style={{
-              color: 'rgb(var(--color-white))',
-              textShadow: '0 0 10px rgba(255, 255, 255, 0.25)'
+              background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
             }}>
               segundos
             </span>
@@ -54,7 +56,7 @@ function Hero() {
         {/* Subheadline - minimal */}
         <p className="text-[15px] sm:text-base text-neutral-400 mt-2 mb-10 md:text-2xl md:max-w-2xl mx-auto md:mb-12 md:px-0"
            style={{
-             color: 'rgb(var(--color-gray-500))',
+             color: 'rgb(var(--color-gray-400))',
              animation: 'fade-in-up 0.8s ease-out 0.3s both'
            }}>
           IA que lee, entiende y cita tus documentos.
@@ -135,7 +137,7 @@ function Hero() {
 
           {/* Minimal trust signal */}
           <p className="text-xs text-neutral-500 mt-1 text-center md:text-sm md:flex md:flex-row md:items-center md:gap-3"
-             style={{ color: 'rgb(var(--color-gray-600))' }}>
+             style={{ color: 'rgb(var(--color-gray-400))' }}>
             <span className="block md:inline">Sin tarjeta</span>
             <span className="hidden md:inline opacity-40">•</span>
             <span className="block font-medium" style={{ color: 'rgb(var(--color-gray-400))' }}>
