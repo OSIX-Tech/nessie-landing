@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { API_ENDPOINTS, apiRequest } from '../lib/api'
+import UserInfoDialog from './UserInfoDialog'
 
 function Wishlist() {
   const [email, setEmail] = useState('')
@@ -9,6 +10,8 @@ function Wishlist() {
   const [emailError, setEmailError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [confirmedCount, setConfirmedCount] = useState(2847) // Valor por defecto
+  const [showDialog, setShowDialog] = useState(false)
+  const [currentEmailId, setCurrentEmailId] = useState<number | null>(null)
   const sectionRef = useScrollAnimation()
 
   // Cargar contador al montar el componente
@@ -66,7 +69,7 @@ function Wishlist() {
 
     try {
       const metadata = getMetadata()
-      await apiRequest(API_ENDPOINTS.register, {
+      const response = await apiRequest(API_ENDPOINTS.register, {
         method: 'POST',
         body: JSON.stringify({
           email,
@@ -81,15 +84,21 @@ function Wishlist() {
         })
       })
 
-      // Éxito - mostrar mensaje de confirmación
+      // Éxito - mostrar mensaje de confirmación y diálogo
       setIsSubscribed(true)
       setEmailError('')
+      setCurrentEmailId(response.id || null)
       
-      // Limpiar el formulario después de un momento
+      // Mostrar diálogo después de un momento
+      setTimeout(() => {
+        setShowDialog(true)
+      }, 1000)
+      
+      // Limpiar el formulario después de mostrar el diálogo
       setTimeout(() => {
         setIsSubscribed(false)
         setEmail('')
-      }, 3000)
+      }, 1500)
 
     } catch (error: unknown) {
       // Manejo de errores específicos del backend
@@ -104,6 +113,33 @@ function Wishlist() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleDialogSubmit = async (userType: string, expectedPrice: string) => {
+    if (!currentEmailId) return
+    
+    try {
+      await apiRequest(API_ENDPOINTS.updateUser(currentEmailId), {
+        method: 'PUT',
+        body: JSON.stringify({
+          user_type: userType,
+          expected_price: expectedPrice
+        })
+      })
+      
+      setShowDialog(false)
+      setCurrentEmailId(null)
+    } catch (error) {
+      console.error('Error updating user info:', error)
+      // Por ahora solo cerramos el diálogo aunque falle
+      setShowDialog(false)
+      setCurrentEmailId(null)
+    }
+  }
+
+  const handleDialogSkip = () => {
+    setShowDialog(false)
+    setCurrentEmailId(null)
   }
 
 
@@ -258,6 +294,12 @@ function Wishlist() {
         </div>
       </div>
 
+      {/* Diálogo de información adicional */}
+      <UserInfoDialog
+        isOpen={showDialog}
+        onSubmit={handleDialogSubmit}
+        onSkip={handleDialogSkip}
+      />
     </section>
   )
 }

@@ -8,7 +8,8 @@ if (!API_BASE_URL) {
 export const API_ENDPOINTS = {
   register: `${API_BASE_URL}/api/waitlist/register`,
   count: `${API_BASE_URL}/api/waitlist/count`,
-  confirm: `${API_BASE_URL}/api/waitlist/confirm`
+  confirm: `${API_BASE_URL}/api/waitlist/confirm`,
+  updateUser: (id: number) => `${API_BASE_URL}/api/waitlist/${id}`
 }
 
 // Función helper para realizar peticiones a la API
