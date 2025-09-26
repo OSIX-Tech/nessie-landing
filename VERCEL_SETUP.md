@@ -11,16 +11,16 @@ Para que el frontend funcione correctamente en producción, configura esta varia
 
 ```
 Name: VITE_API_BASE_URL
-Value: https://tu-backend.railway.app
+Value: https://nessie-landingpage-waitlist-backend-production.up.railway.app
 Environment: Production (o todas)
 ```
 
-### 2. Ejemplo de URL:
-Si tu backend de Railway está en: `https://nessie-backend-production.up.railway.app`
+### 2. URL del Backend:
+Backend de Railway: `https://nessie-landingpage-waitlist-backend-production.up.railway.app`
 
-Entonces configuras:
+Configuración exacta:
 ```
-VITE_API_BASE_URL=https://nessie-backend-production.up.railway.app
+VITE_API_BASE_URL=https://nessie-landingpage-waitlist-backend-production.up.railway.app
 ```
 
 ### 3. Redeploy:
