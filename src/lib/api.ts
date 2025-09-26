@@ -1,9 +1,9 @@
 // Configuración de la API del backend
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || (
-  import.meta.env.MODE === 'development' 
-    ? 'http://localhost:5173'  // Proxy en desarrollo
-    : 'https://your-backend.railway.app'  // Placeholder para producción
-)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
+if (!API_BASE_URL) {
+  console.error('❌ VITE_API_BASE_URL no está configurada. Revisa tu archivo .env.local o las variables de entorno de Vercel.')
+}
 
 export const API_ENDPOINTS = {
   register: `${API_BASE_URL}/api/waitlist/register`,
