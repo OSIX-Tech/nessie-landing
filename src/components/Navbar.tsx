@@ -62,9 +62,9 @@ function Navbar() {
               aria-label="Ir al inicio"
             >
               <img
-                src="/loguito.svg"
+                src="/NessieLogoSW.svg"
                 alt="Nessie"
-                className="h-14 w-auto object-contain transition-all duration-500"
+                className="h-8 w-auto object-contain transition-all duration-500"
                 style={{
                   filter: scrolled ? 'brightness(1)' : 'brightness(1.2)'
                 }}
