@@ -85,6 +85,27 @@ Después de actualizar el backend, estos endpoints deberían funcionar:
 - `GET https://nessie-landingpage-waitlist-backend-production.up.railway.app/api/waitlist/count`
 - `POST https://nessie-landingpage-waitlist-backend-production.up.railway.app/api/waitlist/register`
 
+## Endpoint Adicional Requerido:
+
+El frontend también necesita este endpoint para guardar datos de la encuesta:
+- `PUT https://nessie-landingpage-waitlist-backend-production.up.railway.app/api/waitlist/:id`
+
+### Body esperado para PUT:
+```json
+{
+  "user_type": "estudiante|investigador|profesional|empresa|otros",
+  "expected_price": "5-15|15-30|30-60|60-100|100-150|150+"
+}
+```
+
+### Respuesta esperada del POST /register:
+```json
+{
+  "id": 123,
+  "message": "Usuario registrado exitosamente"
+}
+```
+
 ## Notas Importantes:
 
 - El error ocurre en el **preflight request** (OPTIONS)
