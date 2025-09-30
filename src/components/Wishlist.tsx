@@ -165,8 +165,13 @@ function Wishlist() {
 
         {/* Email form */}
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-3 sm:mb-6 md:mb-8 px-0 sm:px-0">
+          {emailError && (
+            <div className="mb-3 p-3 rounded-xl text-center text-sm text-red-600 bg-red-50 border border-red-200">
+              {emailError}
+            </div>
+          )}
           <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center p-2 rounded-2xl sm:rounded-full transition-all duration-300"
-               style={{ 
+               style={{
                  background: 'rgb(var(--color-white))',
                  border: isFocused ? '2px solid rgb(var(--color-black))' : '2px solid rgb(var(--color-gray-400))',
                  boxShadow: isFocused ? '0 0 0 4px rgba(0, 0, 0, 0.05)' : 'none'
@@ -225,9 +230,6 @@ function Wishlist() {
               )}
             </button>
           </div>
-          {emailError && (
-            <p className="text-xs text-red-500 mt-2 text-center">{emailError}</p>
-          )}
         </form>
 
         {/* Stats */}

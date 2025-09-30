@@ -111,6 +111,7 @@ function ProductSection() {
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [mutedVideos, setMutedVideos] = useState<Set<number>>(new Set(features.map((_, i) => i)))
   const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set())
+  const [expandedVideo, setExpandedVideo] = useState<number | null>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
@@ -286,7 +287,7 @@ function ProductSection() {
     }
   }
 
-  // Toggle video play/pause
+  // Toggle video play/pause (without expanding)
   const togglePlayPause = (index: number) => {
     const video = videoRefs.current[index]
     if (!video) return
@@ -306,6 +307,72 @@ function ProductSection() {
       })
     }
   }
+
+  // Expand video to modal (fullscreen button handler)
+  const expandVideo = (index: number) => {
+    setExpandedVideo(index)
+    const video = videoRefs.current[index]
+    if (video && video.paused) {
+      video.play().then(() => {
+        setPlayingVideos(prev => new Set(prev).add(index))
+      }).catch(() => {
+        // Ignore play errors
+      })
+    }
+  }
+
+  // Close expanded video
+  const closeExpandedVideo = () => {
+    if (expandedVideo !== null) {
+      const video = videoRefs.current[expandedVideo]
+      if (video) {
+        // Keep video playing state when closing modal
+        if (video.paused) {
+          setPlayingVideos(prev => {
+            const s = new Set(prev)
+            s.delete(expandedVideo)
+            return s
+          })
+        }
+        // Don't reset currentTime or pause, keep current state
+      }
+      setExpandedVideo(null)
+    }
+  }
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && expandedVideo !== null) {
+        closeExpandedVideo()
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [expandedVideo])
+
+  // Prevent body scroll and hide navbar when modal is open
+  useEffect(() => {
+    const navbar = document.querySelector('nav')
+    const mobileNavbar = document.querySelector('nav.md\\:hidden')
+
+    if (expandedVideo !== null) {
+      document.body.style.overflow = 'hidden'
+      if (navbar) (navbar as HTMLElement).style.display = 'none'
+      if (mobileNavbar) (mobileNavbar as HTMLElement).style.display = 'none'
+    } else {
+      document.body.style.overflow = 'unset'
+      if (navbar) (navbar as HTMLElement).style.display = ''
+      if (mobileNavbar) (mobileNavbar as HTMLElement).style.display = ''
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+      if (navbar) (navbar as HTMLElement).style.display = ''
+      if (mobileNavbar) (mobileNavbar as HTMLElement).style.display = ''
+    }
+  }, [expandedVideo])
 
   return (
     <section
@@ -403,12 +470,12 @@ function ProductSection() {
           {features.map((feature, index) => (
             <div
               key={feature.id}
-              className="feature-card flex-none w-full px-4 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-48 snap-center flex items-center py-2 sm:py-0"
+              className="feature-card flex-none w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24 snap-center flex items-center py-2 sm:py-0"
               aria-current={index === activeIndex}
-              style={{ minHeight: 'min(58vh, 520px)' }}
+              style={{ minHeight: 'auto' }}
             >
               <div
-                className="w-full max-w-5xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden transform transition-all duration-500"
+                className="w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden transform transition-all duration-500"
                 style={{
                   background: 'rgba(10, 10, 10, 0.8)',
                   border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -418,37 +485,45 @@ function ProductSection() {
                     : '0 10px 20px rgba(0, 0, 0, 0.3)'
                 }}
               >
-                {/* Card Header */}
-                <div className="p-3 sm:p-6 lg:p-10">
-                  <div className="flex items-start gap-2 sm:gap-4 lg:gap-5 mb-3 sm:mb-6">
-                    <div
-                      className="w-9 h-9 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg sm:rounded-2xl flex items-center justify-center flex-shrink-0"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        color: 'rgba(255, 255, 255, 0.7)'
-                      }}
-                    >
-                      {feature.icon}
+                {/* Card Header - Compact */}
+                <div className="p-2 sm:p-3 lg:p-4">
+                  <div className="flex items-start justify-between gap-2 sm:gap-2.5 mb-1.5 sm:mb-2">
+                    <div className="flex items-start gap-2 sm:gap-3 flex-1">
+                      <div
+                        className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.03)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          color: 'rgba(255, 255, 255, 0.7)'
+                        }}
+                      >
+                        {feature.icon}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm sm:text-lg lg:text-xl font-bold mb-0.5 sm:mb-1"
+                            style={{ color: 'rgb(var(--color-white))' }}>
+                          {feature.title}
+                        </h3>
+                        <p className="text-[10px] sm:text-xs lg:text-sm leading-snug"
+                           style={{ color: 'rgb(var(--color-gray-400))' }}>
+                          {feature.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-base sm:text-xl lg:text-3xl font-bold mb-0.5 sm:mb-2"
-                          style={{ color: 'rgb(var(--color-white))' }}>
-                        {feature.title}
-                      </h3>
-                      <p className="text-[11px] sm:text-sm lg:text-lg leading-relaxed"
-                         style={{ color: 'rgb(var(--color-gray-400))' }}>
-                        {feature.description}
-                      </p>
+                    {/* Counter moved here */}
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-[10px] sm:text-xs font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
+                        {index + 1} / {features.length}
+                      </span>
                     </div>
                   </div>
 
                   {/* Chips - Mobile optimized */}
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {feature.chips.map((chip, i) => (
                       <span
                         key={i}
-                        className="px-2 py-0.5 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-full text-[9px] sm:text-xs lg:text-sm font-medium"
+                        className="px-1.5 py-0.5 sm:px-2 sm:py-1 lg:px-3 lg:py-1.5 rounded-full text-[8px] sm:text-[10px] lg:text-xs font-medium"
                         style={{
                           background: 'rgba(255, 255, 255, 0.05)',
                           color: 'rgb(var(--color-gray-400))',
@@ -472,7 +547,7 @@ function ProductSection() {
                     preload={'metadata'}
                     controls={false}
                     onClick={() => togglePlayPause(index)}
-                    className="w-full h-full cursor-pointer object-contain sm:object-cover"
+                    className="w-full h-full cursor-pointer object-cover"
                     aria-label={`Video demo de ${feature.title}`}
                   >
                     {/* Source will be set dynamically via lazy loading */}
@@ -496,6 +571,26 @@ function ProductSection() {
 
                   {/* Video Controls Overlay */}
                   <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 flex gap-2">
+                    {/* Fullscreen/Expand button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        expandVideo(index)
+                      }}
+                      className="p-2 sm:p-2.5 rounded-full backdrop-blur-md transition-all hover:scale-105"
+                      style={{
+                        background: 'rgba(0, 0, 0, 0.5)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)'
+                      }}
+                      aria-label="Ver en pantalla completa"
+                    >
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                      </svg>
+                    </button>
+
+                    {/* Mute button */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
@@ -524,34 +619,14 @@ function ProductSection() {
                   </div>
                 </div>
 
-                {/* CTA Section - Mobile optimized */}
-                <div className="p-4 sm:p-6 lg:p-10 border-t"
+                {/* Minimal Footer - Empty spacer */}
+                <div className="py-1.5 sm:py-2 border-t"
                      style={{
                        borderColor: 'rgba(255, 255, 255, 0.05)',
-                       background: 'rgba(0, 0, 0, 0.3)'
+                       background: 'rgba(0, 0, 0, 0.2)'
                      }}>
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="#wishlist"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
-                      }}
-                      className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm lg:text-base font-medium transition-all duration-300"
-                      style={{ color: 'rgba(255, 255, 255, 0.7)' }}
-                    >
-                      {feature.cta.label}
-                      <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] sm:text-xs" style={{ color: 'rgb(var(--color-gray-400))' }}>
-                        {index + 1} / {features.length}
-                      </span>
-                    </div>
-                  </div>
                 </div>
+
               </div>
             </div>
           ))}
@@ -579,6 +654,100 @@ function ProductSection() {
           />
         ))}
       </div>
+
+      {/* Expanded Video Modal */}
+      {expandedVideo !== null && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-fade-in"
+          style={{
+            background: 'rgba(0, 0, 0, 0.95)',
+            backdropFilter: 'blur(8px)',
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+          onClick={closeExpandedVideo}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="video-modal-title"
+        >
+          {/* Close button */}
+          <button
+            onClick={closeExpandedVideo}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all hover:scale-110 hover:rotate-90 focus:outline-none focus:ring-2 focus:ring-white/50"
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)'
+            }}
+            aria-label="Cerrar video (ESC)"
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Video container with animation */}
+          <div
+            className="relative w-full max-w-7xl aspect-video rounded-xl sm:rounded-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'rgba(10, 10, 10, 0.95)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5)',
+              animation: 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            {/* Feature info overlay */}
+            <div className="absolute top-0 left-0 right-0 z-10 p-4 sm:p-6 bg-gradient-to-b from-black/80 to-transparent">
+              <h3 id="video-modal-title" className="text-base sm:text-xl font-bold text-white mb-1">
+                {features[expandedVideo].title}
+              </h3>
+              <p className="text-xs sm:text-sm text-white/70">
+                {features[expandedVideo].description}
+              </p>
+            </div>
+
+            <video
+              ref={el => { if (el && expandedVideo !== null) videoRefs.current[expandedVideo] = el }}
+              src="/video.mp4"
+              poster="/nessie.png"
+              muted={mutedVideos.has(expandedVideo)}
+              playsInline
+              loop
+              autoPlay
+              controls
+              controlsList="nodownload"
+              className="w-full h-full object-contain bg-black"
+            />
+          </div>
+
+          {/* Hint text */}
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 text-white/50 text-xs sm:text-sm">
+            Presiona ESC o haz click fuera para cerrar
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
 
       {/* CSS for hiding scrollbar */}
       <style>{`

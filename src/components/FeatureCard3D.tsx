@@ -25,34 +25,30 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
   }, [])
 
   return (
-    <div 
+    <div
       ref={cardRef}
-      className="group relative overflow-hidden rounded-xl md:rounded-3xl p-4 md:p-8 transition-all duration-300 h-full md:hover:scale-[1.02]"
+      className="feature-card-3d group relative overflow-hidden p-4 md:p-8 transition-all duration-300 h-full md:hover:scale-[1.02]"
       style={{
+        borderRadius: 'var(--radius-sm)',
         background: 'rgba(10, 10, 10, 0.9)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        backdropFilter: 'blur(10px)',
+        border: '1px solid var(--glass-border-strong)',
+        backdropFilter: 'blur(var(--blur-sm))',
         transformStyle: 'preserve-3d',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+        boxShadow: 'var(--shadow-lg)'
       }}>
-      
+
       {/* Glow effect layer */}
-      <div 
+      <div
         ref={glowRef}
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none will-change-opacity"
         style={{ mixBlendMode: 'overlay' }}
       />
-      
+
       {/* Gradient overlay on hover */}
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${feature.gradient}`}></div>
-      
-      {/* Animated background pattern */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.05) 10px, rgba(255, 255, 255, 0.05) 20px)`,
-          animation: 'slidePattern 20s linear infinite'
-        }} />
-      </div>
+
+      {/* Animated background pattern - optimized */}
+      <div className="feature-card-pattern absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
       
       {/* Content */}
       <div className="relative z-10">
@@ -118,39 +114,6 @@ function FeatureCard3D({ feature }: FeatureCard3DProps) {
         ))}
       </div>
       
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes slidePattern {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(20px);
-          }
-        }
-        
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-          }
-          33% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          66% {
-            transform: translateY(10px) translateX(-5px);
-          }
-        }
-      `}</style>
     </div>
   )
 }

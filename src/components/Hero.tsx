@@ -25,31 +25,26 @@ function Hero() {
 
         
 
-        {/* Main headline - ultra clean */}
-        <h1 className="text-4xl font-bold leading-tight md:text-6xl lg:text-7xl xl:text-8xl md:font-bold md:leading-[0.95] lg:leading-[0.9] tracking-tight mb-4 md:mb-8"
-            style={{ animation: 'fade-in-up 0.8s ease-out 0.2s both' }}>
-          <span className="block sm:inline" style={{ color: 'rgb(var(--color-white))' }}>
-            Encuentra cualquier
-          </span>
-          {' '}
-          <span className="block sm:inline" style={{ color: 'rgb(var(--color-white))' }}>
-            respuesta en
-          </span>
-          {' '}
-          <span className="relative inline-block">
+        {/* Main headline - ultra clean, optimized */}
+        <h1 className="text-5xl font-bold leading-tight md:text-6xl lg:text-7xl xl:text-8xl md:font-bold md:leading-[0.95] lg:leading-[0.9] tracking-tight mb-4 md:mb-8 px-2"
+            style={{ animation: 'fade-in-up 0.5s ease-out 0.1s both' }}>
+          <span className="block" style={{ color: 'rgb(var(--color-white))' }}>
+            Encuentra cualquier respuesta en{' '}
+          <span className="relative inline-block pb-1">
             <span style={{
-              background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-400)) 100%)',
+              background: 'linear-gradient(135deg, rgb(var(--color-white)) 0%, rgb(var(--color-gray-300)) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
               segundos
             </span>
-            {/* Subtle glow behind text - smaller on mobile */}
-            <div className="absolute inset-0 blur-xl sm:blur-3xl opacity-15"
+            {/* Optimized glow - better performance */}
+            <div className="absolute inset-0 blur-2xl opacity-30 pointer-events-none will-change-opacity"
                  style={{
-                   background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%)'
+                   background: 'radial-gradient(ellipse, rgba(255, 255, 255, 0.8) 0%, transparent 60%)'
                  }}/>
+          </span>
           </span>
         </h1>
 
@@ -57,14 +52,14 @@ function Hero() {
         <p className="text-[15px] sm:text-base text-neutral-400 mt-2 mb-10 md:text-2xl md:max-w-2xl mx-auto md:mb-12 md:px-0"
            style={{
              color: 'rgb(var(--color-gray-400))',
-             animation: 'fade-in-up 0.8s ease-out 0.3s both'
+             animation: 'fade-in-up 0.5s ease-out 0.2s both'
            }}>
           IA que lee, entiende y cita tus documentos.
         </p>
 
         {/* Dual CTA */}
         <div className="flex flex-col items-center gap-4 mt-4 md:mt-10 lg:mt-12"
-             style={{ animation: 'fade-in-up 0.8s ease-out 0.4s both' }}>
+             style={{ animation: 'fade-in-up 0.5s ease-out 0.3s both' }}>
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
 
           {/* Primary CTA */}
@@ -73,36 +68,12 @@ function Hero() {
                e.preventDefault()
                document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
              }}
-            className="group relative w-full sm:flex-1 py-3 text-sm rounded-full font-medium transition-all duration-300 text-center"
-             style={{
-               background: 'rgba(255, 255, 255, 0.95)',
-               color: 'rgb(var(--color-black))',
-               border: '1px solid rgba(255, 255, 255, 0.2)',
-               backdropFilter: 'blur(10px)',
-               WebkitBackdropFilter: 'blur(10px)',
-               boxShadow: '0 10px 40px rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1)'
-             }}
-             onMouseEnter={(e) => {
-               e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
-               e.currentTarget.style.background = 'rgba(255, 255, 255, 1)'
-               e.currentTarget.style.boxShadow = '0 20px 60px rgba(255, 255, 255, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1)'
-             }}
-             onMouseLeave={(e) => {
-               e.currentTarget.style.transform = 'translateY(0) scale(1)'
-               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)'
-               e.currentTarget.style.boxShadow = '0 10px 40px rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1)'
-             }}>
+            className="hero-cta-primary group relative w-full sm:flex-1 py-3 text-sm rounded-full font-medium text-center">
             <span className="relative z-10">
               Únete
             </span>
-            {/* Grid pattern overlay on hover */}
-            <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                 style={{
-                   backgroundImage: `
-                     linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.5) 50%, transparent 60%)
-                   `,
-                   animation: 'shimmer-slide 1s ease-out'
-                 }}></div>
+            {/* Shimmer effect on hover */}
+            <div className="hero-shimmer"></div>
           </a>
 
           {/* Secondary CTA */}
@@ -111,39 +82,37 @@ function Hero() {
                e.preventDefault()
                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
              }}
-            className="group relative w-full sm:flex-1 py-3 text-sm rounded-full font-medium transition-all duration-300 text-center"
-             style={{
-               background: 'rgba(255, 255, 255, 0.05)',
-               color: 'rgb(var(--color-white))',
-               border: '1px solid rgba(255, 255, 255, 0.2)',
-               backdropFilter: 'blur(10px)',
-               WebkitBackdropFilter: 'blur(10px)'
-             }}
-             onMouseEnter={(e) => {
-               e.currentTarget.style.transform = 'translateY(-2px)'
-               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-               e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-             }}
-             onMouseLeave={(e) => {
-               e.currentTarget.style.transform = 'translateY(0)'
-               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-               e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-             }}>
+            className="hero-cta-secondary group relative w-full sm:flex-1 py-3 text-sm rounded-full font-medium text-center">
             <span className="relative z-10">
               Ver características
             </span>
           </a>
           </div>
 
-          {/* Minimal trust signal */}
-          <p className="text-xs text-neutral-500 mt-1 text-center md:text-sm md:flex md:flex-row md:items-center md:gap-3"
-             style={{ color: 'rgb(var(--color-gray-400))' }}>
-            <span className="block md:inline">Sin tarjeta</span>
-            <span className="hidden md:inline opacity-40">•</span>
-            <span className="block font-medium" style={{ color: 'rgb(var(--color-gray-400))' }}>
-              2,847 profesionales esperando
+          {/* Enhanced trust signal with icons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-2 text-xs md:text-sm"
+               style={{ color: 'rgb(var(--color-gray-400))' }}>
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Sin tarjeta
             </span>
-          </p>
+            <span className="hidden sm:inline opacity-30">•</span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <svg className="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              2,847 esperando
+            </span>
+            <span className="hidden sm:inline opacity-30">•</span>
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Acceso en 2 min
+            </span>
+          </div>
         </div>
 
         {/* Grid decoration elements - hidden on mobile */}
@@ -161,7 +130,13 @@ function Hero() {
              }}/>
       </div>
 
-      {/* Scroll indicator removed for a cleaner bottom area */}
+      {/* Scroll indicator - subtle and minimal */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
+           style={{ animation: 'scroll-bounce 2s ease-in-out infinite' }}>
+        <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7" />
+        </svg>
+      </div>
 
       <style>{`
         @keyframes grid-fade {
@@ -187,14 +162,14 @@ function Hero() {
           100% { transform: translateX(100%); }
         }
 
-        @keyframes scroll-indicator {
+        @keyframes scroll-bounce {
           0%, 100% {
             transform: translateY(0);
-            opacity: 0;
+            opacity: 0.2;
           }
           50% {
-            transform: translateY(5px);
-            opacity: 1;
+            transform: translateY(8px);
+            opacity: 0.4;
           }
         }
 

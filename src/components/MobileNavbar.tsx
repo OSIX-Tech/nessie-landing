@@ -251,9 +251,9 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ className = '' }) => {
                       <span className="block">{navMeta[item.id]?.icon}</span>
                     </div>
                     <div className="leading-tight">
-                      <div className="text-white text-lg font-semibold tracking-tight">{item.label}</div>
+                      <div className="text-white text-base font-semibold tracking-tight">{item.label}</div>
                       {navMeta[item.id]?.subtitle && (
-                        <div className="text-xs leading-snug text-white/45">{navMeta[item.id].subtitle}</div>
+                        <div className="text-xs leading-snug text-white/50">{navMeta[item.id].subtitle}</div>
                       )}
                     </div>
                   </div>

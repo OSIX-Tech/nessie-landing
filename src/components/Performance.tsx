@@ -72,17 +72,17 @@ const productivityData = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-xl"
-           style={{ 
+      <div className="rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-xl"
+           style={{
              background: 'rgba(255, 255, 255, 0.98)',
              border: '1px solid rgba(0, 0, 0, 0.08)',
              backdropFilter: 'blur(10px)'
            }}>
-        <p className="text-[10px] sm:text-xs font-bold mb-1" style={{ color: 'rgb(0, 0, 0)' }}>
+        <p className="text-xs sm:text-sm font-bold mb-1.5" style={{ color: 'rgb(0, 0, 0)' }}>
           {label}
         </p>
         {payload.map((entry: any, index: number) => (
-          <p key={index} className="text-[10px] sm:text-xs flex items-center gap-1 sm:gap-2" style={{ color: 'rgba(0, 0, 0, 0.7)' }}>
+          <p key={index} className="text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2" style={{ color: 'rgba(0, 0, 0, 0.7)' }}>
             <span className="w-2 h-2 rounded-full" style={{ background: entry.color || 'rgb(0, 0, 0)' }}></span>
             <span className="font-medium">{entry.name}:</span>
             <span className="font-bold" style={{ color: 'rgb(0, 0, 0)' }}>
@@ -138,9 +138,9 @@ function Performance() {
             { value: '2100 hrs', label: 'Horas ahorradas', trend: '↑', subtitle: 'mensualmente' },
             { value: '$398K/año', label: 'Ahorro total', trend: '↑', subtitle: 'reducción costos' }
           ].map((kpi, index) => (
-            <div key={index} 
+            <div key={index}
                  className="relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 group transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
-                 style={{ 
+                 style={{
                    background: 'rgba(255, 255, 255, 0.05)',
                    backdropFilter: 'blur(20px)',
                    WebkitBackdropFilter: 'blur(20px)',
@@ -152,10 +152,10 @@ function Performance() {
                  }}>
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-1 sm:mb-2">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: 'rgb(var(--color-white))' }}>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: 'rgb(var(--color-white))' }}>
                     {kpi.value}
                   </div>
-                  <span className={`text-base sm:text-lg md:text-xl ${kpi.trend === '↑' ? 'text-green-500' : 'text-gray-400'}`}>
+                  <span className={`text-sm sm:text-base md:text-lg ${kpi.trend === '↑' ? 'text-green-500' : 'text-gray-400'}`}>
                     {kpi.trend}
                   </span>
                 </div>

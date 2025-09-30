@@ -236,8 +236,8 @@ function Pricing() {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-sm" 
-                            style={{ color: plan.highlight ? 'rgb(var(--color-gray-700))' : 'rgb(var(--color-gray-300))' }}>
+                      <span className="text-sm"
+                            style={{ color: plan.highlight ? 'rgb(var(--color-gray-800))' : 'rgb(var(--color-gray-200))' }}>
                         {feature}
                       </span>
                     </li>

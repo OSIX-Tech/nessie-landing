@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, AreaChart, Area } from 'recharts'
 import MobileCarousel from './UseCasesSectionMobile'
@@ -287,9 +287,18 @@ const renderChart = (metrics: UseCase['metrics']) => {
 function UseCasesSection() {
   const sectionRef = useScrollAnimation()
   const [activeIndex, setActiveIndex] = useState(0)
-  
+  const [hideInstruction, setHideInstruction] = useState(false)
+
+  // Auto-hide instruction after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHideInstruction(true)
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
-    <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden md:min-h-screen sm:min-h-[120vh] md:min-h-[150vh] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center scroll-mt-16 md:scroll-mt-24">
+    <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden min-h-screen py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center scroll-mt-16 md:scroll-mt-24">
       <div className="md:max-w-[1600px] w-full mx-auto">
         {/* Section header */}
         <div className="text-center md:max-w-3xl mx-auto mb-3 sm:mb-6 md:mb-8">
@@ -326,21 +335,21 @@ function UseCasesSection() {
 
         {/* Desktop Interactive Use Case Showcase - Hidden on mobile */}
         <div className="hidden md:block relative">
-          {/* Section instruction */}
-          <div className="text-center mb-4 sm:mb-6">
-            <p className="text-xs sm:text-sm font-medium animate-pulse" style={{ color: 'rgb(var(--color-gray-400))' }}>
+          {/* Section instruction - auto-hide after 5s */}
+          <div className={`text-center mb-4 sm:mb-6 transition-all duration-700 ${hideInstruction ? 'opacity-0 h-0 mb-0' : 'opacity-100'}`}>
+            <p className="text-xs sm:text-sm font-medium" style={{ color: 'rgb(var(--color-gray-500))' }}>
               ← Haz clic en un perfil para explorar su caso de uso →
             </p>
             <div className="flex justify-center items-center gap-2 mt-2">
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/40 animate-bounce"></div>
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/30 animate-bounce"></div>
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           </div>
 
           {/* Navigation Tabs */}
           <div className="flex justify-center mb-6 sm:mb-8">
-            <div className="inline-flex p-1.5 sm:p-2 gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl overflow-x-auto max-w-full"
+            <div className="inline-flex p-2 gap-3 rounded-2xl sm:rounded-3xl overflow-x-auto max-w-full"
                  style={{
                    background: 'rgba(10, 10, 10, 0.9)',
                    border: '1px solid rgba(255, 255, 255, 0.15)',
@@ -351,38 +360,7 @@ function UseCasesSection() {
                 <button
                   key={useCase.id}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden px-3 sm:px-4 py-2.5 sm:py-3 pb-6 sm:pb-8 rounded-xl sm:rounded-2xl font-semibold text-[11px] sm:text-sm transition-all duration-300 min-w-[100px] sm:min-w-[140px] cursor-pointer ${
-                    activeIndex === index 
-                      ? 'transform-gpu' 
-                      : 'transform-gpu hover:scale-105'
-                  }`}
-                  style={{
-                    background: activeIndex === index
-                      ? 'rgba(25, 25, 25, 0.95)'
-                      : 'rgba(15, 15, 15, 0.85)',
-                    border: activeIndex === index
-                      ? '1px solid rgba(255, 255, 255, 0.25)'
-                      : '1px solid rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(10px)',
-                    transformStyle: 'preserve-3d',
-                    boxShadow: activeIndex === index
-                      ? '0 6px 16px rgba(0, 0, 0, 0.3)'
-                      : 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeIndex !== index) {
-                      e.currentTarget.style.background = 'rgba(30, 30, 30, 0.95)'
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
-                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeIndex !== index) {
-                      e.currentTarget.style.background = 'rgba(15, 15, 15, 0.85)'
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)'
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)'
-                    }
-                  }}
+                  className={`use-case-tab ${activeIndex === index ? 'active' : ''}`}
                 >
                   {/* Glow effect for active */}
                   {activeIndex === index && (
@@ -445,11 +423,12 @@ function UseCasesSection() {
 
           {/* Active Use Case Display - Full Viewport */}
           <div className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] overflow-hidden flex-1">
-            <div 
+            <div
               className="flex transition-transform duration-500 ease-in-out"
-              style={{ 
+              style={{
                 transform: `translateX(-${activeIndex * (100 / useCases.length)}%)`,
-                width: `${useCases.length * 100}%`
+                width: `${useCases.length * 100}%`,
+                willChange: 'transform'
               }}
             >
               {useCases.map((useCase) => (
@@ -460,9 +439,9 @@ function UseCasesSection() {
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 md:gap-12 items-center h-full">
                     {/* Content Side - 3 columns */}
-                  <div className="lg:col-span-3 space-y-4 sm:space-y-6 md:space-y-8 flex flex-col justify-center">
+                  <div className="lg:col-span-3 space-y-6 md:space-y-8 flex flex-col justify-center">
                     {/* Category Badge & Time Saved */}
-                    <div className="flex items-center gap-2 sm:gap-4 sm:-ml-2">
+                    <div className="flex items-center gap-4 sm:-ml-2">
                       <span 
                         className="px-4 py-2 rounded-full text-sm font-semibold"
                         style={{
@@ -489,7 +468,7 @@ function UseCasesSection() {
                     </div>
 
                     {/* Benefits List - Compact on mobile */}
-                    <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
+                    <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-3">
                       {useCase.benefits.slice(0, 4).map((benefit, idx) => (
                         <div key={idx} className="flex items-start gap-2 sm:gap-3">
                           <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white mt-1.5 sm:mt-2 flex-shrink-0"></div>
@@ -502,25 +481,28 @@ function UseCasesSection() {
 
                     {/* CTA */}
                     {useCase.cta && (
-                      <button 
-                        disabled={true}
+                      <a
+                        href="#wishlist"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })
+                        }}
                         data-analytics-id={useCase.cta.analyticsId}
-                        className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 cursor-not-allowed"
+                        className="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 cursor-pointer"
                         style={{
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          color: 'rgba(255, 255, 255, 0.4)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          backdropFilter: 'blur(10px)',
-                          boxShadow: 'none'
+                          background: 'rgb(255, 255, 255)',
+                          color: 'rgb(0, 0, 0)',
+                          border: 'none',
+                          boxShadow: '0 4px 12px rgba(255, 255, 255, 0.2)'
                         }}
                       >
                         {useCase.cta.label}
-                        <svg className="w-5 h-5 opacity-40" 
+                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1"
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                 d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
-                      </button>
+                      </a>
                     )}
                   </div>
 
