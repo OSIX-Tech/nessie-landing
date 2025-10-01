@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Landing from './components/Landing'
-import Confirmado from './components/Confirmado'
 import Confirm from './components/Confirm'
 
 function App() {
