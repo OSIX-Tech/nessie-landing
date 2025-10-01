@@ -1,10 +1,25 @@
 import { useEffect, useState } from 'react'
+import { API_ENDPOINTS, apiRequest } from '../lib/api'
 
 function Hero() {
   const [isVisible, setIsVisible] = useState(false)
+  const [confirmedCount, setConfirmedCount] = useState(2847) // Valor por defecto
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 100)
+  }, [])
+
+  // Cargar contador al montar el componente
+  useEffect(() => {
+    const loadCount = async () => {
+      try {
+        const response = await apiRequest(API_ENDPOINTS.count)
+        setConfirmedCount(response.confirmed || 2847)
+      } catch {
+        // Mantener el valor por defecto si falla
+      }
+    }
+    loadCount()
   }, [])
 
   return (
@@ -103,7 +118,7 @@ function Hero() {
               <svg className="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              2,847 esperando
+{confirmedCount.toLocaleString()} esperando
             </span>
             <span className="hidden sm:inline opacity-30">•</span>
             <span className="flex items-center gap-1.5">
