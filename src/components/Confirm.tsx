@@ -18,24 +18,33 @@ function Confirm() {
 
       try {
         // Llamar al backend para confirmar el email
-        await apiRequest(`${API_ENDPOINTS.confirm}?token=${token}`)
-        
+        const confirmUrl = `${API_ENDPOINTS.confirm}?token=${token}`
+        console.log('🔍 Llamando a:', confirmUrl)
+
+        const response = await apiRequest(confirmUrl)
+        console.log('✅ Respuesta exitosa:', response)
+
         // Éxito - redirigir a página de confirmación exitosa
         navigate('/confirmado?message=Tu email ha sido confirmado exitosamente', { replace: true })
-        
+
       } catch (error: unknown) {
         // Error - redirigir a página de error con mensaje específico
         const errorMessage = error instanceof Error ? error.message : String(error)
+        console.error('❌ Error en confirmación:', error)
+        console.error('❌ Error message:', errorMessage)
+
         let message = 'Ha ocurrido un error al confirmar tu email'
-        
+
         if (errorMessage.includes('400')) {
           message = 'Token de confirmación inválido'
         } else if (errorMessage.includes('410')) {
           message = 'El enlace de confirmación ha expirado'
         } else if (errorMessage.includes('404')) {
           message = 'Token de confirmación no encontrado'
+        } else if (errorMessage.includes('500')) {
+          message = 'Error interno del servidor'
         }
-        
+
         navigate(`/error?message=${encodeURIComponent(message)}`, { replace: true })
       }
     }
