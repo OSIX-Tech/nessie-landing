@@ -123,20 +123,28 @@ function Wishlist() {
 
   const handleDialogSubmit = async (userType: string, expectedPrice: string) => {
     if (!currentEmailId) return
-    
+
+    const updatePayload = {
+      user_type: userType,
+      expected_price: expectedPrice
+    }
+
+    console.log('📤 Enviando datos de encuesta al backend:', updatePayload)
+    console.log('📬 ID del usuario:', currentEmailId)
+    console.log('🔗 URL de actualización:', API_ENDPOINTS.updateUser(currentEmailId))
+
     try {
-      await apiRequest(API_ENDPOINTS.updateUser(currentEmailId), {
+      const response = await apiRequest(API_ENDPOINTS.updateUser(currentEmailId), {
         method: 'PUT',
-        body: JSON.stringify({
-          user_type: userType,
-          expected_price: expectedPrice
-        })
+        body: JSON.stringify(updatePayload)
       })
-      
+
+      console.log('📥 Respuesta de actualización:', response)
+
       setShowDialog(false)
       setCurrentEmailId(null)
     } catch (error) {
-      console.error('Error updating user info:', error)
+      console.error('❌ Error updating user info:', error)
       // Por ahora solo cerramos el diálogo aunque falle
       setShowDialog(false)
       setCurrentEmailId(null)
