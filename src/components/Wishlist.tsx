@@ -69,20 +69,26 @@ function Wishlist() {
 
     try {
       const metadata = getMetadata()
+      const payload = {
+        email,
+        browser_language: metadata.browser_language,
+        user_agent: metadata.user_agent,
+        referrer: metadata.referrer,
+        utm_source: metadata.utm_source,
+        utm_medium: metadata.utm_medium,
+        utm_campaign: metadata.utm_campaign,
+        timezone: metadata.timezone,
+        screen_resolution: metadata.screen_resolution
+      }
+
+      console.log('📤 Enviando datos al backend:', payload)
+
       const response = await apiRequest(API_ENDPOINTS.register, {
         method: 'POST',
-        body: JSON.stringify({
-          email,
-          browser_language: metadata.browser_language,
-          user_agent: metadata.user_agent,
-          referrer: metadata.referrer,
-          utm_source: metadata.utm_source,
-          utm_medium: metadata.utm_medium,
-          utm_campaign: metadata.utm_campaign,
-          timezone: metadata.timezone,
-          screen_resolution: metadata.screen_resolution
-        })
+        body: JSON.stringify(payload)
       })
+
+      console.log('📥 Respuesta del backend:', response)
 
       // Éxito - mostrar mensaje de confirmación y diálogo
       setIsSubscribed(true)
