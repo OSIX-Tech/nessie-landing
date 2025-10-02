@@ -15,8 +15,8 @@ const features = [
     description: 'Búsqueda inteligente en toda tu base documental usando lenguaje natural.',
     chips: ['Búsqueda semántica', 'Múltiples formatos', 'Resultados instantáneos'],
     video: {
-      poster: '/videos/busqueda/poster.jpg',
-      src_mp4: '/videos/busqueda/preview.mp4'
+      poster: '/videos/caso-1.mp4',
+      src_mp4: '/videos/caso-1.mp4'
     },
     cta: {
       label: 'Probar búsqueda',
@@ -35,8 +35,8 @@ const features = [
     description: 'Respuestas precisas con citas y referencias exactas a los documentos fuente.',
     chips: ['Citas automáticas', 'Trazabilidad completa', 'Verificación de fuentes'],
     video: {
-      poster: '/videos/respuestas/poster.jpg',
-      src_mp4: '/videos/respuestas/preview.mp4'
+      poster: '/videos/caso-2.mp4',
+      src_mp4: '/videos/caso-2.mp4'
     },
     cta: {
       label: 'Ver precisión',
@@ -55,8 +55,8 @@ const features = [
     description: 'Análisis y síntesis del contenido con resúmenes y comparaciones automáticas.',
     chips: ['Resúmenes automáticos', 'Análisis comparativo', 'Insights inteligentes'],
     video: {
-      poster: '/videos/analisis/poster.jpg',
-      src_mp4: '/videos/analisis/preview.mp4'
+      poster: '/videos/caso-3.mp4',
+      src_mp4: '/videos/caso-3.mp4'
     },
     cta: {
       label: 'Ver análisis',
@@ -75,8 +75,8 @@ const features = [
     description: 'Generación de ideas y documentos basados en tu base de conocimiento.',
     chips: ['Generación automática', 'Templates inteligentes', 'Consistencia de marca'],
     video: {
-      poster: '/videos/generacion/poster.jpg',
-      src_mp4: '/videos/generacion/preview.mp4'
+      poster: '/videos/caso-4.mp4',
+      src_mp4: '/videos/caso-4.mp4'
     },
     cta: {
       label: 'Crear contenido',
@@ -95,8 +95,8 @@ const features = [
     description: 'Integración de herramientas externas para un flujo de trabajo unificado.',
     chips: ['APIs nativas', 'Sincronización automática', 'Workflow integrado'],
     video: {
-      poster: '/videos/integracion/poster.jpg',
-      src_mp4: '/videos/integracion/preview.mp4'
+      poster: '/videos/caso-5.mp4',
+      src_mp4: '/videos/caso-5.mp4'
     },
     cta: {
       label: 'Ver integraciones',
@@ -121,7 +121,7 @@ function ProductSection() {
   useEffect(() => {
     const firstVideo = videoRefs.current[0]
     if (firstVideo && !loadedVideos.has(0)) {
-      firstVideo.src = '/video.mp4'
+      firstVideo.src = features[0].video.src_mp4
       try {
         firstVideo.preload = 'auto'
         firstVideo.load()
@@ -195,7 +195,7 @@ function ProductSection() {
             const video = videoRefs.current[index]!
             if (!video.src) {
               // Cargar el video de la carpeta public
-              video.src = '/video.mp4'
+              video.src = features[index].video.src_mp4
               setLoadedVideos(prev => new Set(prev).add(index))
             }
           }
@@ -540,7 +540,6 @@ function ProductSection() {
                 <div className="relative aspect-video bg-black">
                   <video
                     ref={el => { videoRefs.current[index] = el }}
-                    poster={'/nessie.png'}
                     muted={mutedVideos.has(index)}
                     playsInline
                     loop
@@ -708,8 +707,7 @@ function ProductSection() {
 
             <video
               ref={el => { if (el && expandedVideo !== null) videoRefs.current[expandedVideo] = el }}
-              src="/video.mp4"
-              poster="/nessie.png"
+              src={features[expandedVideo].video.src_mp4}
               muted={mutedVideos.has(expandedVideo)}
               playsInline
               loop
