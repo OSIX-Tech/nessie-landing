@@ -34,7 +34,7 @@ const useCases: UseCase[] = [
     title: "Estudio inteligente con IA", 
     description: "Transforma PDFs largos y complejos en resúmenes estructurados con citas verificables. Nessie analiza automáticamente tus documentos académicos, extrae conceptos clave y genera materiales de estudio personalizados. Ideal para estudiantes que manejan grandes volúmenes de literatura académica y necesitan optimizar su tiempo de preparación.", 
     benefits: ["Resúmenes automáticos con estructura jerárquica", "Citas trazables y referencias verificables", "Fichas de estudio personalizadas por tema", "Detección automática de conceptos clave", "Generación de preguntas de repaso", "Integración con gestores bibliográficos"],
-    timesSaved: "87% menos tiempo",
+    timesSaved: "60% menos tiempo",
     mainMetric: { value: "15min", label: "vs 2 horas antes" },
     visual: { 
       icon: (
@@ -55,7 +55,7 @@ const useCases: UseCase[] = [
         { tarea: 'Citas', antes: 2, despues: 0.5 },
       ],
       kpis: [
-        { label: 'Tiempo ahorrado', value: '87%', change: '+12%' },
+        { label: 'Tiempo ahorrado', value: '60%', change: '+12%' },
         { label: 'Papers procesados', value: '156', change: '+89%' },
         { label: 'Notas generadas', value: '340', change: '+156%' }
       ]
@@ -95,7 +95,7 @@ const useCases: UseCase[] = [
       ],
       kpis: [
         { label: 'Papers por sesión', value: '15-20', change: '+300%' },
-        { label: 'Tiempo por paper', value: '-75%', change: '+75%' },
+        { label: 'Tiempo por paper', value: '-60%', change: '+60%' },
         { label: 'Precisión citas', value: '99.2%', change: '+35%' }
       ]
     },
@@ -135,7 +135,7 @@ const useCases: UseCase[] = [
       kpis: [
         { label: 'Documentos indexados', value: '500+', change: '+300%' },
         { label: 'Tiempo búsqueda', value: '-70%', change: '+50%' },
-        { label: 'Productividad personal', value: '+85%', change: '+85%' }
+        { label: 'Productividad personal', value: '+45%', change: '+45%' }
       ]
     },
     cta: { 
