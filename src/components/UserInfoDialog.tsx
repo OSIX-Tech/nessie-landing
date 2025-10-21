@@ -32,6 +32,20 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
     }
   }, [isOpen])
 
+  // Auto-close on step 3
+  useEffect(() => {
+    if (step === 3) {
+      const timer = setTimeout(() => {
+        const finalUserType = userType === 'otros' ? customUserType : userType
+        setIsClosing(true)
+        setTimeout(() => {
+          onSubmit(finalUserType, expectedPrice)
+        }, 300)
+      }, 2560)
+      return () => clearTimeout(timer)
+    }
+  }, [step, userType, customUserType, expectedPrice, onSubmit])
+
   // Bloquear/desbloquear scroll del body
   useEffect(() => {
     if (isOpen) {
@@ -83,21 +97,17 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
   const handleNext = () => {
     if (step === 1 && userType) {
       setStep(2)
+    } else if (step === 2 && expectedPrice) {
+      setStep(3)
     }
   }
 
   const handleBack = () => {
     if (step === 2) {
       setStep(1)
+    } else if (step === 3) {
+      setStep(2)
     }
-  }
-
-  const handleSubmit = () => {
-    const finalUserType = userType === 'otros' ? customUserType : userType
-    setIsClosing(true)
-    setTimeout(() => {
-      onSubmit(finalUserType, expectedPrice)
-    }, 300)
   }
 
   const userTypeOptions = [
@@ -237,6 +247,10 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.15);
         }
+        @keyframes progressBar {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
       `}</style>
 
       {/* Backdrop */}
@@ -277,20 +291,22 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
         <div className={`${isClosing ? 'dialog-closing' : 'dialog-entering'}`} style={{ willChange: 'transform', display: 'grid', gridTemplateRows: 'auto 1fr auto', minHeight: 0 }}>
         {/* Header */}
         <div className="relative px-8 pt-8 pb-6" style={{ background: '#0f0f0f' }}>
-          {/* Step Indicator */}
-          <div className="absolute top-6 left-8">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-medium" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
-                Paso
-              </span>
-              <span className="text-sm font-bold" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                {step}
-              </span>
-              <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
-                de 2
-              </span>
+          {/* Step Indicator - only show on steps 1 and 2 */}
+          {step !== 3 && (
+            <div className="absolute top-6 left-8">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                  Paso
+                </span>
+                <span className="text-sm font-bold" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                  {step}
+                </span>
+                <span className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                  de 3
+                </span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Close Button */}
           <button
@@ -310,12 +326,14 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
 
           <div className="text-center mt-8">
             <h3 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: '#ffffff', letterSpacing: '-0.02em' }}>
-              {step === 1 ? '¿Cómo usarás Nessie?' : '¿Cuánto pagarías?'}
+              {step === 1 ? '¿Cómo usarás Nessie?' : step === 2 ? '¿Cuánto pagarías?' : 'Registro completado'}
             </h3>
             <p className="text-sm md:text-base max-w-md mx-auto" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
               {step === 1
                 ? 'Selecciona tu perfil para personalizar la experiencia'
-                : 'Ayúdanos a definir el mejor precio'}
+                : step === 2
+                ? 'Ayúdanos a definir el mejor precio'
+                : 'Revisa tu correo electrónico para confirmar tu registro'}
             </p>
           </div>
         </div>
@@ -427,7 +445,7 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
                 </div>
               )}
             </div>
-          ) : (
+          ) : step === 2 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {priceOptions.map((option) => (
                 <button
@@ -477,75 +495,157 @@ function UserInfoDialog({ isOpen, onSubmit, onSkip }: UserInfoDialogProps) {
                 </button>
               ))}
             </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-4">
+              {/* Success Icon */}
+              <div className="mb-6 flex justify-center">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                  style={{
+                    background: 'rgba(16, 185, 129, 0.1)',
+                    border: '2px solid rgba(16, 185, 129, 0.3)'
+                  }}
+                >
+                  <svg
+                    className="w-8 h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ color: 'rgb(16, 185, 129)' }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Spam Warning */}
+              <div
+                className="rounded-xl p-4 flex items-start gap-3 w-full max-w-md"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                }}
+              >
+                <svg
+                  className="w-5 h-5 flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style={{ color: 'rgba(251, 191, 36, 0.8)' }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+                <div className="text-left">
+                  <p
+                    className="text-sm font-medium mb-1"
+                    style={{ color: 'rgba(255, 255, 255, 0.8)' }}
+                  >
+                    ¿No ves el correo?
+                  </p>
+                  <p
+                    className="text-xs"
+                    style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                  >
+                    Revisa tu carpeta de spam o correo no deseado
+                  </p>
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              <div
+                className="mt-6 h-1 rounded-full overflow-hidden w-full max-w-md"
+                style={{ background: 'rgba(255, 255, 255, 0.05)' }}
+              >
+                <div
+                  style={{
+                    height: '100%',
+                    background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1))',
+                    animation: 'progressBar 2.56s linear forwards'
+                  }}
+                />
+              </div>
+            </div>
           )}
         </div>
 
-        {/* Footer */}
-        <div className="px-8 py-6 flex items-center justify-between"
-             style={{
-               background: '#0f0f0f',
-               borderTop: '1px solid rgba(255, 255, 255, 0.08)'
-             }}>
-          <div>
-            {step === 2 ? (
-              <button
-                onClick={handleBack}
-                className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:scale-105"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)'
-                }}
-              >
-                ← Atrás
-              </button>
-            ) : (
-              <button
-                onClick={onSkip}
-                className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:scale-105"
-                style={{
-                  background: 'transparent',
-                  color: 'rgba(255, 255, 255, 0.4)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)'
-                }}
-              >
-                Omitir
-              </button>
-            )}
-          </div>
+        {/* Footer - only show on steps 1 and 2 */}
+        {step !== 3 && (
+          <div className="px-8 py-6 flex items-center justify-between"
+               style={{
+                 background: '#0f0f0f',
+                 borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+               }}>
+            <div>
+              {step === 2 ? (
+                <button
+                  onClick={handleBack}
+                  className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:scale-105"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    color: 'rgba(255, 255, 255, 0.6)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)'
+                  }}
+                >
+                  ← Atrás
+                </button>
+              ) : (
+                <button
+                  onClick={onSkip}
+                  className="px-5 py-2.5 rounded-xl text-sm font-medium transition-all hover:scale-105"
+                  style={{
+                    background: 'transparent',
+                    color: 'rgba(255, 255, 255, 0.4)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)'
+                  }}
+                >
+                  Omitir
+                </button>
+              )}
+            </div>
 
-          <div>
-            {step === 1 ? (
-              <button
-                onClick={handleNext}
-                disabled={!userType || (userType === 'otros' && !customUserType)}
-                className="px-7 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100"
-                style={{
-                  background: userType && (userType !== 'otros' || customUserType)
-                    ? '#ffffff'
-                    : 'rgba(255, 255, 255, 0.1)',
-                  color: userType && (userType !== 'otros' || customUserType)
-                    ? '#0a0a0a'
-                    : 'rgba(255, 255, 255, 0.3)'
-                }}
-              >
-                Continuar →
-              </button>
-            ) : (
-              <button
-                onClick={handleSubmit}
-                disabled={!expectedPrice}
-                className="px-7 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100"
-                style={{
-                  background: expectedPrice ? '#ffffff' : 'rgba(255, 255, 255, 0.1)',
-                  color: expectedPrice ? '#0a0a0a' : 'rgba(255, 255, 255, 0.3)'
-                }}
-              >
-                Finalizar ✓
-              </button>
-            )}
+            <div>
+              {step === 1 ? (
+                <button
+                  onClick={handleNext}
+                  disabled={!userType || (userType === 'otros' && !customUserType)}
+                  className="px-7 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100"
+                  style={{
+                    background: userType && (userType !== 'otros' || customUserType)
+                      ? '#ffffff'
+                      : 'rgba(255, 255, 255, 0.1)',
+                    color: userType && (userType !== 'otros' || customUserType)
+                      ? '#0a0a0a'
+                      : 'rgba(255, 255, 255, 0.3)'
+                  }}
+                >
+                  Continuar →
+                </button>
+              ) : (
+                <button
+                  onClick={handleNext}
+                  disabled={!expectedPrice}
+                  className="px-7 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 disabled:opacity-30 disabled:hover:scale-100"
+                  style={{
+                    background: expectedPrice ? '#ffffff' : 'rgba(255, 255, 255, 0.1)',
+                    color: expectedPrice ? '#0a0a0a' : 'rgba(255, 255, 255, 0.3)'
+                  }}
+                >
+                  Continuar →
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
         </div>
       </div>
     </div>

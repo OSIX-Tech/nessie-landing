@@ -90,21 +90,21 @@ function Wishlist() {
 
       console.log('📥 Respuesta del backend:', response)
 
-      // Éxito - mostrar mensaje de confirmación y diálogo
+      // Éxito - mostrar mensaje de confirmación y diálogo inmediatamente
       setIsSubscribed(true)
       setEmailError('')
       setCurrentEmailId(response.id || null)
-      
-      // Mostrar diálogo después de un momento
-      setTimeout(() => {
-        setShowDialog(true)
-      }, 1000)
-      
-      // Limpiar el formulario después de mostrar el diálogo
+
+      // Mostrar diálogo inmediatamente
+      setShowDialog(true)
+
+      // Limpiar el email del formulario pero mantener el botón verde
+      setEmail('')
+
+      // Después de 20 segundos, volver el botón a su estado normal
       setTimeout(() => {
         setIsSubscribed(false)
-        setEmail('')
-      }, 1500)
+      }, 20000)
 
     } catch (error: unknown) {
       // Manejo de errores específicos del backend
@@ -154,6 +154,7 @@ function Wishlist() {
   const handleDialogSkip = () => {
     setShowDialog(false)
     setCurrentEmailId(null)
+    // Mantener el botón verde visible (no cambiar isSubscribed)
   }
 
 
