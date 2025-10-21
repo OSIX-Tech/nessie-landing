@@ -28,3 +28,21 @@ export const apiRequest = async (endpoint: string, options: RequestInit = {}) =>
 
   return response.json()
 }
+
+// Función específica para confirmación de email que verifica el campo success
+export const confirmEmailRequest = async (endpoint: string) => {
+  const response = await fetch(endpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data = await response.json()
+
+  // El backend siempre devuelve JSON, verificar el campo success
+  if (!data.success) {
+    throw new Error(data.message || data.error || 'Error al confirmar el email')
+  }
+
+  return data
+}

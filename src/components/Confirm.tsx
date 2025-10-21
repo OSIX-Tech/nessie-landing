@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { API_ENDPOINTS, apiRequest } from '../lib/api'
+import { API_ENDPOINTS, confirmEmailRequest } from '../lib/api'
 
 function Confirm() {
   const [searchParams] = useSearchParams()
@@ -17,11 +17,11 @@ function Confirm() {
       }
 
       try {
-        // Llamar al backend para confirmar el email
+        // Llamar al backend para confirmar el email con query parameter
         const confirmUrl = `${API_ENDPOINTS.confirm}?token=${token}`
         console.log('🔍 Llamando a:', confirmUrl)
 
-        const response = await apiRequest(confirmUrl)
+        const response = await confirmEmailRequest(confirmUrl)
         console.log('✅ Respuesta exitosa:', response)
 
         // Éxito - redirigir a página de confirmación exitosa
@@ -33,19 +33,8 @@ function Confirm() {
         console.error('❌ Error en confirmación:', error)
         console.error('❌ Error message:', errorMessage)
 
-        let message = 'Ha ocurrido un error al confirmar tu email'
-
-        if (errorMessage.includes('400')) {
-          message = 'Token de confirmación inválido'
-        } else if (errorMessage.includes('410')) {
-          message = 'El enlace de confirmación ha expirado'
-        } else if (errorMessage.includes('404')) {
-          message = 'Token de confirmación no encontrado'
-        } else if (errorMessage.includes('500')) {
-          message = 'Error interno del servidor'
-        }
-
-        navigate(`/error?message=${encodeURIComponent(message)}`, { replace: true })
+        // El mensaje ya viene del backend en el error
+        navigate(`/error?message=${encodeURIComponent(errorMessage)}`, { replace: true })
       }
     }
 
