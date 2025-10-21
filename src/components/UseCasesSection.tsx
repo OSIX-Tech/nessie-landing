@@ -173,7 +173,7 @@ const useCases: UseCase[] = [
         { metric: 'Colaboración', antes: 55, despues: 80 },
       ],
       kpis: [
-        { label: 'Ahorro por empleado/año', value: '€4,800', change: '+180%' },
+        { label: 'Ahorro por empleado/año', value: '€5,600', change: '+45%' },
         { label: 'Tiempo búsqueda', value: '-52%', change: '+25%' },
         { label: 'Adopción usuarios', value: '87%', change: '+67%' }
       ]
