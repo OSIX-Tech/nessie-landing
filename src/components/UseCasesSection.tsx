@@ -88,10 +88,10 @@ const useCases: UseCase[] = [
       chartType: 'line',
       primaryColor: '#10B981',
       data: [
-        { mes: 'Ene', papersAnalizados: 12, citasEncontradas: 85 },
-        { mes: 'Feb', papersAnalizados: 18, citasEncontradas: 142 },
-        { mes: 'Mar', papersAnalizados: 24, citasEncontradas: 189 },
-        { mes: 'Abr', papersAnalizados: 31, citasEncontradas: 248 },
+        { mes: 'Jun', papersAnalizados: 12, citasEncontradas: 85 },
+        { mes: 'Jul', papersAnalizados: 18, citasEncontradas: 142 },
+        { mes: 'Agos', papersAnalizados: 24, citasEncontradas: 189 },
+        { mes: 'Sep', papersAnalizados: 31, citasEncontradas: 248 },
       ],
       kpis: [
         { label: 'Papers por sesión', value: '15-20', change: '+300%' },
@@ -127,10 +127,10 @@ const useCases: UseCase[] = [
       chartType: 'area',
       primaryColor: '#22C55E',
       data: [
-        { mes: 'Ene', documentosOrganizados: 45, documentosBuscados: 12 },
-        { mes: 'Feb', documentosOrganizados: 128, documentosBuscados: 34 },
-        { mes: 'Mar', documentosOrganizados: 285, documentosBuscados: 67 },
-        { mes: 'Abr', documentosOrganizados: 520, documentosBuscados: 89 },
+        { mes: 'Jun', documentosOrganizados: 45, documentosBuscados: 12 },
+        { mes: 'Jul', documentosOrganizados: 128, documentosBuscados: 34 },
+        { mes: 'Agos', documentosOrganizados: 285, documentosBuscados: 67 },
+        { mes: 'Sep', documentosOrganizados: 520, documentosBuscados: 89 },
       ],
       kpis: [
         { label: 'Documentos indexados', value: '500+', change: '+300%' },
