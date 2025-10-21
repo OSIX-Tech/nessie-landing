@@ -35,18 +35,18 @@ function Footer() {
           {/* Bottom bar with copyright and legal links */}
           <div className="flex flex-col sm:flex-row items-center gap-4 text-center">
             <div className="text-[10px] sm:text-xs" style={{ color: 'rgb(var(--color-gray-400))' }}>
-              © {currentYear} Nessie by OSIX Tech. Todos los derechos reservados.
+              © {currentYear} Nessie by <a href="https://osix.tech/es" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" style={{ color: 'rgb(var(--color-gray-300))' }}>OSIX Tech</a>. Todos los derechos reservados.
             </div>
             <div className="flex gap-4 sm:gap-6 text-[10px] sm:text-xs">
-              <a href="#" className="hover:text-white transition-colors"
+              <a href="https://osix.tech/es/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"
                  style={{ color: 'rgb(var(--color-gray-400))' }}>
                 Privacidad
               </a>
-              <a href="#" className="hover:text-white transition-colors"
+              <a href="https://osix.tech/es/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"
                  style={{ color: 'rgb(var(--color-gray-400))' }}>
                 Términos
               </a>
-              <a href="#" className="hover:text-white transition-colors"
+              <a href="https://osix.tech/es/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"
                  style={{ color: 'rgb(var(--color-gray-400))' }}>
                 Cookies
               </a>
