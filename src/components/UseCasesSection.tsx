@@ -95,7 +95,7 @@ const useCases: UseCase[] = [
       ],
       kpis: [
         { label: 'Papers por sesión', value: '15-20', change: '+300%' },
-        { label: 'Tiempo por paper', value: '-60%', change: '+60%' },
+        { label: 'Tiempo por paper', value: '-60%', change: '+20%' },
         { label: 'Precisión citas', value: '99.2%', change: '+35%' }
       ]
     },
@@ -135,7 +135,7 @@ const useCases: UseCase[] = [
       kpis: [
         { label: 'Documentos indexados', value: '500+', change: '+300%' },
         { label: 'Tiempo búsqueda', value: '-70%', change: '+50%' },
-        { label: 'Productividad personal', value: '+45%', change: '+45%' }
+        { label: 'Productividad personal', value: '+45%', change: '+20%' }
       ]
     },
     cta: { 
@@ -151,7 +151,7 @@ const useCases: UseCase[] = [
     title: "Knowledge Management corporativo", 
     description: "Centraliza y hace accesible todo el conocimiento organizacional con seguridad enterprise. Nessie transforma documentación dispersa en un sistema unificado de gestión del conocimiento, permitiendo a equipos encontrar información crítica en segundos. Incluye controles de acceso granulares, auditoría completa y integración nativa con herramientas corporativas existentes.", 
     benefits: ["RAG privado con encriptación end-to-end", "SSO y auditoría completa de accesos", "Integración con sistemas empresariales", "Control de versiones automatizado", "Workflows de aprobación de contenido", "Analytics de uso y engagement", "API para integraciones custom", "Backup y disaster recovery"],
-    timesSaved: "45% reducción búsquedas",
+    timesSaved: "52% reducción búsquedas",
     mainMetric: { value: "$2.3M", label: "ahorro anual promedio" },
     visual: { 
       icon: (
@@ -174,7 +174,7 @@ const useCases: UseCase[] = [
       ],
       kpis: [
         { label: 'Ahorro por empleado/año', value: '€4,800', change: '+180%' },
-        { label: 'Tiempo búsqueda', value: '-45%', change: '+25%' },
+        { label: 'Tiempo búsqueda', value: '-52%', change: '+25%' },
         { label: 'Adopción usuarios', value: '87%', change: '+67%' }
       ]
     },
