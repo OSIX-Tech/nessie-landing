@@ -378,14 +378,25 @@ function ProductSection() {
     <section
       ref={sectionRef}
       id="product"
-      className="relative py-12 sm:py-18 md:py-20 lg:py-24 opacity-0 scroll-mt-16 md:scroll-mt-24"
+      className="relative py-12 sm:py-18 md:py-20 lg:py-24 opacity-0 scroll-mt-16 md:scroll-mt-24 overflow-hidden"
       role="region"
       aria-label="Carrusel de funcionalidades"
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
+      {/* Nessie background image - visible on desktop */}
+      <img
+        src="/NessieVertBB.png"
+        alt=""
+        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[12%] xl:w-[15%] 2xl:w-[18%] h-auto opacity-90 pointer-events-none"
+        style={{
+          animation: 'float-subtle 12s ease-in-out infinite',
+          filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.15))',
+          zIndex: 0
+        }}
+      />
       {/* Section Header - Mobile optimized */}
-      <div className="text-center max-w-4xl mx-auto mb-4 sm:mb-8 lg:mb-12 px-5 sm:px-6">
+      <div className="relative z-10 text-center max-w-4xl mx-auto mb-4 sm:mb-8 lg:mb-12 px-5 sm:px-6">
         <div className="flex justify-center mb-4 sm:mb-6">
           <div className="relative inline-flex px-5 sm:px-6 py-1.5 sm:py-2 rounded-full"
                style={{
@@ -421,7 +432,7 @@ function ProductSection() {
       </div>
 
       {/* Navigation Buttons (Desktop only) */}
-      <div className="hidden lg:flex justify-center gap-4 mb-8">
+      <div className="relative z-10 hidden lg:flex justify-center gap-4 mb-8">
         <button
           onClick={() => scrollToCard(Math.max(0, activeIndex - 1))}
           className="p-3 rounded-full transition-all hover:scale-110"
@@ -459,7 +470,7 @@ function ProductSection() {
       {/* Carousel Container */}
       <div
         ref={carouselRef}
-        className="overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+        className="relative z-10 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -633,7 +644,7 @@ function ProductSection() {
       </div>
 
       {/* Dots Pagination - estilo unificado con Casos de Uso */}
-      <div className="flex justify-center items-center gap-1.5 sm:gap-2 mt-3 sm:mt-6 px-4" role="tablist">
+      <div className="relative z-10 flex justify-center items-center gap-1.5 sm:gap-2 mt-3 sm:mt-6 px-4" role="tablist">
         {features.map((_, index) => (
           <button
             key={index}
@@ -743,6 +754,15 @@ function ProductSection() {
           to {
             opacity: 1;
             transform: scale(1);
+          }
+        }
+
+        @keyframes float-subtle {
+          0%, 100% {
+            transform: translateY(-50%) translateX(0);
+          }
+          50% {
+            transform: translateY(-50%) translateX(-10px);
           }
         }
       `}</style>

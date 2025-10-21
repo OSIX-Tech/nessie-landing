@@ -99,8 +99,20 @@ function Features() {
   }
 
   return (
-    <section ref={sectionRef} id="features" className="relative py-10 sm:py-16 md:py-24 lg:py-32 px-5 sm:px-6 md:px-12 lg:px-24 opacity-0 scroll-mt-16 md:scroll-mt-24">
-      <div className="max-w-[1400px] mx-auto">
+    <section ref={sectionRef} id="features" className="relative py-10 sm:py-16 md:py-24 lg:py-32 px-5 sm:px-6 md:px-12 lg:px-24 opacity-0 scroll-mt-16 md:scroll-mt-24 overflow-hidden">
+      {/* Nessie background image - left side */}
+      <img
+        src="/NessieUP.png"
+        alt=""
+        className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-[12%] xl:w-[15%] 2xl:w-[18%] h-auto opacity-90 pointer-events-none"
+        style={{
+          animation: 'float-subtle 12s ease-in-out infinite',
+          filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.15))',
+          zIndex: 0
+        }}
+      />
+
+      <div className="relative z-10 max-w-[1400px] mx-auto">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12 md:mb-20 lg:mb-24">
           <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base font-semibold mb-4 md:mb-6"
@@ -176,6 +188,17 @@ function Features() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes float-subtle {
+          0%, 100% {
+            transform: translateY(-50%) translateX(0);
+          }
+          50% {
+            transform: translateY(-50%) translateX(10px);
+          }
+        }
+      `}</style>
     </section>
   )
 }

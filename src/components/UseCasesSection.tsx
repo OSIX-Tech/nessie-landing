@@ -299,7 +299,19 @@ function UseCasesSection() {
 
   return (
     <section ref={sectionRef} id="use-cases" className="relative overflow-x-hidden min-h-screen py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-24 opacity-0 md:flex md:flex-col md:justify-center scroll-mt-16 md:scroll-mt-24">
-      <div className="md:max-w-[1600px] w-full mx-auto">
+      {/* Nessie background image - right side */}
+      <img
+        src="/NessieVertBB.png"
+        alt=""
+        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[12%] xl:w-[15%] 2xl:w-[18%] h-auto opacity-90 pointer-events-none"
+        style={{
+          animation: 'float-subtle 12s ease-in-out infinite',
+          filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.15))',
+          zIndex: 0
+        }}
+      />
+
+      <div className="relative z-10 md:max-w-[1600px] w-full mx-auto">
         {/* Section header */}
         <div className="text-center md:max-w-3xl mx-auto mb-3 sm:mb-6 md:mb-8">
           <span className="inline-block px-2.5 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm md:text-base font-semibold mb-3 sm:mb-6"
@@ -634,6 +646,17 @@ function UseCasesSection() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes float-subtle {
+          0%, 100% {
+            transform: translateY(-50%) translateX(0);
+          }
+          50% {
+            transform: translateY(-50%) translateX(-10px);
+          }
+        }
+      `}</style>
     </section>
   )
 }

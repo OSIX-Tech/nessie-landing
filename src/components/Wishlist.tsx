@@ -159,13 +159,25 @@ function Wishlist() {
 
   return (
     <section ref={sectionRef} id="wishlist" className="py-10 sm:py-16 md:py-24 relative overflow-hidden opacity-0 scroll-mt-16 md:scroll-mt-24">
+      {/* Nessie background image - left side */}
+      <img
+        src="/NessieUP.png"
+        alt=""
+        className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-[12%] xl:w-[15%] 2xl:w-[18%] h-auto opacity-90 pointer-events-none"
+        style={{
+          animation: 'float-subtle 12s ease-in-out infinite',
+          filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.15))',
+          zIndex: 0
+        }}
+      />
+
       {/* Subtle overlay for depth */}
       <div className="absolute inset-0 opacity-30"
            style={{
              background: 'radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%)'
            }}></div>
 
-      <div className="relative max-w-4xl mx-auto px-5 sm:px-6 md:px-12 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-6 md:px-12 text-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6"
              style={{
@@ -316,6 +328,17 @@ function Wishlist() {
         onSubmit={handleDialogSubmit}
         onSkip={handleDialogSkip}
       />
+
+      <style>{`
+        @keyframes float-subtle {
+          0%, 100% {
+            transform: translateY(-50%) translateX(0);
+          }
+          50% {
+            transform: translateY(-50%) translateX(10px);
+          }
+        }
+      `}</style>
     </section>
   )
 }
