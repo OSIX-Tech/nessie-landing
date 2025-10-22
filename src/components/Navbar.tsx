@@ -57,7 +57,7 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 safe-top ${
-      scrolled ? 'py-3 px-6 md:px-12' : 'py-4 px-6 md:px-12'
+      scrolled ? 'py-3 px-6 md:px-12' : 'py-4 px-4 md:px-12'
     }`}>
       <div className="max-w-7xl mx-auto">
         <div className={`relative flex items-center justify-between transition-all duration-500 ${
