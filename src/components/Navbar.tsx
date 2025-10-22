@@ -22,11 +22,11 @@ function Navbar() {
     const sections = navItems.map(n => n.id)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
           setActiveId(entry.target.id)
         }
       })
-    }, { threshold: [0.5] })
+    }, { threshold: [0.3, 0.5, 0.7] })
 
     sections.forEach((id) => {
       const el = document.getElementById(id)
@@ -37,9 +37,9 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 safe-top ${
-      scrolled ? 'py-3' : 'py-4'
+      scrolled ? 'py-3 px-6 md:px-12' : 'py-4 px-6 md:px-12'
     }`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto">
         <div className={`relative flex items-center justify-between transition-all duration-500 ${
           scrolled ? 'backdrop-blur-xl' : ''
         }`}
