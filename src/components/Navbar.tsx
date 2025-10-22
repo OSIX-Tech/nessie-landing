@@ -16,23 +16,43 @@ function Navbar() {
     }
   }, [])
 
-  // Track active section via IntersectionObserver
+  // Track active section based on scroll position
   const [activeId, setActiveId] = useState<string>('')
   useEffect(() => {
-    const sections = navItems.map(n => n.id)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-          setActiveId(entry.target.id)
+    const handleScroll = () => {
+      const sections = navItems.map(item => {
+        const element = document.getElementById(item.id)
+        if (!element) return null
+        const rect = element.getBoundingClientRect()
+        return {
+          id: item.id,
+          top: rect.top,
+          bottom: rect.bottom,
+          height: rect.height
+        }
+      }).filter((s): s is NonNullable<typeof s> => s !== null)
+
+      if (sections.length === 0) return
+
+      // Find the section that is most visible in the viewport
+      const viewportCenter = window.innerHeight / 2
+      let closestSection = sections[0]
+      let closestDistance = Math.abs(sections[0].top - viewportCenter)
+
+      sections.forEach(section => {
+        const distance = Math.abs(section.top - viewportCenter)
+        if (distance < closestDistance && section.top < viewportCenter && section.bottom > 0) {
+          closestDistance = distance
+          closestSection = section
         }
       })
-    }, { threshold: [0.3, 0.5, 0.7] })
 
-    sections.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
+      setActiveId(closestSection.id)
+    }
+
+    handleScroll() // Initial call
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
@@ -41,14 +61,15 @@ function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto">
         <div className={`relative flex items-center justify-between transition-all duration-500 ${
-          scrolled ? 'backdrop-blur-xl' : ''
+          scrolled ? 'backdrop-blur-xl px-4' : ''
         }`}
         style={{
           background: scrolled
             ? 'rgba(0, 0, 0, 0.5)'
             : 'transparent',
           borderRadius: scrolled ? '9999px' : '0',
-          padding: scrolled ? '8px 16px' : '0',
+          paddingTop: scrolled ? '8px' : '0',
+          paddingBottom: scrolled ? '8px' : '0',
           border: scrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
           boxShadow: scrolled ? '0 10px 40px rgba(0, 0, 0, 0.3)' : 'none'
         }}>
