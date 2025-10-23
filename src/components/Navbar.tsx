@@ -61,7 +61,7 @@ function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto">
         <div className={`relative flex items-center justify-between transition-all duration-500 ${
-          scrolled ? 'backdrop-blur-xl px-4' : ''
+          scrolled ? 'backdrop-blur-xl pl-4 pr-1' : ''
         }`}
         style={{
           background: scrolled
