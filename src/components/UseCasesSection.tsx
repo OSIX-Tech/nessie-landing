@@ -60,10 +60,10 @@ const useCases: UseCase[] = [
         { label: 'Notas generadas', value: '340', change: '+156%' }
       ]
     },
-    cta: { 
-      label: "Probar demo estudiantil", 
-      href: "/demo?preset=estudiante", 
-      analyticsId: "usecase_demo_student_click" 
+    cta: {
+      label: "Únete a la lista de espera",
+      href: "#wishlist",
+      analyticsId: "usecase_waitlist_student_click"
     } 
   },
   { 
@@ -99,10 +99,10 @@ const useCases: UseCase[] = [
         { label: 'Precisión citas', value: '99.2%', change: '+35%' }
       ]
     },
-    cta: { 
-      label: "Ver caso de investigación", 
-      href: "/demo?preset=researcher", 
-      analyticsId: "usecase_demo_researcher_click" 
+    cta: {
+      label: "Únete a la lista de espera",
+      href: "#wishlist",
+      analyticsId: "usecase_waitlist_researcher_click"
     } 
   },
   { 
@@ -138,10 +138,10 @@ const useCases: UseCase[] = [
         { label: 'Productividad personal', value: '+45%', change: '+20%' }
       ]
     },
-    cta: { 
-      label: "Explorar uso personal", 
-      href: "/demo?preset=general", 
-      analyticsId: "usecase_demo_general_click" 
+    cta: {
+      label: "Únete a la lista de espera",
+      href: "#wishlist",
+      analyticsId: "usecase_waitlist_general_click"
     } 
   },
   { 
